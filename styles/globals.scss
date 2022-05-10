@@ -1,0 +1,61 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+
+$theme-colors: (
+	success: (
+		#16b43b,
+		#f1c339,
+	),
+);
+@function hexToRGB($hex) {
+	@return red($hex), green($hex), blue($hex);
+}
+html {
+	@each $name, $color in $theme-colors {
+		--c_#{$name}: #{nth($color, 1)};
+    --c_#{$name}_rgb: #{hexToRGB(nth($color, 1))};
+    &[data-darkmode="true"] {
+      --c_#{$name}: #{nth($color, 2)};
+      --c_#{$name}_rgb: #{hexToRGB(nth($color, 2))};
+    }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $_headers: (h1: 1.6rem, h2: 1.4rem, h3: 1.2rem);
+
+// @each $tag, $size in $_headers {
+//   #{$tag} {
+//     font-size: $size;
+//   }
+// }

@@ -1,0 +1,24 @@
+// .h2 {
+//     &::before,::after{
+//         content: ;
+//     }
+// }
+
+$_headers: (
+	h1: 1.6rem,
+	h2: 1.4rem,
+	h3: 1.2rem,
+);
+@each $tag, $size in $_headers {
+	.#{$tag} {
+        &::before,&::after {
+            display: block;
+        }
+		&::before {
+			content: "<#{$tag}>";
+		}
+		&::after {
+			content: "</#{$tag}>";
+		}
+	}
+}

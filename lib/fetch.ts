@@ -1,5 +1,6 @@
-async function json(e) {
-	return await fetch(process.env.wpURL + e).then((res) => res.json());
+import urlJoin from "url-join";
+export async function json(e) {
+	return await fetch(urlJoin(process.env.wpURL, e)).then((res) => res.json());
 }
 
 export async function GETpostList(tags) {
@@ -9,8 +10,12 @@ export async function GETpostList(tags) {
 	return res;
 }
 export async function GETpost(slug) {
-	var res = await json("/posts?slug=" + slug);
+	var res = await json("/posts?slug=" + encodeURI(slug));
 	return res[0];
+}
+export async function GETwp(url) {
+	let a = await json(url);
+	return a;
 }
 export async function GETwpList(url) {
 	var fetchJson = await fetch(process.env.wpURL + url);
@@ -20,7 +25,8 @@ export async function GETwpList(url) {
 		Array(Number(totalpages))
 			.fill(0)
 			.map(async (e, i) => {
-				let a = await json(url + "&page=" + (i + 1));
+				url = urlJoin(url, "?page=" + (i + 1));
+				let a = await json(url);
 				return a;
 			})
 	);
@@ -32,7 +38,7 @@ export async function tagTop() {
 	return tagList(res);
 }
 export async function tag(slug) {
-	var res = await json("/tags?slug=" + slug);
+	var res = await json("/tags?slug=" + encodeURI(slug));
 	return res[0];
 }
 export async function tagList(res) {

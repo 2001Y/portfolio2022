@@ -1,4 +1,5 @@
 import Blog_post from "components/widget/blog_post";
+import Works_post from "components/widget/works_post";
 export default function ({ res }) {
     return (
         <>
@@ -11,17 +12,24 @@ export default function ({ res }) {
                 ))}
             </ul>
             <h2>Works</h2>
+            <ul>
+                {res.works.map((e1, i1) => (
+                    <li key={i1}>
+                        <Works_post res={e1} />
+                    </li>
+                ))}
+            </ul>
         </>
     );
 }
 
-import { GETwpList } from "lib/fetch";
+import { GETpostList, GETwpList } from "lib/fetch";
 export async function getServerSideProps(e) {
     let searchWord = e.query.s;
-    let blog = await GETwpList(
-        "/posts?per_page=12&_fields=title,slug,date,voting,tags&search=" +
-        searchWord
-    );
+    ["　", ",", "/"].map((e, i) => {
+        searchWord = searchWord.replace(e, "+");
+    });
+    let blog = await GETpostList("&per_page=12&search=" + searchWord);
     let works = await GETwpList("/works?per_page=12&search=" + searchWord);
     return {
         props: {

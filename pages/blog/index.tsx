@@ -4,7 +4,6 @@ import css from "styles/blog.module.scss"
 export default function ({ res }) {
     return (
         <>
-            <h1 className={css.test}>Welcome to React Server Components</h1>
             <TagListRender res={res} />
         </>
     );

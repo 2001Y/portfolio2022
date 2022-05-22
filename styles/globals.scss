@@ -1,3 +1,242 @@
+$theme-colors: (
+	--c_success: (
+		#16b43b,
+		#f1c339,
+	),
+	--c_font: (
+		#000000,
+		#ffffff,
+	),
+	--c_bodyBG: (
+		#ffffff,
+		#2b2b2b,
+	),
+	--c_bg: (
+		#f2f2f2,
+		#2b2b2b,
+	),
+);
+@function hexToRGB($hex) {
+	@return red($hex), green($hex), blue($hex);
+}
+html {
+	color: var(--c_font);
+	background: var(--c_bodyBG);
+	transition: 0.3s color, 0.3s background;
+	@each $name, $color in $theme-colors {
+		#{$name}: #{nth($color, 1)};
+		#{$name}_reversal: #{nth($color, 2)};
+		#{$name}_rgb: #{hexToRGB(nth($color, 1))};
+		&[data-darkmode="true"] {
+			#{$name}: #{nth($color, 2)};
+			#{$name}_reversal: #{nth($color, 1)};
+			#{$name}_rgb: #{hexToRGB(nth($color, 2))};
+		}
+	}
+	@keyframes accentC {
+		$num: 10;
+		@for $i from 1 through $num {
+			$hsla: 360/$num*$i;
+			#{100/$num*$i}% {
+				--c_accent: hsla($hsla, 100%, 75%, 1);
+			}
+		}
+	}
+}
+
+.load {
+	position: fixed;
+	left: calc(50% - 5vw);
+	top: calc(50% - 5vw);
+	width: 10vw;
+	height: 10vw;
+	stroke: var(--c_bg_reversal);
+}
+
+// $_headers: (h1: 1.6rem, h2: 1.4rem, h3: 1.2rem);
+// @each $tag, $size in $_headers {
+//   #{$tag} {
+//     font-size: $size;
+//   }
+// }
+
+main {
+	margin-top: 30vh;
+	transform: translateY(50vh);
+	opacity: 0;
+	transition: 0.2s, opacity 0.1s;
+	&.false {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+.loading {
+	opacity: 0;
+	// transition: .1s .3s;
+	&.true {
+		opacity: 1;
+		// transition-delay: 0s;
+	}
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	margin: 2.7vw;
+	width: 100%;
+	box-sizing: border-box;
+	height: 100%;
+	z-index: 99999;
+	pointer-events: none;
+	> * {
+		> * {
+			pointer-events: auto;
+		}
+		@media (max-width: 800px) {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+		}
+	}
+}
+.fixed {
+	font-weight: bold;
+	color: #000;
+	display: flex;
+	justify-content: space-between;
+	&.true {
+		top: 0;
+	}
+}
+$mainHeight: 2.3rem;
+$mainPadding: 1.5rem;
+$aWidth: 6rem;
+$heightOver: 0.1em;
+$widthOver: 0.37rem;
+$borderHeight: 70%;
+
+.headerTitle {
+	height: $mainHeight;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: .7rem;
+	background: #f2f2f2;
+	border-radius: 99rem;
+	padding-right: 1.3rem;
+	box-shadow: 0 0 0.3rem 0 rgba(0, 0, 0, 0.3);
+	span {
+		font-size: .7em;
+		opacity: .3;
+	}
+}
+.profileIMGwrap {
+	$size: 2.7rem;
+	margin-top: -($size - $mainHeight)/2;
+	width: $size;
+	height: $size;
+	border-radius: 100%;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	box-shadow: 0 0 0.4rem 0 rgba(0, 0, 0, 0.4);
+}
+.profileIMG {
+	width: 85%;
+	height: 85%;
+	border-radius: 100%;
+	overflow: hidden;
+}
+.menu {
+	position: relative;
+	background: #f2f2f2;
+	border-radius: 99rem;
+	box-shadow: 0 0 0.3rem 0 rgba(0, 0, 0, 0.3);
+	&::after,
+	&::before {
+		content: "";
+		border-right: solid rgba(#000, 0.1) 1.7px;
+		height: $borderHeight;
+		position: absolute;
+		top: calc((100% - $borderHeight) / 2);
+		z-index: 0;
+	}
+	&::before {
+		left: $aWidth + $mainPadding;
+	}
+	&::after {
+		left: $aWidth * 2 + $mainPadding;
+	}
+	ul {
+		display: flex;
+		padding: 0 $mainPadding;
+		li {
+			a {
+				height: $mainHeight;
+				width: $aWidth;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			z-index: 99;
+			display: flex;
+			align-items: center;
+		}
+		&::after {
+			content: "";
+			box-shadow: 0 0 0.4rem 0 rgba(0, 0, 0, 0.4);
+			width: calc($aWidth + $widthOver * 2);
+			height: calc(100% + $heightOver * 2);
+			border-radius: 99rem;
+			position: absolute;
+			top: -$heightOver;
+			left: calc($mainPadding - $widthOver);
+			z-index: 1;
+			transition: 0.3s;
+			pointer-events: none;
+			background: linear-gradient(
+				70deg,
+				hsla(0, 100%, 75%, 1),
+				hsla(0, 100%, 75%, 1),
+				hsla(45, 100%, 75%, 1),
+				hsla(90, 100%, 75%, 1),
+				hsla(134, 100%, 75%, 1),
+				hsla(180, 100%, 75%, 1),
+				hsla(225, 100%, 75%, 1),
+				hsla(270, 100%, 75%, 1),
+				hsla(315, 100%, 75%, 1),
+				hsla(360, 100%, 75%, 1),
+				hsla(360, 100%, 75%, 1)
+			);
+			background-size: 1000% 1000%;
+			animation: move_eye 30s linear infinite alternate;
+		}
+	}
+}
+@keyframes move_eye {
+	0% {
+		background-position: top left;
+	}
+	50% {
+		background-position: center center;
+	}
+	100% {
+		background-position: bottom right;
+	}
+}
+.\/blog {
+	ul::after {
+		transform: translateX(calc(100% - $widthOver * 2));
+	}
+}
+.\/about {
+	ul::after {
+		transform: translateX(calc(200% - $widthOver * 4));
+	}
+}
+
+
+
 html,
 body {
 	padding: 0;
@@ -14,48 +253,3 @@ a {
 * {
 	box-sizing: border-box;
 }
-
-
-$theme-colors: (
-	success: (
-		#16b43b,
-		#f1c339,
-	),
-);
-@function hexToRGB($hex) {
-	@return red($hex), green($hex), blue($hex);
-}
-html {
-	@each $name, $color in $theme-colors {
-		--c_#{$name}: #{nth($color, 1)};
-    --c_#{$name}_rgb: #{hexToRGB(nth($color, 1))};
-    &[data-darkmode="true"] {
-      --c_#{$name}: #{nth($color, 2)};
-      --c_#{$name}_rgb: #{hexToRGB(nth($color, 2))};
-    }
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $_headers: (h1: 1.6rem, h2: 1.4rem, h3: 1.2rem);
-
-// @each $tag, $size in $_headers {
-//   #{$tag} {
-//     font-size: $size;
-//   }
-// }

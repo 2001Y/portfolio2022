@@ -1,0 +1,81 @@
+:root {
+	--subMenu_width: 2rem;
+	--header_height: 2.3rem;
+	--header_padding: 1.5rem;
+	--header_subMenu_iconSize: 1rem;
+	--header_subMenu_icon_padding: 1.2rem 0;
+	--blog_tagList_opacity: 0.4;
+	@media (max-width: 500px) {
+		--subMenu_width: 2.7rem;
+		--header_height: 2.3rem;
+		--header_padding: 0.5rem;
+		--header_subMenu_iconSize: 1.3rem;
+		--header_subMenu_icon_padding: 1.7rem 0;
+	}
+}
+
+$theme-colors: (
+	--c_font: (
+		#1d1d1d,
+		#eeeeee,
+	),
+	--c_bg_body: (
+		#ffffff,
+		#212121,
+	),
+	--c_bg: (
+		#f2f2f2,
+		#3e3e3e,
+	),
+	--c_bg_menu: (
+		#f4f2ec,
+		#f9f9f9,
+	),
+);
+@function hexToRGB($hex) {
+	@return red($hex), green($hex), blue($hex);
+}
+html {
+	@each $name, $color in $theme-colors {
+		#{$name}: #{nth($color, 1)};
+		#{$name}_rgb: #{hexToRGB(nth($color, 1))};
+		#{$name}_light: #{nth($color, 1)};
+		#{$name}_light_rgb: #{hexToRGB(nth($color, 1))};
+		#{$name}_dark: #{nth($color, 2)};
+		#{$name}_reversal: #{nth($color, 2)};
+		#{$name}_reversal_rgb: #{hexToRGB(nth($color, 2))};
+		&[data-darkmode="true"] {
+			#{$name}: #{nth($color, 2)};
+			#{$name}_rgb: #{hexToRGB(nth($color, 2))};
+			#{$name}_reversal: #{nth($color, 1)};
+			#{$name}_reversal_rgb: #{hexToRGB(nth($color, 1))};
+		}
+	}
+}
+
+$theme-variable: (
+	--shadow_menu: (
+		0 0 0.3rem 0 rgba(0, 0, 0, 0.2),
+		0 0 0.3rem 0 rgba(0, 0, 0, 0.8),
+	),
+	--shadow_menuHover: (
+		0 0 0.1rem 0 rgba(0, 0, 0, 0.3),
+		0 0 0.1rem 0 rgba(0, 0, 0, 0.8),
+	),
+	--shadow_menuActive: (
+		0 0 0.4rem 0 rgba(0, 0, 0, 0.4),
+		0 0 0.4rem 0 rgba(0, 0, 0, 0.9),
+	),
+);
+html {
+	@each $name, $e in $theme-variable {
+		#{$name}: #{nth($e, 1)};
+		#{$name}_light: #{nth($e, 1)};
+		#{$name}_dark: #{nth($e, 2)};
+		#{$name}_reversal: #{nth($e, 2)};
+		&[data-darkmode="true"] {
+			#{$name}: #{nth($e, 2)};
+			#{$name}_reversal: #{nth($e, 1)};
+		}
+	}
+}

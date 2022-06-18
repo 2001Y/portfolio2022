@@ -1,4 +1,5 @@
 import "the-new-css-reset/css/reset.css";
+import "../styles/variable.scss";
 import "../styles/globals.scss";
 import Header from "components/header";
 
@@ -6,6 +7,8 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+
+import Cursor from "components/Cursor"
 
 import LoadAVG from "public/load.svg";
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -32,6 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
+			{/* <Cursor /> */}
 			<Header />
 			{/* <GoogleReCaptchaProvider
 				reCaptchaKey={process.env.recaptcha.siteID}

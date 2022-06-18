@@ -13,7 +13,7 @@ module.exports = {
 	swcMinify: true,
 	cpus: 4,
 	sassOptions: {
-		prependData: '@import "styles/_V.scss";',
+		prependData: '@import "styles/prepend.scss";',
 	},
 	images: {
 		domains: ["yoshikitam.wpx.jp", "github.com"],

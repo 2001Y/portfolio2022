@@ -1,7 +1,7 @@
 import TagListRender from "components/tagList";
 
 import css from "styles/blog.module.scss"
-export default function ({ res }) {
+export default function ({ res, totalpages }) {
     return (
         <>
             <TagListRender res={res} />
@@ -12,6 +12,7 @@ export default function ({ res }) {
 import { tagTop } from "lib/fetch";
 export async function getStaticProps() {
     let res = await tagTop();
+    // console.log(res)
     return {
         props: {
             res: [res[3], res[0], res[1], res[2]]

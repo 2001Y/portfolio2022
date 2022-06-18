@@ -1,29 +1,56 @@
 .animeBG {
-    background: linear-gradient(
-        70deg,
-        hsla(0, 100%, 70%, 1),
-        hsla(0, 100%, 70%, 1),
-        hsla(45, 100%, 70%, 1),
-        hsla(90, 100%, 70%, 1),
-        hsla(134, 100%, 70%, 1),
-        hsla(180, 100%, 70%, 1),
-        hsla(225, 100%, 70%, 1),
-        hsla(270, 100%, 70%, 1),
-        hsla(315, 100%, 70%, 1),
-        hsla(360, 100%, 70%, 1),
-        hsla(360, 100%, 70%, 1)
-      );
-    background-size: 500% 500%;
-    animation: move_eye 10s linear infinite alternate;
+	background: linear-gradient(
+		60deg,
+		var(--gradient_0),
+		var(--gradient_1),
+		var(--gradient_2)
+	);
+	trasition: background 0.05s;
+	will-chage: background;
+	// background-size: cover;
+	// background: linear-gradient(
+	// 	70deg,
+	// 	hsla(0, 100%, 75%, 1),
+	// 	hsla(0, 100%, 75%, 1),
+	// 	hsla(45, 100%, 75%, 1),
+	// 	hsla(90, 100%, 75%, 1),
+	// 	hsla(134, 100%, 75%, 1),
+	// 	hsla(180, 100%, 75%, 1),
+	// 	hsla(225, 100%, 80%, 1),
+	// 	hsla(270, 100%, 90%, 1),
+	// 	hsla(315, 100%, 80%, 1),
+	// 	hsla(360, 100%, 75%, 1),
+	// 	hsla(360, 100%, 75%, 1)
+	// );
+	// background-size: 1000% 1000%;
+	// animation: move_eye 30s linear infinite alternate;
 }
-@keyframes move_eye {
-    0% {
-      background-position: top left;
-    }
-    50% {
-      background-position: center center;
-    }
-    100% {
-      background-position: bottom right;
-    }
-  }
+.animeBG_before {
+	&::before {
+		@extend .animeBG;
+	}
+}
+.animeBG_after {
+	&::after {
+		@extend .animeBG;
+	}
+}
+.animeBG_font {
+	@extend .animeBG;
+	transition: -webkit-text-fill-color 0.2s, opacity 0.2s;
+	-webkit-background-clip: text;
+	@include hover {
+		-webkit-text-fill-color: transparent;
+	}
+}
+// @keyframes move_eye {
+// 	0% {
+// 		background-position: top left;
+// 	}
+// 	50% {
+// 		background-position: center center;
+// 	}
+// 	100% {
+// 		background-position: bottom right;
+// 	}
+// }

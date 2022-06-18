@@ -4,10 +4,16 @@ export async function json(e) {
 }
 
 export async function GETpostList(tags) {
-	var res = await json(
-		"/posts?per_page=30&_fields=id,title,slug,date,voting,tags" + tags
+	var res = await fetch(
+		urlJoin(
+			process.env.wpURL,
+			"posts?per_page=18&_fields=id,title,slug,date,voting,tags" + tags
+		)
 	);
-	return res;
+	return {
+		postList: await res.json(),
+		totalpages: await res.headers.get("x-wp-totalpages"),
+	};
 }
 export async function GETpost(slug) {
 	var res = await json("/posts?slug=" + encodeURI(slug));
@@ -18,8 +24,8 @@ export async function GETwp(url) {
 	return a;
 }
 export async function GETwpList(url) {
-	var fetchJson = await fetch(process.env.wpURL + url);
-	var totalpages = await fetchJson.headers.get("x-wp-totalpages");
+	let fetchJson = await fetch(process.env.wpURL + url);
+	let totalpages = await fetchJson.headers.get("x-wp-totalpages");
 
 	let res = await Promise.all(
 		Array(Number(totalpages))
@@ -69,6 +75,7 @@ export async function tagList(res) {
 	res.push({
 		id: "latest",
 		name: "All",
+		// slug: "/",
 		tagList: await latestTagList(),
 	});
 	async function latestTagList() {
@@ -86,15 +93,17 @@ export async function tagList(res) {
 	res = await Promise.all(
 		res.map(async (e, i) => {
 			// 各親タグの記事取得
+			let fetch;
 			if (e.id == "latest") {
-				e.postList = await GETpostList();
+				fetch = await GETpostList();
 			} else {
-				e.postList = await GETpostList("&tags=" + e.id);
+				fetch = await GETpostList("&tags=" + e.id);
 			}
+			e.postList = fetch.postList;
+			e.totalpages = fetch.totalpages;
 			return e;
 		})
 	);
-
 	// 記事の重複削除
 	let viewPostList = []; //表示されてる全ての記事
 	res = res

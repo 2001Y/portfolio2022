@@ -1,5 +1,5 @@
 import WorksPost from "components/widget/works_post";
-export default function ({ res }) {
+export default function ({ res, cat }) {
 	const shuffle = ([...array]) => {
 		for (let i = array.length - 1; i >= 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
@@ -12,6 +12,11 @@ export default function ({ res }) {
 
 	return (
 		<>
+			{cat.map((e, i) => (
+				<>
+					<h2>#{e.name}</h2>
+				</>
+			))}
 			{res.map((e, i) => (
 				<WorksPost res={e} />
 			))}
@@ -21,9 +26,10 @@ export default function ({ res }) {
 import { GETwpList } from "lib/fetch";
 export async function getStaticProps() {
 	let res = await GETwpList("/works");
+	let cat = await GETwpList("/works_cat");
 	return {
 		props: {
-			res,
+			res, cat
 		},
 	};
 }

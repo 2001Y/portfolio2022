@@ -1,11 +1,10 @@
+import Link from "next/link";
 import Image from "next/image";
+import classNames from "classnames";
 
 const ResponsiveImage = (props) => (
 	<Image alt={props.alt} layout="responsive" {...props} />
 );
-const components = {
-	img: ResponsiveImage,
-};
 
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -15,19 +14,34 @@ import rehypeStringify from "rehype-stringify";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 
-import { useEffect, useState } from "react";
+import c_Heading from "styles/heading.module.scss";
+import c_blog from "styles/blog.module.scss";
+import c_Post from "styles/post.module.scss";
+
 export default function ({ res, content }) {
+	console.log(res)
 	return (
 		<>
-			<h1 dangerouslySetInnerHTML={{ __html: res.title }}></h1>
-			<time>{res.date}</time>
-			<article dangerouslySetInnerHTML={{ __html: res.content }}></article>
+			<div className={c_Post.meta}>
+				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
+				<time itemprop="datePublished">{res.date}</time>
+				<time itemprop="dateModified">{res.modified}</time>
+				<ul className={classNames(c_blog.tagList, c_blog.hover)}>
+					{res.tags.map((e, i) => (
+						<li>
+							<Link href={"/blog/tag/" + e.slug}>
+								<a>#{e.name}</a>
+							</Link>
+						</li>
+					))}
+				</ul>
+			</div>
+			<article className={c_Post.article} dangerouslySetInnerHTML={{ __html: res.content }}></article>
 		</>
 	);
 }
 
 import { GETpost } from "lib/fetch";
-import Link from "next/link";
 const CustomLink = ({
 	children,
 	href,
@@ -55,13 +69,13 @@ export async function getStaticProps({ params }) {
 		.use(rehypeHighlight)
 		.use(rehypeStringify, { allowDangerousHtml: true })
 		// HTML → React
-		.use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
-		.use(rehypeReact, {
-			createElement: createElement,
-			components: {
-				a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
-			},
-		})
+		// .use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
+		// .use(rehypeReact, {
+		// 	createElement: createElement,
+		// 	components: {
+		// 		a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
+		// 	},
+		// })
 		.process(res.content);
 	res.content = String(content);
 	return {

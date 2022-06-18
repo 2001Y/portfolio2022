@@ -1,19 +1,29 @@
-// .h2 {
-//     &::before,::after{
-//         content: ;
-//     }
-// }
-
 $_headers: (
-	h1: 1.6rem,
-	h2: 1.4rem,
-	h3: 1.2rem,
+	h1: 2.5em,
+	h2: 2.4em,
+	h3: 1.2em,
 );
 @each $tag, $size in $_headers {
 	.#{$tag} {
-        &::before,&::after {
-            display: block;
-        }
+		font-weight: bold;
+		font-size: $size;
+		display: flex;
+		gap: 0.25em;
+		flex-flow: column;
+		letter-spacing: calc(0.1em + 0.005rem);
+		line-height: 1em;
+	}
+	.#{$tag}_tag {
+		&::before,
+		&::after {
+			font-family: monospace;
+			font-weight: bold;
+			font-size: 0.35em;
+			display: block;
+			opacity: 0.3;
+			line-height: 1em;
+			letter-spacing: 0.1em;
+		}
 		&::before {
 			content: "<#{$tag}>";
 		}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "echo '\nCloudflare Tunnel\nurl: https://nextjs.2001y.dev\n' && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

@@ -1,6 +1,6 @@
 import Blog_post from "components/widget/blog_post";
 import Works_post from "components/widget/WorksList_post";
-export default function ({ res }) {
+export default function Output({ res }) {
     return (
         <>
             <h2>Blog</h2>

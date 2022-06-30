@@ -5,7 +5,7 @@
 //     console.log(reCaptchaToken)
 // };
 
-export default function ({ res }) {
+export default function Output({ res }) {
 	var nowTime = new Date();
 	var Y = nowTime.getFullYear() - 1 - 2001;
 	let M = (9 - nowTime.getMonth()) / 12;

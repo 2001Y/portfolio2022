@@ -25,7 +25,7 @@ const processor = unified()
 		},
 	});
 
-export default function ({ res, content }) {
+export default function Output({ res, content }) {
 	// console.log(res)
 	return (
 		<>
@@ -37,7 +37,7 @@ export default function ({ res, content }) {
 				)}
 				<ul className={classNames(c_blog.tagList, c_blog.hover)}>
 					{res.tags.map((e, i) => (
-						<li>
+						<li key={i}>
 							<Link href={"/blog/tag/" + e.slug}>
 								<a>#{e.name}</a>
 							</Link>
@@ -61,7 +61,6 @@ import remarkGfm from 'remark-gfm'
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypePrism from '@mapbox/rehype-prism';
-import classMap from 'styles/editor-class-map.css';
 import rehypeParse from "rehype-parse";
 import { Fragment } from 'react'
 import rehypeReact from "rehype-react";

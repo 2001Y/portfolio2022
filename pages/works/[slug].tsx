@@ -25,7 +25,7 @@ const processor = unified()
 		},
 	});
 
-export default function ({ res, content }) {
+export default function Output({ res, content }) {
 	// console.log(res)
 	return (
 		<>

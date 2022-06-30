@@ -96,7 +96,7 @@ export async function tagList(res) {
 			// 各親タグの記事取得
 			let fetch;
 			if (e.id == "latest") {
-				fetch = await GETpostList();
+				fetch = await GETpostList("");
 			} else {
 				fetch = await GETpostList("&tags=" + e.id);
 			}

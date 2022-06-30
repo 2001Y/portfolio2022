@@ -11,7 +11,7 @@ import c_V from "styles/_V.module.scss";
 
 import { InView } from 'react-intersection-observer';
 
-export default function ({ res }) {
+export default function Output({ res }) {
 	let [state_pageNumber, setPageNumber] = useState([1, 1, 1, 1]);
 	let [state_nextPageList, setNextPageList] = useState([[], [], [], []]);
 

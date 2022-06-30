@@ -1,5 +1,5 @@
 import TagListRender from "components/tagList";
-export default function ({ res }) {
+export default function Output({ res }) {
     return (
         <>
             <TagListRender res={res} />

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import c_blog from "styles/blog.module.scss"
 import c_heading from "styles/heading.module.scss";
 
-export default function ({ res }) {
+export default function Output({ res }) {
     return (
         <>
             <Link href={"/blog/" + res.slug}>

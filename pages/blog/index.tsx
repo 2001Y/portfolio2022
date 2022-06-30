@@ -1,7 +1,7 @@
 import TagListRender from "components/tagList";
 
 import css from "styles/blog.module.scss"
-export default function ({ res, totalpages }) {
+export default function Output({ res, totalpages }) {
     return (
         <>
             <TagListRender res={res} />

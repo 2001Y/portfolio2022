@@ -8,7 +8,7 @@ import Router, { useRouter } from 'next/router'
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss"
 
-export default function ({ res, cat }) {
+export default function Output({ res, cat }) {
 	const router = useRouter();
 	const params = router.query
 
@@ -40,7 +40,7 @@ export default function ({ res, cat }) {
 	});
 	function resize() {
 		// 斜めスクロール
-		let boxElm = document.querySelector("#box_");
+		let boxElm = document.querySelector("#box_") as HTMLElement;
 		let bodyHeight = document.documentElement.scrollHeight;
 		let innerHeight = window.innerHeight;
 		let boxHeight = boxElm.offsetHeight;
@@ -78,7 +78,7 @@ export default function ({ res, cat }) {
 					</Link>
 				</li>
 				{cat.map((e, i) => (
-					<li>
+					<li key={i}>
 						<Link href={"?cat=" + e.slug}>
 							<a
 								className={classNames(c_V.animeBG_font)}
@@ -94,11 +94,12 @@ export default function ({ res, cat }) {
 				<div className={c_works.boxW}>
 					<ul className={c_works.list} id="box_">
 						{res.map((e, i) => (
-							<li>
+							<li key={i}>
 								<ul>
 									{e.map((e1, i1) => (
 										<WorksList_post
-											work={e1}
+											key={i1}
+											res={e1}
 										/>
 									))}
 								</ul>

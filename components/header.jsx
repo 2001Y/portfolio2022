@@ -8,7 +8,7 @@ import c_V from "styles/_V.module.scss";
 
 import c_header from "styles/header.module.scss";
 
-export default function ({ res }) {
+export default function Output() {
 	let [profile, setProfile] = useState(true);
 	let [state_menu, set_state_menu] = useState(true);
 
@@ -30,12 +30,12 @@ export default function ({ res }) {
 		let colorRange = 100;
 		function color(e) {
 			[...Array(pointCount)].map((_, i) => {
-				let h = (e + colorRange / pointCount * i) % 360;
+				let h = (e + (colorRange / pointCount) * i) % 360;
 				document.body.style.setProperty(
 					"--gradient_" + i,
 					"hsl(" + h + ",100%,70%)"
 				);
-			})
+			});
 		}
 
 		// subMenuを自動的に閉じる
@@ -43,7 +43,7 @@ export default function ({ res }) {
 			set_state_menu(false);
 			setProfile(false);
 		}, 2000);
-	}, [])
+	}, []);
 
 	let [darkmode, setDarkmode] = useState(false);
 	function toggleDarkmode(e) {
@@ -77,7 +77,10 @@ export default function ({ res }) {
 		<header className={c_header.header}>
 			<section className={classNames(c_header.fixed)}>
 				<section>
-					<div className={classNames(c_header.headerTitle, c_header.border)} onClick={() => setProfile(!profile)}>
+					<div
+						className={classNames(c_header.headerTitle, c_header.border)}
+						onClick={() => setProfile(!profile)}
+					>
 						<div className={classNames(c_V.animeBG, c_header.profileIMGwrap)}>
 							<div className={c_header.profileIMG}>
 								<Image
@@ -91,9 +94,7 @@ export default function ({ res }) {
 							2001Y<span>@Y20010920T</span>
 						</h1>
 						<div className={c_header.subMenu}>
-							<ul className={classNames(
-								{ [c_header.subMenu_open]: profile }
-							)}>
+							<ul className={classNames({ [c_header.subMenu_open]: profile })}>
 								{[
 									["Twitter", "https://twitter.com/y20010920t", "#twitter"],
 									[
@@ -113,7 +114,10 @@ export default function ({ res }) {
 												<a
 													target="_blank"
 													onClick={() => setPageName(e[1])}
-													className={classNames(c_header.icon, c_V.animeBG_after)}
+													className={classNames(
+														c_header.icon,
+														c_V.animeBG_after
+													)}
 													style={{ "--icon": "url(" + e[2] + ")" }}
 												></a>
 											</Link>
@@ -126,7 +130,9 @@ export default function ({ res }) {
 				</section>
 				<section>
 					<nav className={classNames(c_header.menu, c_header.border, nowPath)}>
-						<ul className={classNames(c_V.animeBG_after, c_header.border_after)}>
+						<ul
+							className={classNames(c_V.animeBG_after, c_header.border_after)}
+						>
 							{[
 								["Works", "/"],
 								["Blog", "/blog"],
@@ -145,16 +151,25 @@ export default function ({ res }) {
 				</section>
 				<section>
 					<div
-						className={classNames(c_header.iconBtn, c_header.spMenu, c_header.border)}
+						className={classNames(
+							c_header.iconBtn,
+							c_header.spMenu,
+							c_header.border
+						)}
 						style={{ "--icon": "url(#menu)" }}
 						onClick={() => set_state_menu(!state_menu)}
 					></div>
 					<div className={classNames({ [c_header.subMenu]: spState })}>
-						<ul className={classNames(c_header.setting, { [c_header.subMenu_open]: state_menu })}>
-							<li className={classNames(
-								c_header.searchWrap,
-								{ [c_header.searchWrap_true]: search },
-							)}>
+						<ul
+							className={classNames(c_header.setting, {
+								[c_header.subMenu_open]: state_menu,
+							})}
+						>
+							<li
+								className={classNames(c_header.searchWrap, {
+									[c_header.searchWrap_true]: search,
+								})}
+							>
 								<form
 									onSubmit={(e) => {
 										e.preventDefault();
@@ -203,7 +218,12 @@ export default function ({ res }) {
 			</section> */}
 
 			<div
-				className={classNames(c_V.animeBG, c_header.filter, c_header.iconBtn, nowPath)}
+				className={classNames(
+					c_V.animeBG,
+					c_header.filter,
+					c_header.iconBtn,
+					nowPath
+				)}
 				style={{ "--icon": "url(#filter)" }}
 				onClick={() => toggleDarkmode()}
 			></div>
@@ -252,6 +272,6 @@ export default function ({ res }) {
 					/>
 				</clipPath>
 			</svg>
-		</header >
+		</header>
 	);
 }

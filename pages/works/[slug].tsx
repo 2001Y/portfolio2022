@@ -1,89 +1,108 @@
+import Link from "next/link";
 import Image from "next/image";
+import classNames from "classnames";
 
 const ResponsiveImage = (props) => (
-    <Image alt={props.alt} layout="responsive" {...props} />
+	<Image alt={props.alt} layout="responsive" {...props} />
 );
-const components = {
-    img: ResponsiveImage,
-};
 
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeHighlight from "rehype-highlight";
-import rehypeStringify from "rehype-stringify";
-import rehypeParse from "rehype-parse";
-import rehypeReact from "rehype-react";
+import c_Heading from "styles/heading.module.scss";
+import c_blog from "styles/blog.module.scss";
+import c_Post from "styles/post.module.scss";
 
-import { useEffect, useState } from "react";
+
+const CustomLink = ({ children, href }) => (
+	<a href={href} target="_blank" rel="noopener noreferrer">
+		{children}
+	</a>
+);
+const processor = unified()
+	.use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
+	.use(rehypeReact, {
+		createElement,
+		components: {
+			a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
+		},
+	});
+
 export default function ({ res, content }) {
-    return (
-        <>
-            <h1 dangerouslySetInnerHTML={{ __html: res.title }}></h1>
-            <time>{res.date}</time>
-            <article dangerouslySetInnerHTML={{ __html: res.content }}></article>
-        </>
-    );
+	// console.log(res)
+	return (
+		<>
+			<div className={c_Post.meta}>
+				<h1
+					className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)}
+					dangerouslySetInnerHTML={{ __html: res.title }}></h1>
+				{/* <time itemProp="datePublished">{res.date}</time>
+				{res.date !== res.modified && (
+					<time itemProp="dateModified">{res.modified}</time>
+				)} */}
+				{/* <ul className={classNames(c_blog.tagList, c_blog.hover)}>
+					{res.tags.map((e, i) => (
+						<li>
+							<Link href={"/blog/tag/" + e.slug}>
+								<a>#{e.name}</a>
+							</Link>
+						</li>
+					))}
+				</ul> */}
+			</div>
+			<article className={c_Post.article}>
+				{processor.processSync(res.content).result}
+			</article>
+		</>
+	);
 }
 
-import Link from "next/link";
-const CustomLink = ({
-    children,
-    href,
-}: {
-    children: string;
-    href: string;
-}): JSX.Element =>
-    href.startsWith("/") || href === "" ? (
-        <Link href={href}>
-            <a>{children}</a>
-        </Link>
-    ) : (
-        <a href={href} target="_blank" rel="noopener noreferrer">
-            {children}
-        </a>
-    );
+import { GETwp } from "lib/fetch";
 
-import { json } from "lib/fetch";
 import { createElement } from "react";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from 'remark-gfm'
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
+import rehypePrism from '@mapbox/rehype-prism';
+import rehypeParse from "rehype-parse";
+import rehypeReact from "rehype-react";
+import rehypeSlug from 'rehype-slug'
 export async function getStaticProps({ params }) {
-    let res = await json("/works?slug=" + params.slug);
-    console.log(res);
-    let content = await unified()
-        // Markdown → HTML
-        .use(remarkParse)
-        .use(remarkRehype, { allowDangerousHtml: true })
-        .use(rehypeHighlight)
-        .use(rehypeStringify, { allowDangerousHtml: true })
-        // HTML → React
-        .use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
-        .use(rehypeReact, {
-            createElement: createElement,
-            components: {
-                a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
-            },
-        })
-        .process(res.content);
-    res.content = String(content);
-    return {
-        props: {
-            res: res[0],
-        },
-    };
+	let res = await GETwp("/works?slug=" + encodeURI(params.slug));
+	res = res[0];
+	let content = await unified()
+		// Markdown → HTML
+		.use(remarkParse)
+		.use(remarkGfm) //表対応
+		.use(remarkRehype, {
+			allowDangerousHtml: true // <html>など
+		})
+		.use(rehypeSlug) //見出しにid
+		.use(rehypePrism, {
+			ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
+		})
+		.use(rehypeStringify, { allowDangerousHtml: true })
+		.process(res.content);
+	console.log(content)
+	res.content = String(content);
+	return {
+		props: {
+			res,
+		},
+	};
 }
 
 import { GETwpList } from "lib/fetch";
 export async function getStaticPaths() {
-    // 外部APIエンドポイントを呼び出して記事を取得します。
-    let res = await GETwpList("/works?per_page=100&_fields=slug");
-    res = res.map((e) => e.slug);
+	// 外部APIエンドポイントを呼び出して記事を取得します。
+	let res = await GETwpList("/works?per_page=100&_fields=slug");
+	res = res.map((e) => decodeURI(e.slug));
 
-    // 記事に基づいてプリレンダリングしたいパスを取得します
-    var paths = res.map((slug) => ({
-        params: { slug },
-    }));
+	// 記事に基づいてプリレンダリングしたいパスを取得します
+	var paths = res.map((slug) => ({
+		params: { slug },
+	}));
 
-    // ビルド時にこれらのパスだけをプリレンダリングします。
-    // { fallback: false } は他のルートが404になることを意味します。
-    return { paths, fallback: false };
+	// ビルド時にこれらのパスだけをプリレンダリングします。
+	// { fallback: false } は他のルートが404になることを意味します。
+	return { paths, fallback: false };
 }

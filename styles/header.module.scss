@@ -52,7 +52,7 @@
 	gap: 0.7rem;
 	background: var(--c_bg_menu);
 	border-radius: 99rem;
-	box-shadow: var(--shadow_menu);
+	box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 	position: relative;
 	cursor: pointer;
 	span {
@@ -88,7 +88,7 @@
 	position: relative;
 	background: var(--c_bg_menu);
 	border-radius: 99rem;
-	box-shadow: var(--shadow_menu);
+	box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 	&::after,
 	&::before {
 		content: "";
@@ -179,7 +179,7 @@
 		display: grid;
 		place-items: center;
 		background: var(--c_bg_dark);
-		box-shadow: var(--shadow_menu);
+		box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 		transform: translateY(-100%);
 		border-radius: 0 0 999rem 999rem;
 		@media (max-width: 800px) {
@@ -250,13 +250,13 @@
 	height: calc(var(--header_height) + 0.2em);
 	background: var(--c_bg_menu);
 	border-radius: 100%;
-	box-shadow: var(--shadow_menu);
+	box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 	cursor: pointer;
 	transition: box-shadow 0.1s, transform 0.1s;
 	will-change: box-shadow, transform;
 	@mixin iconBtn_hover() {
 		transform: scale(0.97);
-		box-shadow: var(--shadow_menuHover);
+		box-shadow: var(--shadow_menuHover), var(--shadow_menuHoverSub);
 	}
 	@include hover {
 		@include iconBtn_hover;
@@ -338,7 +338,7 @@
 					background: var(--c_bg_menu);
 					border-radius: 999rem;
 					padding: 0 calc(var(--header_height) / 2);
-					box-shadow: var(--shadow_menu);
+					box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 				}
 			}
 			&.searchWrap_true {

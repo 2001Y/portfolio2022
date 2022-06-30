@@ -143,7 +143,7 @@
 	// 	left: 0;
 	// }
 	> li {
-		width: 22rem;
+		width: 20em;
 		@media (max-width: 500px) {
 			width: 17rem;
 		}
@@ -155,6 +155,11 @@
 		h3 {
 			line-height: 1.2em;
 			margin-bottom: 0.35em;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 3;
+			overflow: hidden;
+			// text-align: justify;
 			@media (max-width: 500px) {
 				font-size: 1rem;
 			}

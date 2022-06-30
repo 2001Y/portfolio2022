@@ -24,6 +24,18 @@ $main_marginTop: calc($header_height - $header_padding + 1.3vh);
 		}
 	}
 }
+@mixin flex($flow: _, $justify-content: _, $align-items: _) {
+	display: flex;
+	@if $flow != "_" {
+		flex-flow: $flow;
+	}
+	@if $justify-content != "_" {
+		justify-content: $justify-content;
+	}
+	@if $align-items != "_" {
+		align-items: $align-items;
+	}
+}
 
 $breakpoints: (
 	"sm": "screen and (max-width: 600px)",

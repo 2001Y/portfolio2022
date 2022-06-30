@@ -16,7 +16,7 @@ $_headers: (
 	.#{$tag}_tag {
 		&::before,
 		&::after {
-			font-family: monospace;
+			font-family: var(--baseFont_monospace), var(--baseFont);
 			font-weight: bold;
 			font-size: 0.35em;
 			display: block;

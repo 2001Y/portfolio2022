@@ -1,5 +1,5 @@
 import Blog_post from "components/widget/blog_post";
-import Works_post from "components/widget/works_post";
+import Works_post from "components/widget/WorksList_post";
 export default function ({ res }) {
     return (
         <>

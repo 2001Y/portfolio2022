@@ -1,6 +1,7 @@
 import "the-new-css-reset/css/reset.css";
 import "../styles/variable.scss";
 import "../styles/globals.scss";
+import "../styles/prism.css"
 import Header from "components/header";
 
 import type { AppProps } from "next/app";
@@ -11,11 +12,15 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import Cursor from "components/Cursor"
 
 import LoadAVG from "public/load.svg";
+import * as url from "url";
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 	const [pageLoading, setPageLoading] = useState(false);
 	useEffect(() => {
-		const handleStart = (url) => url !== router.asPath && setPageLoading(true);
+		const handleStart = (url) => {
+			url = new URL("http://example.com" + url);
+			url.pathname !== router.pathname && setPageLoading(true)
+		};
 		const handleComplete = () => setPageLoading(false);
 		router.events.on("routeChangeStart", handleStart);
 		router.events.on("routeChangeComplete", handleComplete);

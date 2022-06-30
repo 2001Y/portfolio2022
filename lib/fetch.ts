@@ -17,6 +17,7 @@ export async function GETpostList(tags) {
 }
 export async function GETpost(slug) {
 	var res = await json("/posts?slug=" + encodeURI(slug));
+	// console.log(res);
 	return res[0];
 }
 export async function GETwp(url) {

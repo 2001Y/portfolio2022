@@ -16,7 +16,7 @@ export default function ({ res }) {
 	useEffect(() => {
 		// OSダークモード反映
 		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-			toggleDarkmode(true);
+			setTimeout(() => toggleDarkmode(true), 500);
 		}
 
 		// グラデアニメーション
@@ -24,7 +24,7 @@ export default function ({ res }) {
 		setInterval(() => {
 			count = (count + 0.5) % 360;
 			color(count);
-		}, 50);
+		}, 100);
 
 		let pointCount = 3;
 		let colorRange = 100;
@@ -159,7 +159,7 @@ export default function ({ res }) {
 									onSubmit={(e) => {
 										e.preventDefault();
 
-										console.log(e);
+										// console.log(e);
 										router.push({
 											pathname: "/search",
 											query: {

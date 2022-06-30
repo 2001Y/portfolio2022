@@ -1,8 +1,7 @@
 html,
 body {
 	min-height: 100vh;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: var(--baseFont);
 }
 html {
 	font-size: 15px;
@@ -24,6 +23,27 @@ body {
 	display: flex;
 	flex-flow: column;
 	justify-content: center;
+	--gradient_0: hsl(0.5, 100%, 70%);
+	--gradient_1: hsl(33.833333333333336, 100%, 70%);
+	--gradient_2: hsl(67.16666666666667, 100%, 70%);
+}
+canvas {
+	outline: none;
+}
+#box {
+	height: 500vh;
+}
+#wrap {
+	transition: 0.3s opacity, 0.3s filter;
+	will-change: opacity, filter;
+}
+#tagList {
+	@include hover {
+		& + #wrap {
+			opacity: 0.5;
+			filter: blur(10px);
+		}
+	}
 }
 
 .load {
@@ -41,12 +61,12 @@ body {
 main {
 	padding: 0 3vw;
 	margin-top: $main_marginTop;
-	transform: translateY(50vh);
+	// transform: translateY(50vh);
 	opacity: 0;
-	transition: transform 0.2s, opacity 0.1s;
-	will-change: transform, opacity;
+	transition: opacity 0.1s;
+	will-change: opacity;
 	&.false {
-		transform: translateY(0);
+		// transform: translateY(0);
 		opacity: 1;
 	}
 }
@@ -73,4 +93,26 @@ footer {
 	ul::after {
 		transform: translateX(calc(200% - $widthOver * 4));
 	}
+}
+
+// bloggerから引き継ぎ
+.blog-card-left img,
+.blog-card-right img,
+.hitokoto-talk img,
+.last-comment a {
+	display: none !important;
+}
+.blog-card-left,
+.blog-card-right {
+	margin-bottom: 0.3em;
+}
+.diff {
+	display: flex;
+	place-items: center;
+}
+
+// Hugo
+mobile-scroll {
+	overflow: hidden;
+	overflow-x: scroll;
 }

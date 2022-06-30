@@ -11,7 +11,30 @@ module.exports = {
 			secretKEY: "6LftP-cfAAAAAI9Z-xUQAazRXpnQ038keebNPsTp",
 		},
 	},
-
+	async redirects() {
+		return [
+			{
+				source: "/blog/web/:slug",
+				destination: "/blog/:slug",
+				permanent: true,
+			},
+			{
+				source: "/blog/gadget/:slug",
+				destination: "/blog/:slug",
+				permanent: true,
+			},
+			{
+				source: "/blog/camera/:slug",
+				destination: "/blog/:slug",
+				permanent: true,
+			},
+			{
+				source: "/blog/other/:slug",
+				destination: "/blog/:slug",
+				permanent: true,
+			},
+		];
+	},
 	// Custom
 	reactStrictMode: true,
 	smcLoader: true,
@@ -29,7 +52,7 @@ module.exports = {
 			test: /\.svg$/,
 			use: ["@svgr/webpack"],
 		});
-		
+
 		config.optimization.minimize = isProd;
 		config.optimization.minimizer = [
 			new TerserPlugin({

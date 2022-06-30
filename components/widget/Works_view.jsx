@@ -1,7 +1,7 @@
 import Image from "next/image";
 import c_works from "styles/works.module.scss";
 
-import { createElement } from "react";
+import { useEffect, useLayoutEffect, useState, createElement } from "react";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
@@ -22,51 +22,70 @@ const processor = unified()
 	});
 
 export default function Output({ res }) {
+	let [state_youtube, set_state_youtube] = useState(false);
 	return (
 		<>
 			<div className={c_works.main_inner}>
-				<div>
-					{res.cfs.img && (
-						<div
-							className={classNames(c_works.tmb, {
-								[c_works.vertical]: res.imgSize.aspect < 1,
-							})}
-							style={{
-								"--aspect": res.imgSize.aspect,
-							}}
-						>
-							<Image
-								src={res.cfs.img}
-								height={res.imgSize.height}
-								width={res.imgSize.width}
-							/>
-							{res.category && (
-								<ul className={classNames(c_works.categoryList)}>
-									{res.category.map((e, i) => (
-										<li key={i}>{e.name}</li>
+				{res.cfs.img && (
+					<div
+						className={classNames(c_works.tmb, {
+							[c_works.vertical]: res.imgSize.aspect < 1,
+							[c_works.youtube]: res.cfs.youtube,
+						})}
+						style={{
+							"--aspect": res.imgSize.aspect,
+						}}
+						onClick={() => {
+							set_state_youtube(res.cfs.youtube);
+						}}
+					>
+						{res.cfs.youtube && (
+							<iframe
+								className={classNames(c_works.youtube, {
+									[c_works.play]: state_youtube,
+								})}
+								src={
+									"https://www.youtube.com/embed/" +
+									state_youtube +
+									"?autoplay=1"
+								}
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen
+							></iframe>
+						)}
+						<Image
+							src={res.cfs.img}
+							height={res.imgSize.height}
+							width={res.imgSize.width}
+						/>
+						{res.category && (
+							<ul className={classNames(c_works.categoryList)}>
+								{res.category.map((e, i) => (
+									<li key={i}>{e.name}</li>
+								))}
+							</ul>
+						)}
+					</div>
+				)}
+				{res.title && <h2 className={c_works.title}>{res.title}</h2>}
+				{(res.cfs.time || res.tags) && (
+					<ul className={c_works.meta}>
+						{res.tags && (
+							<li>
+								<ul className={c_works.tagList}>
+									{res.tags.map((e, i) => (
+										<li key={i}>#{e.name}</li>
 									))}
 								</ul>
-							)}
-						</div>
-					)}
-					{res.title && <h2 className={c_works.title}>{res.title}</h2>}
-					{(res.cfs.time || res.tags) && (
-						<ul className={c_works.meta}>
-							{res.cfs.time && <li>制作期間：{res.cfs.time}</li>}
-							{res.tags && (
-								<li>
-									使用技術：
-									<ul className={c_works.tagList}>
-										{res.tags.map((e, i) => (
-											<li key={i}>#{e.name}</li>
-										))}
-									</ul>
-								</li>
-							)}
-						</ul>
-					)}
+							</li>
+						)}
+						{res.cfs.time && <li>{res.cfs.time}</li>}
+					</ul>
+				)}
+				{res.content && (
 					<article>{processor.processSync(res.content).result}</article>
-				</div>
+				)}
 			</div>
 		</>
 	);

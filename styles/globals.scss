@@ -30,6 +30,9 @@ body {
 canvas {
 	outline: none;
 }
+iframe {
+	frameborder: 0;
+}
 #box {
 	height: 500vh;
 }
@@ -47,6 +50,7 @@ canvas {
 }
 
 .load {
+	pointer-events: none;
 	position: fixed;
 	$size: max(6rem, 9vw);
 	left: calc(50% - $size / 2);

@@ -35,7 +35,11 @@ export default function Output({ res }) {
 				{/* <Link href={"/works/" + res.slug}>
 					<a> */}
 				{res.cfs.img && (
-					<div className={c_works.tmb}>
+					<div
+						className={classNames(c_works.tmb, {
+							[c_works.youtube]: res.cfs.youtube,
+						})}
+					>
 						<Image
 							src={res.cfs.img}
 							layout={"fill"}
@@ -43,6 +47,15 @@ export default function Output({ res }) {
 							width={res.imgSize.width}
 						/>
 					</div>
+				)}
+				{res.category && (
+					<>
+						<ul className={classNames(c_works.categoryList)}>
+							{res.category.map((e2, i2) => (
+								<li key={i2}>{e2.name}</li>
+							))}
+						</ul>
+					</>
 				)}
 				<div className={c_works.meta}>
 					<h3
@@ -61,15 +74,6 @@ export default function Output({ res }) {
 						)}
 					</ul>
 				</div>
-				{res.category && (
-					<>
-						<ul className={classNames(c_works.categoryList)}>
-							{res.category.map((e2, i2) => (
-								<li key={i2}>{e2.name}</li>
-							))}
-						</ul>
-					</>
-				)}
 				{/* </a>
 				</Link> */}
 			</li>

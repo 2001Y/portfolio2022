@@ -6,7 +6,7 @@ import useSWR from "swr";
 import classNames from "classnames";
 import Router, { useRouter } from "next/router";
 
-export default function Output({ res }) {
+export default function Output({ res, countSum }) {
 	const router = useRouter();
 	const params = router.query;
 	function pushQuery(name, value) {
@@ -27,6 +27,7 @@ export default function Output({ res }) {
 				style={{
 					"--aspectSum": res.imgSize.aspectSum,
 					"--aspect": res.imgSize.aspect,
+					"--gapCount": countSum - 1,
 				}}
 				onClick={() => {
 					pushQuery("post", res.slug);
@@ -43,7 +44,6 @@ export default function Output({ res }) {
 						<Image
 							alt={res.title + "のサムネイル"}
 							src={res.cfs.img}
-							layout={"fill"}
 							height={res.imgSize.height}
 							width={res.imgSize.width}
 						/>
@@ -66,7 +66,7 @@ export default function Output({ res }) {
 					<ul>
 						{res.tags && (
 							<li>
-								<ul>
+								<ul className={c_works.tagList}>
 									{res.tags.map((e2, i2) => (
 										<li key={i2}>#{e2.name}</li>
 									))}

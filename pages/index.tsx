@@ -41,7 +41,9 @@ export default function Output({ res, cat }) {
 	useEffect(() => {
 		resize()
 		window.onresize = resize;
+		return () => window.removeEventListener("scroll", resize);
 	});
+	var timer = null;
 	function resize() {
 		// 斜めスクロール
 		let boxElm = document.querySelector("#box_") as HTMLElement;
@@ -51,9 +53,12 @@ export default function Output({ res, cat }) {
 		onscroll();
 		window.onscroll = onscroll;
 		function onscroll() {
-			let scrollRate = document.documentElement.scrollTop / (bodyHeight + innerHeight);
+			// clearTimeout(timer);
+			// timer = setTimeout(function () {
+			let scrollRate = document.documentElement.scrollTop / bodyHeight;
 			let position = -1 * scrollRate * boxHeight;
 			boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+			// }, 16);
 		}
 	}
 
@@ -118,6 +123,7 @@ export default function Output({ res, cat }) {
 										<WorksList_post
 											key={i1}
 											res={e1}
+											countSum={e.length}
 										/>
 									))}
 								</ul>

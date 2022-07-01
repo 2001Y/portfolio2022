@@ -111,18 +111,11 @@ export default function Output({ res, cat }) {
 			{params.post && <>
 				<section
 					className={c_works.WorksOverlay}
+					onClick={(e) => {
+						e.target.className == c_works.WorksOverlay && pushQuery("post", "")
+					}}
 				>
-					<div
-						className={c_works.bg}
-						onClick={() => { pushQuery("post", "") }}
-					>
-					</div>
-					<div className={c_works.main}>
-						<div
-							className={c_works.paddingTop}
-							onClick={() => { pushQuery("post", "") }}
-						>
-						</div>
+					<div className={c_works.main} >
 						<Works_view res={postRes} />
 					</div>
 				</section>

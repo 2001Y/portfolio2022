@@ -151,31 +151,28 @@
 	position: fixed;
 	top: 0;
 	right: 0;
-	height: 100vh;
 	width: 100vw;
+	height: 100vh;
+	overflow: visible;
+	overflow-y: scroll;
 	z-index: 99;
 	display: flex;
-	// opacity: 0;
-	// transform: translateY(100%);
 	transition: 0.2s transform, 0.1s opacity;
-	.bg {
-		width: 100vw;
-		background: rgb(#000, 0.5);
-		backdrop-filter: blur(3px);
-		// opacity: 0;
-		cursor: pointer;
-		animation: opacityIn 0.3s forwards;
-		@keyframes opacityIn {
-			from {
-				opacity: 0;
-			}
-			to {
-				opacity: 1;
-			}
+	background: rgb(#000, 0.5);
+	backdrop-filter: blur(3px);
+	cursor: pointer;
+	animation: opacityIn 0.3s forwards;
+	@keyframes opacityIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
 		}
 	}
 	.main {
 		animation: bottomIn 0.3s forwards;
+		pointer-events: none;
 		@keyframes bottomIn {
 			from {
 				opacity: 0;
@@ -188,30 +185,30 @@
 		}
 		width: 40rem;
 		height: fit-content;
-		max-height: 100vh;
-		overflow: visible;
-		overflow-y: scroll;
-		position: fixed;
-		bottom: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-flow: column;
+		justify-content: flex-end;
+		padding-top: calc($main_marginTop + var(--padding) - 0.5rem);
+		@media (max-width: 800px) {
+			padding-top: calc(var(--padding) - 0.5rem);
+		}
+		position: absolute;
+		top: 0;
 		right: 2.5vw;
 
-		--padding: min(8vw, 3.5rem);
+		--padding: min(4vw, 2.5rem);
 		@media (max-width: 800px) {
 			width: 100vw;
 			right: 0;
 		}
-		.paddingTop {
-			height: calc($main_marginTop + var(--padding) - 0.5rem);
-			cursor: pointer;
-			@media (max-width: 800px) {
-				height: calc(var(--padding) - 0.5rem);
-			}
-		}
 		> .main_inner {
+			cursor: default;
+			pointer-events: auto;
 			height: fit-content;
 			padding: var(--padding);
 			padding-top: 0;
-			padding-bottom: calc(var(--padding) - 1.3rem);
+			padding-bottom: calc(var(--padding) * 0.9);
 			@media (max-width: 800px) {
 				padding-bottom: calc(var(--padding) - 1.3rem + $main_marginTop);
 			}
@@ -221,18 +218,14 @@
 				box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 				content: "";
 				background: var(--c_bg_body);
-				width: 94%;
+				width: 100%;
 				--gapTop: min(10rem, 40%);
 				height: calc(100% - var(--gapTop));
 				border-radius: 3rem 3rem 0 0;
 				position: absolute;
 				top: var(--gapTop);
-				right: 3%;
+				right: 0;
 				z-index: -1;
-				@media (max-width: 700px) {
-					width: 100vw;
-					right: 0;
-				}
 			}
 			.tmb {
 				box-shadow: var(--shadow_menu), var(--shadow_menuSub);

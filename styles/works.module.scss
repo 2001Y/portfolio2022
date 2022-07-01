@@ -194,16 +194,27 @@
 		position: fixed;
 		bottom: 0;
 		right: 2.5vw;
-		--padding: 3.5rem;
+
+		--padding: min(8vw, 3.5rem);
+		@media (max-width: 800px) {
+			width: 100vw;
+			right: 0;
+		}
 		.paddingTop {
 			height: calc($main_marginTop + var(--padding) - 0.5rem);
 			cursor: pointer;
+			@media (max-width: 800px) {
+				height: calc(var(--padding) - 0.5rem);
+			}
 		}
 		> .main_inner {
 			height: fit-content;
 			padding: var(--padding);
 			padding-top: 0;
 			padding-bottom: calc(var(--padding) - 1.3rem);
+			@media (max-width: 800px) {
+				padding-bottom: calc(var(--padding) - 1.3rem + $main_marginTop);
+			}
 			position: relative;
 			--gap: 1rem;
 			&::after {
@@ -218,6 +229,10 @@
 				top: var(--gapTop);
 				right: 3%;
 				z-index: -1;
+				@media (max-width: 700px) {
+					width: 100vw;
+					right: 0;
+				}
 			}
 			.tmb {
 				box-shadow: var(--shadow_menu), var(--shadow_menuSub);

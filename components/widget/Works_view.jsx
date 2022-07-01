@@ -77,7 +77,7 @@ export default function Output({ res }) {
 						dangerouslySetInnerHTML={{ __html: res.title }}
 					></h2>
 				)}
-				{(res.cfs.time || res.tags) && (
+				{(res.cfs.time || res.tags || res.cfs.location) && (
 					<ul className={c_works.meta}>
 						{res.tags && (
 							<li>
@@ -89,6 +89,7 @@ export default function Output({ res }) {
 							</li>
 						)}
 						{res.cfs.time && <li>{res.cfs.time}</li>}
+						{res.cfs.location && <li>{res.cfs.location}</li>}
 					</ul>
 				)}
 				{res.content && (

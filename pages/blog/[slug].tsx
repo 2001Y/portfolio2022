@@ -1,3 +1,4 @@
+import Head from "components/Head";
 import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";

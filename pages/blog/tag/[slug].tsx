@@ -1,7 +1,9 @@
+import Head from "components/Head";
 import TagListRender from "components/tagList";
 export default function Output({ res }) {
     return (
         <>
+            <Head title={"2001Y's Blog"} />
             <TagListRender res={res} />
         </>
     );

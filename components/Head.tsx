@@ -1,25 +1,26 @@
 import Head from "next/head";
 
-function Page({ title, description, ogp, url, breadcrumb }) {
-   if (title) {
-      title = title;
+function Page(props) {
+   let res = JSON.parse(JSON.stringify(props));
+   if (res.title) {
+      res.title = res.title;
    } else {
-      title = process.env.title;
+      res.title = process.env.title;
    }
 
-   if (breadcrumb) {
-      breadcrumb = breadcrumb.map((e, i) => ({
-         "@type": "ListItem",
-         position: i + 1,
-         name: e[0],
-         item: _V.meta.baseURL + e[1],
-      }));
-      breadcrumb = {
-         "@context": "https://schema.org",
-         "@type": "BreadcrumbList",
-         itemListElement: breadcrumb,
-      };
-   }
+   // if (res.breadcrumb) {
+   //    res.breadcrumb = res.breadcrumb.map((e, i) => ({
+   //       "@type": "ListItem",
+   //       position: i + 1,
+   //       name: e[0],
+   //       item: _V.meta.baseURL + e[1],
+   //    }));
+   //    res.breadcrumb = {
+   //       "@context": "https://schema.org",
+   //       "@type": "BreadcrumbList",
+   //       itemListElement: res.breadcrumb,
+   //    };
+   // }
 
    return (
       <Head>
@@ -31,33 +32,33 @@ function Page({ title, description, ogp, url, breadcrumb }) {
                <meta property="og:site_name" content={process.env.title} />
             </>
          )}
-         {title && (
+         {res.title && (
             <>
-               <title>{title}</title>
-               <meta property="og:title" content={title} />
+               <title>{res.title}</title>
+               <meta property="og:title" content={res.title} />
             </>
          )}
-         {ogp && (
+         {res.ogp && (
             <>
-               <meta property="og:image" content={ogp} />
+               <meta property="og:image" content={res.ogp} />
             </>
          )}
-         {url && (
+         {res.url && (
             <>
-               <meta property="og:url" content={url} />
-               <link rel="canonical" href={url} />
+               <meta property="og:url" content={res.url} />
+               <link rel="canonical" href={res.url} />
             </>
          )}
-         {description && (
+         {res.description && (
             <>
-               <meta property="og:description" content={description} />
+               <meta property="og:description" content={res.description} />
             </>
          )}
-         {breadcrumb && (
+         {res.breadcrumb && (
             <>
                <script
                   type="application/ld+json"
-                  dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+                  dangerouslySetInnerHTML={{ __html: JSON.stringify(res.breadcrumb) }}
                />
             </>
          )}

@@ -1,3 +1,4 @@
+import Head from "components/Head";
 import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";
@@ -15,6 +16,8 @@ export default function Output({ res }) {
 	let [state_pageNumber, setPageNumber] = useState([1, 1, 1, 1]);
 	let [state_nextPageList, setNextPageList] = useState([[], [], [], []]);
 
+	let title = "2001Y's Blog";
+	title = res[0].name != "All" && "tag:" + res[0].name + "｜" + title;
 	// const [ref, inView] = useInView({
 	// 	rootMargin: '-100px 0px',
 	// });
@@ -39,6 +42,7 @@ export default function Output({ res }) {
 	// console.log(res)
 	return (
 		<>
+			<Head title={title} />
 			<ol className={c_blog.postSection}>
 				{res.map((e, i) => (
 					<li key={i} data-count={e.allCount}>

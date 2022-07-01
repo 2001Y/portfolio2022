@@ -13,6 +13,8 @@ export default function Output({ res, cat }) {
 	const router = useRouter();
 	const params = router.query
 
+	let title = "2001Y's Works";
+
 	let postRes = {};
 	if (params.post) {
 		postRes = res.find((e) => e.slug == params.post);
@@ -25,6 +27,7 @@ export default function Output({ res, cat }) {
 				e.category.map((e1) => {
 					if (e1.slug == params.cat) {
 						rr.push(e)
+						title = "#" + e1.name + "｜2001Y's Works";
 						return true
 					}
 				})
@@ -69,7 +72,7 @@ export default function Output({ res, cat }) {
 
 	return (
 		<>
-			<Head title={"Works"} />
+			<Head title={title} />
 			{params.post && <>
 				<section
 					className={c_works.WorksOverlay}

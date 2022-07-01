@@ -2,6 +2,7 @@ import "the-new-css-reset/css/reset.css";
 import "../styles/variable.scss";
 import "../styles/globals.scss";
 import "../styles/prism.css"
+import Head from "components/Head";
 import Header from "components/header";
 
 import type { AppProps } from "next/app";
@@ -32,6 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
+			<Head />
 			<Header />
 			<main className={String(pageLoading)}>
 				<Component {...pageProps} />

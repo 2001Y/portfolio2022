@@ -1,3 +1,4 @@
+import Head from "components/Head";
 import WorksList_post from "components/widget/WorksList_post";
 import Works_view from "components/widget/Works_view";
 import Link from "next/link";
@@ -68,6 +69,7 @@ export default function Output({ res, cat }) {
 
 	return (
 		<>
+			<Head title={"Works"} />
 			{params.post && <>
 				<section
 					className={c_works.WorksOverlay}

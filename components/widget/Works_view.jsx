@@ -1,3 +1,4 @@
+import Head from "components/Head";
 import Image from "next/image";
 import c_works from "styles/works.module.scss";
 
@@ -25,6 +26,7 @@ export default function Output({ res }) {
 	let [state_youtube, set_state_youtube] = useState(false);
 	return (
 		<>
+			<Head title={res.title && res.title + "｜2001Y's Works"} />
 			<div className={c_works.main_inner}>
 				{res.cfs.img && (
 					<div

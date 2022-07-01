@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
 	env: {
-		title:"2001Y.me",
+		title: "2001Y",
 		wpURL: "https://yoshikitam.wpx.jp/2001y/wp-json/wp/v2",
 		recaptcha: {
 			siteKEY: "6LftP-cfAAAAAHLMQW44OmVE1-TZ6OMx0ZYvUnIk",

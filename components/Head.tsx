@@ -1,9 +1,8 @@
 import Head from "next/head";
-const _V = require("./_V.js");
 
 function Page({ title, description, ogp, url, breadcrumb }) {
    if (title) {
-      title = title + "｜" + process.env.title;
+      title = title;
    } else {
       title = process.env.title;
    }
@@ -21,7 +20,6 @@ function Page({ title, description, ogp, url, breadcrumb }) {
          itemListElement: breadcrumb,
       };
    }
-   // console.log(breadcrumb);
 
    return (
       <Head>

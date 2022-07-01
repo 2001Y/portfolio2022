@@ -12,6 +12,7 @@ export default function Output({ res }) {
 	let D = nowTime.getDay() / 30 / 365;
 	return (
 		<>
+			<p>工事中...🚧<br /><br /><br /><br /></p>
 			<h1>Yoshiki TAMURA</h1>
 			<p>
 				武蔵野美術大学 造形構想学部

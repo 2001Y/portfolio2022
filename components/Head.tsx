@@ -3,9 +3,9 @@ const _V = require("./_V.js");
 
 function Page({ title, description, ogp, url, breadcrumb }) {
    if (title) {
-      var title = title + "｜" + _V.meta.siteTitle;
+      title = title + "｜" + process.env.title;
    } else {
-      var title = "英語専門塾 " + _V.meta.siteTitle;
+      title = process.env.title;
    }
 
    if (breadcrumb) {
@@ -28,9 +28,9 @@ function Page({ title, description, ogp, url, breadcrumb }) {
          <meta property="og:type" content="article" />
          <meta name="twitter:card" content="summary_large_image" />
          {/* <meta name="twitter:site" content="@tcr_jp" /> */}
-         {_V.meta.siteTitle && (
+         {process.env.title && (
             <>
-               <meta property="og:site_name" content={_V.meta.siteTitle} />
+               <meta property="og:site_name" content={process.env.title} />
             </>
          )}
          {title && (

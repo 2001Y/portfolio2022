@@ -49,15 +49,16 @@ export default function Output({ res }) {
 									state_youtube +
 									"?autoplay=1"
 								}
-								frameborder="0"
+								frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowfullscreen
+								allowFullScreen
 							></iframe>
 						)}
 						<Image
 							src={res.cfs.img}
 							height={res.imgSize.height}
 							width={res.imgSize.width}
+							alt={res.title + "のサムネイル"}
 						/>
 						{res.category && (
 							<ul className={classNames(c_works.categoryList)}>

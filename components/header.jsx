@@ -87,6 +87,7 @@ export default function Output() {
 									src="https://github.com/2001y.png"
 									width={50}
 									height={50}
+									alt="2001Yのプロフォール画像"
 								/>
 							</div>
 						</div>

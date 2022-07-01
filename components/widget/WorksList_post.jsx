@@ -41,6 +41,7 @@ export default function Output({ res }) {
 						})}
 					>
 						<Image
+							alt={res.title + "のサムネイル"}
 							src={res.cfs.img}
 							layout={"fill"}
 							height={res.imgSize.height}

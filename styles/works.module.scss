@@ -296,11 +296,8 @@
 			}
 			article {
 				margin-top: var(--gap);
-				p,
-				hr {
-					margin-top: 1.3em;
-				}
 				p {
+					margin-top: 0.8em;
 					strong {
 						font-weight: bold;
 						display: inline-block;
@@ -308,6 +305,8 @@
 				}
 				a {
 					color: var(--gradient_1);
+					text-shadow: 0 0 0.05em rgba(var(--c_bg_body_reversal_rgb), 0.7),
+						0 0 0.2em rgba(var(--c_bg_body_reversal_rgb), 0.2);
 					@include hover {
 						opacity: 0.7;
 					}
@@ -315,10 +314,12 @@
 				hr {
 					width: 30%;
 					height: 0.2rem;
-					background: rgba(var(--c_bg_reversal_rgb), 0.1);
+					background: rgba(var(--c_bg_reversal_rgb), 0.03);
 					border-radius: 99rem;
-					margin-right: auto;
-					margin-left: auto;
+					margin: 1em auto;
+				}
+				h2 {
+					font-weight: bold;
 				}
 			}
 		}

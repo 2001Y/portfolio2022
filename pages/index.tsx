@@ -68,6 +68,19 @@ export default function Output({ res, cat }) {
 
 	return (
 		<>
+			{params.post && <>
+				<section
+					className={c_works.WorksOverlay}
+					onClick={(e) => {
+						let elm = e.target as HTMLElement;
+						elm.className == c_works.WorksOverlay && pushQuery("post", "");
+					}}
+				>
+					<div className={c_works.main} >
+						<Works_view res={postRes} />
+					</div>
+				</section>
+			</>}
 			<ul className={c_works.catList} id="tagList">
 				<li>
 					<Link href={"/"}>
@@ -108,18 +121,6 @@ export default function Output({ res, cat }) {
 					</ul>
 				</div>
 			</div>
-			{params.post && <>
-				<section
-					className={c_works.WorksOverlay}
-					onClick={(e) => {
-						e.target.className == c_works.WorksOverlay && pushQuery("post", "")
-					}}
-				>
-					<div className={c_works.main} >
-						<Works_view res={postRes} />
-					</div>
-				</section>
-			</>}
 			<section id="box">
 			</section>
 		</>

@@ -162,6 +162,7 @@
 	backdrop-filter: blur(3px);
 	cursor: pointer;
 	animation: opacityIn 0.3s forwards;
+	z-index: 999;
 	@keyframes opacityIn {
 		from {
 			opacity: 0;
@@ -320,6 +321,9 @@
 				}
 				h2 {
 					font-weight: bold;
+					&:not(:first-child, hr + h2) {
+						margin-top: 1.3rem;
+					}
 				}
 			}
 		}

@@ -68,7 +68,12 @@ export default function Output({ res }) {
 						)}
 					</div>
 				)}
-				{res.title && <h2 className={c_works.title}>{res.title}</h2>}
+				{res.title && (
+					<h2
+						className={c_works.title}
+						dangerouslySetInnerHTML={{ __html: res.title }}
+					></h2>
+				)}
 				{(res.cfs.time || res.tags) && (
 					<ul className={c_works.meta}>
 						{res.tags && (

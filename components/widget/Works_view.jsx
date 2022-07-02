@@ -41,7 +41,7 @@ export default function Output({ res }) {
 							set_state_youtube(res.cfs.youtube);
 						}}
 					>
-						{res.cfs.youtube && (
+						{res.cfs.youtube && state_youtube && (
 							<iframe
 								className={classNames(c_works.youtube, {
 									[c_works.play]: state_youtube,
@@ -51,6 +51,7 @@ export default function Output({ res }) {
 									state_youtube +
 									"?autoplay=1"
 								}
+								title={res.title}
 								frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 								allowFullScreen

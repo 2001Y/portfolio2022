@@ -1,3 +1,4 @@
+import NextHead from 'next/head'
 import Head from "components/Head";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,6 +28,7 @@ const processor = unified()
 	});
 
 export default function Output({ res, content }) {
+
 	// console.log(res)
 	return (
 		<>

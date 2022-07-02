@@ -36,6 +36,9 @@ iframe {
 #box {
 	height: 500vh;
 }
+#box_ {
+	top: var(--position);
+}
 #wrap {
 	transition: 0.3s opacity, 0.3s filter;
 	will-change: opacity, filter;

@@ -9,6 +9,8 @@ import Router, { useRouter } from 'next/router'
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss"
 
+
+
 export default function Output({ res, cat }) {
 	const router = useRouter();
 	const params = router.query
@@ -45,6 +47,7 @@ export default function Output({ res, cat }) {
 	});
 	var timer = null;
 	function resize() {
+		window.removeEventListener("scroll", resize);
 		// 斜めスクロール
 		let boxElm = document.querySelector("#box_") as HTMLElement;
 		let bodyHeight = document.documentElement.scrollHeight;
@@ -58,6 +61,8 @@ export default function Output({ res, cat }) {
 			let scrollRate = document.documentElement.scrollTop / bodyHeight;
 			let position = -1 * scrollRate * boxHeight;
 			boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+			// boxElm.style = ` ${position}px`;
+			// boxElm.style.setProperty('--position', `${position}px`);
 			// }, 16);
 		}
 	}

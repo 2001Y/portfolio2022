@@ -15,7 +15,7 @@ export default function Output({ res }) {
             <ul>
                 {res.works.map((e1, i1) => (
                     <li key={i1}>
-                        <Works_post res={e1} />
+                        <Works_post res={e1} countSum={0}/>
                     </li>
                 ))}
             </ul>

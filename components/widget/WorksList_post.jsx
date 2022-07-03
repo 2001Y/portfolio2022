@@ -40,6 +40,9 @@ export default function Output({ res, countSum }) {
 						className={classNames(c_works.tmb, {
 							[c_works.youtube]: res.cfs.youtube,
 						})}
+						onClick={() => {
+							pushQuery("post", res.slug);
+						}}
 					>
 						<Image
 							alt={res.title + "のサムネイル"}

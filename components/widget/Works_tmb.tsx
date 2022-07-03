@@ -1,16 +1,3 @@
-import Head from "components/Head";
-import WorksList_post from "components/widget/WorksList_post";
-import Works_view from "components/widget/Works_view";
-import Link from "next/link";
-import { useEffect, useState } from 'react'
-import classNames from "classnames";
-import Router, { useRouter } from 'next/router'
-
-import c_V from "styles/_V.module.scss";
-import c_works from "styles/works.module.scss"
-
-
-
 export default function Output({ res, cat }) {
 	const router = useRouter();
 	const params = router.query
@@ -45,17 +32,25 @@ export default function Output({ res, cat }) {
 		window.onresize = resize;
 		return () => window.removeEventListener("scroll", resize);
 	});
+	var timer = null;
 	function resize() {
 		window.removeEventListener("scroll", resize);
+		// 斜めスクロール
 		let boxElm = document.querySelector("#box_") as HTMLElement;
 		let bodyHeight = document.documentElement.scrollHeight;
+		let innerHeight = window.innerHeight;
 		let boxHeight = boxElm.offsetHeight;
 		onscroll();
 		window.onscroll = onscroll;
 		function onscroll() {
+			// clearTimeout(timer);
+			// timer = setTimeout(function () {
 			let scrollRate = document.documentElement.scrollTop / bodyHeight;
 			let position = -1 * scrollRate * boxHeight;
 			boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+			// boxElm.style = ` ${position}px`;
+			// boxElm.style.setProperty('--position', `${position}px`);
+			// }, 16);
 		}
 	}
 
@@ -83,7 +78,9 @@ export default function Output({ res, cat }) {
 						elm.className == c_works.WorksOverlay && pushQuery("post", "");
 					}}
 				>
-					<Works_view res={postRes} />
+					<div className={c_works.main} >
+						<Works_view res={postRes} />
+					</div>
 				</section>
 			</>}
 			<ul className={c_works.catList} id="tagList">
@@ -131,66 +128,4 @@ export default function Output({ res, cat }) {
 			</section>
 		</>
 	);
-}
-import { GETwpList } from "lib/fetch";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from 'remark-gfm'
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import rehypePrism from '@mapbox/rehype-prism';
-import rehypeSlug from 'rehype-slug'
-export async function getStaticProps() {
-	let res = await GETwpList("/works");
-	let cat = await GETwpList("/works_cat");
-	res.map(async (e, i) => {
-		let result = await unified()
-			// Markdown → HTML
-			.use(remarkParse)
-			.use(remarkGfm) //表対応
-			.use(remarkRehype, {
-				allowDangerousHtml: true // <html>など
-			})
-			.use(rehypeSlug) //見出しにid
-			.use(rehypePrism, {
-				ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
-			})
-			.use(rehypeStringify, { allowDangerousHtml: true })
-			.process(e.content);
-		e.content = String(result);
-	})
-	return {
-		props: {
-			res,
-			cat
-		},
-	};
-}
-function viewF(res, level) {
-	// aspectの合計5までを区切る
-	let aspectSum = 0;
-	let result = [];
-	let resChild = []
-	let aspectList = [];
-	res.flat().map((e, i) => {
-		aspectSum += e.imgSize.aspect;
-		resChild.push(e);
-		if (level <= aspectSum || i == (res.length - 1)) {
-			// 行終了
-			aspectList.push(aspectSum);
-			result.push(resChild);
-			aspectSum = 0;
-			resChild = [];
-		}
-	})
-	result = result.map((e, i) => {
-		let aspect = aspectList[i];
-		return e.map((e1, i1) => {
-			e1.imgSize.widthRate = e1.imgSize.aspect / aspect;
-			e1.imgSize.aspectSum = aspect;
-			// console.log(e1.imgSize.aspectSum)
-			return e1
-		})
-	})
-	return result
 }

@@ -2,7 +2,8 @@ import "the-new-css-reset/css/reset.css";
 import "../styles/variable.scss";
 import "../styles/globals.scss";
 import "../styles/prism.css"
-import Head from "components/Head";
+// import Head from "components/Head";
+import Head from "next/head";
 import Header from "components/header";
 
 import type { AppProps } from "next/app";
@@ -33,7 +34,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<Head />
+			<Head >
+				<script async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></script>
+				<script dangerouslySetInnerHTML={{
+					__html: `
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', 'G-51E14JSXC0');
+				`,
+				}}>
+				</script>
+
+			</Head>
 			<Header />
 			<main className={String(pageLoading)}>
 				<Component {...pageProps} />

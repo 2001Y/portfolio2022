@@ -29,29 +29,29 @@ function Page(props) {
          {/* <meta name="twitter:site" content="@tcr_jp" /> */}
          {process.env.title && (
             <>
-               <meta property="og:site_name" content={process.env.title} />
+               <meta property="og:site_name" content={process.env.title} key="og:site_name" />
             </>
          )}
          {res.title && (
             <>
-               <title>{res.title}</title>
-               <meta property="og:title" content={res.title} />
+               <title key="title">{res.title}</title>
+               <meta property="og:title" content={res.title} key="og:title" />
             </>
          )}
          {res.ogp && (
             <>
-               <meta property="og:image" content={res.ogp} />
+               <meta property="og:image" content={res.ogp} key="ogp" />
             </>
          )}
          {res.url && (
             <>
-               <meta property="og:url" content={res.url} />
-               <link rel="canonical" href={res.url} />
+               <meta property="og:url" content={res.url} key="og:url" />
+               <link rel="canonical" href={res.url} key="canonical" />
             </>
          )}
          {res.description && (
             <>
-               <meta property="og:description" content={res.description} />
+               <meta property="og:description" content={res.description} key="og:description" />
             </>
          )}
          {res.breadcrumb && (

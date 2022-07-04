@@ -88,6 +88,7 @@
 		transition: 0.2s color;
 		will-change: color;
 		display: inline-block;
+		word-break: break-all;
 		position: relative;
 		&::after {
 			content: "";

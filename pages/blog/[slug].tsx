@@ -84,8 +84,18 @@ export async function getStaticProps({ params }) {
 			ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
 		})
 		.use(rehypeStringify, { allowDangerousHtml: true })
-		.process(res.content);
-	res.content = String(content);
+		.process(
+			res.content
+				.replace(/(&lt;)/g, '<')
+				.replace(/(&gt;)/g, '>')
+				.replace(/(&quot;)/g, '"')
+				.replace(/(&#39;)/g, "'")
+				.replace(/(&amp;)/g, '&')
+		);
+	console.log(content)
+	res.content = String(
+		content
+	);
 	return {
 		props: {
 			res,

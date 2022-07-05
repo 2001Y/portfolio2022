@@ -8,6 +8,7 @@ $profileIMGwrap_size: calc(var(--header_height) + 0.4em);
 $header_height: calc(var(--header_height) + $header_padding * 2);
 
 // Blog
+$main_width: 44rem;
 $postSection_gap_h: 1vh;
 $postSection_gap_v: 2.5vw;
 $postList_padding: 1.5vh;

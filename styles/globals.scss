@@ -68,6 +68,9 @@ iframe {
 main {
 	padding: 0 3vw;
 	margin-top: $main_marginTop;
+	@media (max-width: 800px) {
+		margin-top: 0;
+	}
 	// transform: translateY(50vh);
 	opacity: 0;
 	transition: opacity 0.1s;
@@ -89,6 +92,9 @@ main {
 footer {
 	text-align: right;
 	padding: 2vh $header_padding;
+	@media (max-width: 800px) {
+		margin-bottom: $main_marginTop;
+	}
 }
 
 .blog {

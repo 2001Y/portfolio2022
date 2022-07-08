@@ -9,7 +9,7 @@ import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import classNames from "classnames";
 
-import ImgLupe from "components/imgLupe";
+import ImgLupe from "components/ImgLupe";
 
 const CustomLink = ({ children, href }) => (
 	<a href={href} target="_blank" rel="noopener noreferrer">

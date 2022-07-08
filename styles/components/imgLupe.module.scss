@@ -1,7 +1,7 @@
 .wrapper {
 	--base: 150vw;
 	width: var(--base);
-	height: calc(var(--base) * var(--width) / var(--height));
+	height: calc(var(--base) * var(--height) / var(--width));
 	overflow: hidden;
 	position: fixed;
 	top: 0;

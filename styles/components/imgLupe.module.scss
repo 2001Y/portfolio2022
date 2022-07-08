@@ -1,5 +1,5 @@
 .wrapper {
-	--base: 150vw;
+	--base: 90vmax;
 	width: var(--base);
 	height: calc(var(--base) * var(--height) / var(--width));
 	overflow: hidden;

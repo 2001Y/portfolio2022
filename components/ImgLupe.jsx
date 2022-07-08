@@ -2,17 +2,17 @@ import classNames from "classnames";
 import Image from "next/image";
 import c_imgLupe from "styles/components/imgLupe.module.scss";
 
-export default function Output({ state_ImgLupe, src, height, width, alt }) {
+export default function Output({ src, height, width, alt, position }) {
 	// console.log(state_ImgLupe);
 	return (
 		<>
 			<div
 				className={classNames(c_imgLupe.wrapper, {
-					[c_imgLupe.open]: state_ImgLupe,
+					[c_imgLupe.open]: position,
 				})}
 				style={{
-					"--positionX": state_ImgLupe.x,
-					"--positionY": state_ImgLupe.y,
+					"--positionX": position.x,
+					"--positionY": position.y,
 					"--width": width,
 					"--height": height,
 				}}

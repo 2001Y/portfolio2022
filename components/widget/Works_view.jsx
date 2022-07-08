@@ -49,7 +49,6 @@ export default function Output({ res }) {
 			<Head title={res.title && res.title + "｜2001Y's Works"} />
 
 			<ImgLupe
-				state_ImgLupe={state_ImgLupe}
 				src={res.cfs.img}
 				height={res.imgSize.height}
 				width={res.imgSize.width}
@@ -137,8 +136,8 @@ export default function Output({ res }) {
 				</div>
 			</div>
 			{/* Task: 関連記事 */}
-			{/* <div className={c_works.relatedScrollBox}>
-				{res.child && (
+			{/* {res.child && (
+				<div className={c_works.relatedScrollBox}>
 					<ul>
 						{res.child.map((e, i) => (
 							<li
@@ -152,6 +151,7 @@ export default function Output({ res }) {
 										"--aspect": e.imgSize.aspect,
 									}}
 									onClick={() => {
+										alert("a");
 										console.log(e.slug);
 										pushQuery("post", "e.slug");
 									}}
@@ -166,8 +166,8 @@ export default function Output({ res }) {
 							</li>
 						))}
 					</ul>
-				)}
-			</div> */}
+				</div>
+			)} */}
 		</>
 	);
 }

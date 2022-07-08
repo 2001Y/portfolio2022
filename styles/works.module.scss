@@ -87,12 +87,12 @@
 	font-size: 1.6rem;
 	font-weight: bold;
 	position: fixed;
-	padding: 4vmin 0;
+	padding: 3vmin 0;
 	bottom: 0;
 	left: 0;
 	z-index: 99;
 	@media (max-width: 800px) {
-		bottom: calc(2vmin + $main_marginTop);
+		bottom: $main_marginTop;
 	}
 	> li {
 		padding: 0.7vmin 5vmin;
@@ -347,16 +347,19 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		--hight: 25vh;
-		height: var(--hight);
+		width: 100vw;
 		overflow: hidden;
 		overflow-x: scroll;
 		z-index: 1;
 		padding: 3vw;
-		box-sizing: content-box;
+		// box-sizing: content-box;
 		> ul {
+			--hight: 25vh;
+			height: var(--hight);
+			width: fit-content;
 			display: flex;
-			margin-right: var(--main_width);
+			gap: 1rem;
+			margin-right: calc(var(--main_width) + 1rem);
 		}
 		.tmb {
 			height: 100%;

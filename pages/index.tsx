@@ -1,7 +1,6 @@
 import Head from "components/Head";
 import WorksList_post from "components/widget/WorksList_post";
 import Works_view from "components/widget/Works_view";
-import ImgLupe from "components/imgLupe"
 import Link from "next/link";
 import { useEffect, useState } from 'react'
 import classNames from "classnames";
@@ -49,20 +48,28 @@ export default function Output({ res, cat }) {
 			let boxElm = document.querySelector("#box_") as HTMLElement;
 			let bodyHeight = document.documentElement.scrollHeight;
 			let boxHeight = boxElm.offsetHeight;
-			onscroll();
-			window.onscroll = onscroll;
+			// onscroll();
+			// window.onscroll = onscroll;
+			document.addEventListener('scroll', onscroll, { passive: true });
+			var ticking = false;
 			function onscroll() {
-				let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-				let scrollRate = scrollTop / bodyHeight;
-				let position = -1 * scrollRate * boxHeight;
-				boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
-				// console.log(position)
+				if (!ticking) {
+					requestAnimationFrame(function () {
+						ticking = false;
+						let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+						let scrollRate = scrollTop / bodyHeight;
+						let position = -1 * scrollRate * boxHeight;
+						boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+						// console.log(position)
+					});
+					ticking = true;
+				}
 			}
 
 		}
 		return () => {
 			// window.removeEventListener("touchmove", onscroll);
-			// window.removeEventListener("scroll", onscroll);
+			document.removeEventListener("scroll", onscroll);
 		};
 	});
 

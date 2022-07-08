@@ -1,6 +1,7 @@
 import Head from "components/Head";
 import WorksList_post from "components/widget/WorksList_post";
 import Works_view from "components/widget/Works_view";
+import ImgLupe from "components/imgLupe"
 import Link from "next/link";
 import { useEffect, useState } from 'react'
 import classNames from "classnames";
@@ -41,23 +42,29 @@ export default function Output({ res, cat }) {
 	res = viewF(res, 3.3)
 
 	useEffect(() => {
-		resize()
+		resize();
 		window.onresize = resize;
-		return () => window.removeEventListener("scroll", resize);
-	});
-	function resize() {
-		window.removeEventListener("scroll", resize);
-		let boxElm = document.querySelector("#box_") as HTMLElement;
-		let bodyHeight = document.documentElement.scrollHeight;
-		let boxHeight = boxElm.offsetHeight;
-		onscroll();
-		window.onscroll = onscroll;
-		function onscroll() {
-			let scrollRate = document.documentElement.scrollTop / bodyHeight;
-			let position = -1 * scrollRate * boxHeight;
-			boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+		function resize() {
+
+			let boxElm = document.querySelector("#box_") as HTMLElement;
+			let bodyHeight = document.documentElement.scrollHeight;
+			let boxHeight = boxElm.offsetHeight;
+			onscroll();
+			window.onscroll = onscroll;
+			function onscroll() {
+				let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				let scrollRate = scrollTop / bodyHeight;
+				let position = -1 * scrollRate * boxHeight;
+				boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+				// console.log(position)
+			}
+
 		}
-	}
+		return () => {
+			// window.removeEventListener("touchmove", onscroll);
+			// window.removeEventListener("scroll", onscroll);
+		};
+	});
 
 	function pushQuery(name, value) {
 		Router.push(
@@ -83,6 +90,14 @@ export default function Output({ res, cat }) {
 						elm.className == c_works.WorksOverlay && pushQuery("post", "");
 					}}
 				>
+					{/* <ImgLupe
+						img={{
+							src: postRes.cfs.img,
+							width: postRes.imgSize.width,
+							height: postRes.imgSize.height
+						}}
+
+					/> */}
 					<Works_view res={postRes} />
 				</section>
 			</>}

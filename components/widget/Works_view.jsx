@@ -9,6 +9,8 @@ import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import classNames from "classnames";
 
+import ImgLupe from "components/imgLupe";
+
 const CustomLink = ({ children, href }) => (
 	<a href={href} target="_blank" rel="noopener noreferrer">
 		{children}
@@ -41,9 +43,19 @@ function pushQuery(name, value) {
 
 export default function Output({ res }) {
 	let [state_youtube, set_state_youtube] = useState(false);
+	const [state_ImgLupe, set_state_ImgLupe] = useState(false);
 	return (
 		<>
 			<Head title={res.title && res.title + "｜2001Y's Works"} />
+
+			<ImgLupe
+				state_ImgLupe={state_ImgLupe}
+				src={res.cfs.img}
+				height={res.imgSize.height}
+				width={res.imgSize.width}
+				alt={res.title + "のサムネイル"}
+				position={state_ImgLupe}
+			/>
 			<div className={c_works.main}>
 				<div className={c_works.main_inner}>
 					{res.cfs.img && (
@@ -55,9 +67,17 @@ export default function Output({ res }) {
 							style={{
 								"--aspect": res.imgSize.aspect,
 							}}
-							onClick={() => {
-								set_state_youtube(res.cfs.youtube);
+							onClick={() => set_state_youtube(res.cfs.youtube)}
+							// onMouseEnter={() => set_state_ImgLupe(true)}
+							onMouseMove={(e) => {
+								const rect = e.currentTarget.getBoundingClientRect();
+								let position = {
+									x: ((e.clientX - rect.left) / rect.width) * 100,
+									y: ((e.clientY - rect.top) / rect.height) * 100,
+								};
+								set_state_ImgLupe(position);
 							}}
+							onMouseLeave={() => set_state_ImgLupe(false)}
 						>
 							{res.cfs.youtube && state_youtube && (
 								<iframe

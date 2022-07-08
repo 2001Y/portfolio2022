@@ -5,6 +5,7 @@ import Image from "next/image";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Script from 'next/script'
 
 const ResponsiveImage = (props) => (
 	<Image alt={props.alt} layout="responsive" {...props} />
@@ -32,14 +33,20 @@ const processor = unified()
 export default function Output({ res, content }) {
 	const { asPath } = useRouter()
 	useEffect(() => {
-		(window.adsbygoogle = window.adsbygoogle || []).push({})
+		document.addEventListener('DOMContentLoaded', function () {
+			(window.adsbygoogle = window.adsbygoogle || []).push({})
+		});
 	}, [asPath])
 	// console.log(res)
 	return (
 		<>
 			<NextHead>
-				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
-					crossOrigin="anonymous"></script>
+				<Script
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
+					crossOrigin="anonymous"
+					async={true}
+					strategy="beforeInteractive"
+				/>
 			</NextHead>
 			<Head title={res.title && res.title + "｜2001Y's Blog"} />
 			<div className={c_Post.meta}>
@@ -61,11 +68,17 @@ export default function Output({ res, content }) {
 			<article className={c_Post.article}>
 				{processor.processSync(res.content).result}
 			</article>
-			<div key={asPath}>
+			<div key={asPath} className={"kooookoku"}>
 				<ins className="adsbygoogle"
 					style={{ display: "block" }}
 					data-ad-client="ca-pub-3750999099107987"
 					data-ad-slot="3114303912"
+					data-ad-format="auto"
+					data-full-width-responsive="true"></ins>
+				<ins className="adsbygoogle"
+					style={{ display: "block" }}
+					data-ad-client="ca-pub-3750999099107987"
+					data-ad-slot="6726245863"
 					data-ad-format="auto"
 					data-full-width-responsive="true"></ins>
 			</div>

@@ -129,3 +129,12 @@ mobile-scroll {
 	overflow: hidden;
 	overflow-x: scroll;
 }
+
+.kooookoku {
+	display: flex;
+	flex-flow: column;
+	width: calc((100vw - $main_width) / 2 - 2vw);
+	position: fixed;
+	left: 0;
+	bottom: 0;
+}

@@ -3,6 +3,8 @@ import Head from "components/Head";
 import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const ResponsiveImage = (props) => (
 	<Image alt={props.alt} layout="responsive" {...props} />
@@ -28,10 +30,17 @@ const processor = unified()
 	});
 
 export default function Output({ res, content }) {
-
+	const { asPath } = useRouter()
+	useEffect(() => {
+		(window.adsbygoogle = window.adsbygoogle || []).push({})
+	}, [asPath])
 	// console.log(res)
 	return (
 		<>
+			<NextHead>
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
+					crossOrigin="anonymous"></script>
+			</NextHead>
 			<Head title={res.title && res.title + "｜2001Y's Blog"} />
 			<div className={c_Post.meta}>
 				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
@@ -52,6 +61,14 @@ export default function Output({ res, content }) {
 			<article className={c_Post.article}>
 				{processor.processSync(res.content).result}
 			</article>
+			<div key={asPath}>
+				<ins className="adsbygoogle"
+					style={{ display: "block" }}
+					data-ad-client="ca-pub-3750999099107987"
+					data-ad-slot="3114303912"
+					data-ad-format="auto"
+					data-full-width-responsive="true"></ins>
+			</div>
 		</>
 	);
 }

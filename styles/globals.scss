@@ -133,8 +133,13 @@ mobile-scroll {
 .kooookoku {
 	display: flex;
 	flex-flow: column;
-	width: calc((100vw - $main_width) / 2 - 2vw);
+	gap: 1rem;
+	--width: calc((100vw - $main_width) / 2 - 2vw);
+	width: var(--width);
 	position: fixed;
 	left: 0;
 	bottom: 0;
+	> div {
+		height: calc(var(--width) * 2 / 3);
+	}
 }

@@ -69,18 +69,22 @@ export default function Output({ res, content }) {
 				{processor.processSync(res.content).result}
 			</article>
 			<div key={asPath} className={"kooookoku"}>
-				<ins className="adsbygoogle"
-					style={{ display: "block" }}
-					data-ad-client="ca-pub-3750999099107987"
-					data-ad-slot="3114303912"
-					data-ad-format="auto"
-					data-full-width-responsive="true"></ins>
-				<ins className="adsbygoogle"
-					style={{ display: "block" }}
-					data-ad-client="ca-pub-3750999099107987"
-					data-ad-slot="6726245863"
-					data-ad-format="auto"
-					data-full-width-responsive="true"></ins>
+				<div>
+					<ins className="adsbygoogle"
+						style={{ display: "block" }}
+						data-ad-client="ca-pub-3750999099107987"
+						data-ad-slot="3114303912"
+						data-ad-format="auto"
+						data-full-width-responsive="true"></ins>
+				</div>
+				<div>
+					<ins className="adsbygoogle"
+						style={{ display: "block" }}
+						data-ad-client="ca-pub-3750999099107987"
+						data-ad-slot="6726245863"
+						data-ad-format="auto"
+						data-full-width-responsive="true"></ins>
+				</div>
 			</div>
 		</>
 	);

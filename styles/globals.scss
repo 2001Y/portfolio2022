@@ -134,7 +134,7 @@ mobile-scroll {
 	display: flex;
 	flex-flow: column;
 	gap: 1rem;
-	--width: calc((100vw - $main_width) / 2 - 2vw);
+	--width: 300px;
 	width: var(--width);
 	position: fixed;
 	left: 0;

@@ -55,6 +55,7 @@ export default function Output({ res }) {
 				/>
 				<input type="submit" value="送信" />
 			</form>
+
 		</>
 	);
 }

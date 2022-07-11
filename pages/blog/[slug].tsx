@@ -35,6 +35,7 @@ export default function Output({ res, content }) {
 	useEffect(() => {
 		document.addEventListener('DOMContentLoaded', function () {
 			(window.adsbygoogle = window.adsbygoogle || []).push({})
+
 		});
 	}, [asPath])
 	// console.log(res)
@@ -86,6 +87,8 @@ export default function Output({ res, content }) {
 						data-full-width-responsive="true"></ins>
 				</div>
 			</div>
+
+
 		</>
 	);
 }

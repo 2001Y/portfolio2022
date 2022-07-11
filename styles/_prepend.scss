@@ -19,7 +19,7 @@ $postList_height: max(25vh, calc(7.5rem * 3 + $postList_gap * 2));
 $main_marginTop: calc($header_height - $header_padding + 1.3vh);
 
 @mixin hover {
-	@media (hover: hover) and (pointer: fine) {
+	@media (any-hover: hover) {
 		&:hover {
 			@content;
 		}

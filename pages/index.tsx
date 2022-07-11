@@ -40,38 +40,38 @@ export default function Output({ res, cat }) {
 	}
 	res = viewF(res, 3.3)
 
-	useEffect(() => {
-		resize();
-		window.onresize = resize;
-		function resize() {
+	// useEffect(() => {
+	// 	resize();
+	// 	window.onresize = resize;
+	// 	function resize() {
 
-			let boxElm = document.querySelector("#box_") as HTMLElement;
-			let bodyHeight = document.documentElement.scrollHeight;
-			let boxHeight = boxElm.offsetHeight;
-			// onscroll();
-			// window.onscroll = onscroll;
-			document.addEventListener('scroll', onscroll, { passive: true });
-			var ticking = false;
-			function onscroll() {
-				if (!ticking) {
-					requestAnimationFrame(function () {
-						ticking = false;
-						let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-						let scrollRate = scrollTop / bodyHeight;
-						let position = -1 * scrollRate * boxHeight;
-						boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
-						// console.log(position)
-					});
-					ticking = true;
-				}
-			}
+	// 		let boxElm = document.querySelector("#box_") as HTMLElement;
+	// 		let bodyHeight = document.documentElement.scrollHeight;
+	// 		let boxHeight = boxElm.offsetHeight;
+	// 		// onscroll();
+	// 		// window.onscroll = onscroll;
+	// 		document.addEventListener('scroll', onscroll, { passive: true });
+	// 		var ticking = false;
+	// 		function onscroll() {
+	// 			if (!ticking) {
+	// 				requestAnimationFrame(function () {
+	// 					ticking = false;
+	// 					let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+	// 					let scrollRate = scrollTop / bodyHeight;
+	// 					let position = -1 * scrollRate * boxHeight;
+	// 					boxElm.style.transform = `translate3d(0, ${position}px, 0)`;
+	// 					// console.log(position)
+	// 				});
+	// 				ticking = true;
+	// 			}
+	// 		}
 
-		}
-		return () => {
-			// window.removeEventListener("touchmove", onscroll);
-			document.removeEventListener("scroll", onscroll);
-		};
-	});
+	// 	}
+	// 	return () => {
+	// 		// window.removeEventListener("touchmove", onscroll);
+	// 		document.removeEventListener("scroll", onscroll);
+	// 	};
+	// });
 
 	function pushQuery(name, value) {
 		Router.push(
@@ -130,8 +130,8 @@ export default function Output({ res, cat }) {
 					</li>
 				))}
 			</ul>
-			<div className={c_works.wrap} id="wrap">
-				<div className={c_works.boxW}>
+			<section className={c_works.wrap} id="wrap">
+				<div className={c_works.scroll}>
 					<ul className={c_works.list} id="box_">
 						{res.map((e, i) => (
 							<li key={i}>
@@ -148,8 +148,6 @@ export default function Output({ res, cat }) {
 						))}
 					</ul>
 				</div>
-			</div>
-			<section id="box">
 			</section>
 		</>
 	);

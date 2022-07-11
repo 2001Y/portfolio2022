@@ -5,6 +5,7 @@ export default function Output({ res }) {
         <>
             <Head title={"2001Y's Blog"} />
             <TagListRender res={res} />
+
         </>
     );
 }

@@ -13,6 +13,8 @@ function Error({ statusCode }) {
                <a>トップページにもどる</a>
             </Link>
          </p>
+
+
       </>
    )
 }

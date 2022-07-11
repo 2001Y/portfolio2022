@@ -1,46 +1,80 @@
 .wrap {
-	--left: 8vw;
-	@media (max-width: 600px) {
-		--left: 10vw;
-	}
 	color: var(--c_font_dark);
-	transition: 0.3s opacity;
-	position: fixed;
-	top: 0;
-	left: var(--left);
-	height: 100vh;
-	width: fit-content;
-	// padding-right: 5vw;
-	will-change: transform;
-	.boxW {
+
+	margin: 0 calc(50% - 50vw); // 左右MAX
+	margin-top: calc(-1 * $main_marginTop); // ヘッダー分総裁
+
+	--mainWidth: 100vw;
+	--mainHeight: 100vh;
+	@supports (height: 100svh) {
+		--mainHeight: 100svh;
+	}
+	width: var(--mainWidth);
+	height: var(--mainHeight);
+
+	position: relative;
+	overflow: hidden;
+	.scroll {
+		//スクロールエリアを全画面に反映
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: center;
+		transform: translate(-50%, -50%) rotate(-10deg);
 		image-rendering: -webkit-optimize-contrast;
 		backface-visibility: hidden;
-		transform: rotate(-10deg);
-		transform-origin: 0% 0%;
+		--sin10: 0.17364817766693034885171662676931479600037567718407;
+		--cos10: 0.98480775301220805936674302458952301367064325171984;
+		--tan10: 0.1763269807084649734710903868686189861216330623481;
+
+		--w1: calc(var(--mainHeight) * var(--sin10));
+		--w2: calc(var(--mainWidth) * var(--cos10));
+		--scrollWidth: calc(var(--w1) + var(--w2));
+		width: var(--scrollWidth);
+
+		--h1: calc(var(--mainHeight) * var(--cos10));
+		--h2: calc(var(--mainWidth) * var(--sin10));
+		height: calc(var(--h1) + var(--h2));
+
+		overflow: hidden;
+		overflow-y: scroll;
+		display: grid;
+		place-items: center;
 		.list {
-			--rowWidth: 75vw;
-			--paddingTop: 23vw;
+			// 斜めスクロール：表示エリア
+			--size: 0.95;
 			@media (max-width: 800px) {
-				// --width: 80vw;
-				--paddingTop: 15vh;
+				--size: 1;
 			}
-			width: var(--rowWidth);
-			padding-top: var(--paddingTop);
+			--viewWidth: calc(
+				var(--scrollWidth) * var(--size) - var(--mainHeight) * var(--sin10) * 2
+			);
+			width: var(--viewWidth);
+			& > * {
+				// 上下の余白確保
+				--viewPadding: calc(var(--viewWidth) * var(--tan10));
+				&:first-child {
+					margin-top: calc(var(--viewPadding) + $main_marginTop + 4vw);
+				}
+				&:last-child {
+					margin-bottom: calc(var(--viewPadding) + $main_marginTop);
+				}
+			}
+
+			// 段組レイアウト
 			display: flex;
 			flex-flow: column;
-			gap: 1vw;
-			will-change: transform;
-			position: relative;
+			--gap: 1vw;
+			gap: var(--gap);
 			> li {
-				position: relative;
+				// position: relative;
 				cursor: pointer;
 				> ul {
 					display: flex;
-					--gap: 1vw;
 					gap: var(--gap);
 					> li {
 						--width: calc(
-							(var(--rowWidth) - var(--gapCount) * var(--gap)) /
+							(var(--viewWidth) - var(--gapCount) * var(--gap)) /
 								var(--aspectSum) * var(--aspect)
 						);
 						width: var(--width);

@@ -51,8 +51,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			<main className={String(pageLoading)}>
 				<Component {...pageProps} />
 			</main>
-
-			<footer>©︎ {Y} Yoshiki TAMURA</footer>
 			<div className={String("loading " + pageLoading)}>
 				<LoadAVG className="load" />
 			</div>

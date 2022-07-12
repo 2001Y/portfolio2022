@@ -96,8 +96,8 @@ export default function Output({ res, cat }) {
 							</a>
 						</Link>
 						<ul className={classNames(c_works.subCatList, c_works.tagList)} >
-							{e.tagList.map((e1, i) => (
-								<li>{e1.name}</li>
+							{e.tagList.map((e1, i1) => (
+								<li key={i1}>{e1.name}</li>
 							))}
 						</ul>
 					</li>

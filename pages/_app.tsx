@@ -32,6 +32,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 	var nowTime = new Date();
 	var Y = nowTime.getFullYear();
 
+	useEffect(() => {
+		function handleResize() {
+			let vh = window.innerHeight;
+			document.documentElement.style.setProperty('--100vh', `${vh}px`);
+		}
+		handleResize();
+		window.addEventListener('resize', handleResize)
+		return () => {
+			window.removeEventListener('resize', handleResize)
+		}
+	}, []);
+
 	return (
 		<>
 			<Head >

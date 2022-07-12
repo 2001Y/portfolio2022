@@ -125,6 +125,11 @@ export default function Output({ res, cat }) {
 								onClick={() => { pushQuery("cat", e.slug) }}
 							>
 								#{e.name}
+								{/* <ul className={classNames(c_works.subCatList, c_works.tagList)} >
+									{e.tagList.map((e1, i) => (
+										<li>{e1.name}</li>
+									))}
+								</ul> */}
 							</a>
 						</Link>
 					</li>

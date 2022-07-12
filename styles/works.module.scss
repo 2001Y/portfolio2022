@@ -119,7 +119,6 @@
 }
 .catList {
 	font-size: 1.6rem;
-	font-weight: bold;
 	position: fixed;
 	padding: 3vmin 0;
 	bottom: 0;
@@ -128,9 +127,28 @@
 	@media (max-width: 800px) {
 		bottom: $main_marginTop;
 	}
-	> li {
-		padding: 0.7vmin 5vmin;
-		padding-right: 4vmin;
+	& > li {
+		& > a {
+			font-weight: bold;
+			padding: 0.7vmin 5vmin;
+			padding-right: 4vmin;
+			display: flex;
+		}
+		.subCatList {
+			font-size: 0.8em;
+			font-weight: normal;
+			display: flex;
+			align-items: flex-end;
+			-webkit-text-fill-color: var(--c_font);
+			// height: 1.1em;
+			overflow: hidden;
+			opacity: 0;
+		}
+		@include hover {
+			.subCatList {
+				opacity: 1;
+			}
+		}
 	}
 }
 .tmb {

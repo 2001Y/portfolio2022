@@ -16,8 +16,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 	const [pageLoading, setPageLoading] = useState(false);
 	useEffect(() => {
 		const handleStart = (url) => {
+			let load = true;
 			url = new URL("http://example.com" + url);
-			url.pathname !== router.pathname && setPageLoading(true)
+			// 今のページ: router.pathname
+			// 開くページ：url.pathname
+			if (
+				(url.pathname == router.pathname) ||
+				((router.pathname.split("/")[1] == "") && (url.pathname.split("/")[1] == "works")) ||
+				((router.pathname.split("/")[1] == "works") && (url.pathname.split("/")[1] == ""))
+			) {
+				load = false;
+			}
+			setPageLoading(load)
 		};
 		const handleComplete = () => setPageLoading(false);
 		router.events.on("routeChangeStart", handleStart);

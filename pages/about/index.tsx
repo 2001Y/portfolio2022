@@ -1,9 +1,4 @@
-// import {  useGoogleReCaptcha } from "react-google-recaptcha-v3";
-// const { executeRecaptcha } = useGoogleReCaptcha();
-// const onSubmit = async () => {
-//     const reCaptchaToken = await executeRecaptcha("contactPage");
-//     console.log(reCaptchaToken)
-// };
+import Contact from "components/Contact"
 
 export default function Output({ res }) {
 	var nowTime = new Date();
@@ -27,34 +22,7 @@ export default function Output({ res }) {
 			</p>
 			<h2>Contact</h2>
 			{/* <button onClick={onSubmit}>ttt</button> */}
-			<form action="https://api.staticforms.xyz/submit" method="post">
-				<h6>お名前</h6>
-				<input type="text" name="name" placeholder="田中 太郎" required />
-				<h6>メールアドレス</h6>
-				<input
-					type="text"
-					name="email"
-					placeholder="mail@example.com"
-					required
-				/>
-				<textarea
-					name="$問い合わせ"
-					placeholder="その他、ご自由にご記入ください。"
-				></textarea>
-				<input type="text" name="honeypot" className="honeypot" />
-				<input type="hidden" name="replyTo" value="@" />
-				<input
-					type="hidden"
-					name="redirectTo"
-					value="https://2001y.me/contact-done"
-				/>
-				<input
-					type="hidden"
-					name="accessKey"
-					value="44801933-9e6a-4b67-a226-63fe8599568b"
-				/>
-				<input type="submit" value="送信" />
-			</form>
+			<Contact name={"About"}></Contact>
 
 		</>
 	);

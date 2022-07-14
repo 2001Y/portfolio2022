@@ -1,4 +1,5 @@
 import Head from "components/Head";
+import WorksList from "components/widget/WorksList"
 import WorksList_post from "components/widget/WorksList_post";
 import Works_view from "components/widget/Works_view";
 import Link from "next/link";
@@ -9,122 +10,17 @@ import Router, { useRouter } from 'next/router'
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss"
 
-
+import { viewF } from "lib/viewF";
 
 export default function Output({ res, cat }) {
 	const router = useRouter();
 	const params = router.query
 
-	let title = "2001Y's Works";
-
-	let postRes = {};
-	if (params.post) {
-		postRes = res.find((e) => e.slug == params.post);
-	}
-
-	if (params.cat) {
-		let rr = []
-		res.flat().filter((e) => {
-			if (e.category) {
-				e.category.map((e1) => {
-					if (e1.slug == params.cat) {
-						rr.push(e)
-						title = "#" + e1.name + "｜2001Y's Works";
-						return true
-					}
-				})
-			}
-			return false
-		})
-		res = rr
-	}
 	res = viewF(res, 3.3)
-
-
-	function pushQuery(name, value) {
-		Router.push(
-			{
-				query: {
-					...router.query,
-					[name]: value
-				},
-			},
-			undefined,
-			{ shallow: true }
-		);
-	}
 
 	return (
 		<>
-			<Head title={title} />
-			{params.post && <>
-				<section
-					className={c_works.WorksOverlay}
-					onClick={(e) => {
-						let elm = e.target as HTMLElement;
-						elm.className == c_works.WorksOverlay && pushQuery("post", "");
-					}}
-				>
-					{/* <ImgLupe
-						img={{
-							src: postRes.cfs.img,
-							width: postRes.imgSize.width,
-							height: postRes.imgSize.height
-						}}
-
-					/> */}
-					<Works_view res={postRes} />
-				</section>
-			</>}
-			<ul className={c_works.catList} id="tagList">
-				<li>
-					<Link href={"/"}>
-						<a
-							className={classNames(c_V.animeBG_font)}
-							onClick={() => { pushQuery("cat", "") }}
-						>all</a>
-					</Link>
-				</li>
-				{cat.map((e, i) => (
-					<li key={i}>
-						<Link href={"?cat=" + e.slug}>
-							<a
-								className={classNames(c_V.animeBG_font)}
-								onClick={() => { pushQuery("cat", e.slug) }}
-							>
-								#{e.name}
-							</a>
-						</Link>
-						<ul className={classNames(c_works.subCatList, c_works.tagList)} >
-							{e.tagList.map((e1, i1) => (
-								<li key={i1}>{e1.name}</li>
-							))}
-						</ul>
-					</li>
-				))}
-			</ul>
-			<section className={classNames(
-				c_works.wrap,
-				{ [c_works.lock]: params.post }
-			)} id="wrap">
-				<div className={c_works.scroll}>
-					<ul className={c_works.list} id="box_">
-						{res.map((e, i) => (
-							<li key={i}>
-								<ul>
-									{e.map((e1, i1) => (
-										<WorksList_post
-											key={i1}
-											res={e1}
-											countSum={e.length}
-										/>
-									))}
-								</ul>
-							</li>
-						))}
-					</ul>
-				</div>
-			</section>
+			<WorksList cat={cat} res={res} lock={false} />
 		</>
 	);
 }
@@ -161,32 +57,4 @@ export async function getStaticProps() {
 			cat
 		},
 	};
-}
-function viewF(res, level) {
-	// aspectの合計5までを区切る
-	let aspectSum = 0;
-	let result = [];
-	let resChild = []
-	let aspectList = [];
-	res.flat().map((e, i) => {
-		aspectSum += e.imgSize.aspect;
-		resChild.push(e);
-		if (level <= aspectSum || i == (res.length - 1)) {
-			// 行終了
-			aspectList.push(aspectSum);
-			result.push(resChild);
-			aspectSum = 0;
-			resChild = [];
-		}
-	})
-	result = result.map((e, i) => {
-		let aspect = aspectList[i];
-		return e.map((e1, i1) => {
-			e1.imgSize.widthRate = e1.imgSize.aspect / aspect;
-			e1.imgSize.aspectSum = aspect;
-			// console.log(e1.imgSize.aspectSum)
-			return e1
-		})
-	})
-	return result
 }

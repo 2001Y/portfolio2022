@@ -28,19 +28,6 @@ const processor = unified()
 		},
 	});
 
-function pushQuery(name, value) {
-	Router.push(
-		{
-			query: {
-				...router.query,
-				[name]: value,
-			},
-		},
-		undefined,
-		{ shallow: true }
-	);
-}
-
 export default function Output({ res }) {
 	let [state_youtube, set_state_youtube] = useState(false);
 	const [state_ImgLupe, set_state_ImgLupe] = useState(false);

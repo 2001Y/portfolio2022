@@ -60,7 +60,7 @@ export default function Output() {
 	useEffect(() => {
 		window.addEventListener("resize", winSize);
 		winSize();
-	});
+	}, []);
 	function winSize() {
 		if (window.innerWidth < 800) {
 			setSpState(true);

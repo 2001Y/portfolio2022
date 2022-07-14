@@ -36,6 +36,9 @@ module.exports = {
 			},
 		];
 	},
+	experimental: {
+		scrollRestoration: true,
+	},
 	// Custom
 	reactStrictMode: true,
 	smcLoader: true,

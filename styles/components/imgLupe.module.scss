@@ -6,9 +6,11 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	transform: translate(
+	will-change: transform;
+	transform: translate3d(
 		calc(-1% * var(--positionX) + (100vw - 40rem) / 2),
-		calc(-1% * var(--positionY) + 50vh)
+		calc(-1% * var(--positionY) + 50vh),
+		0
 	);
 	pointer-events: none;
 	opacity: 0;
@@ -18,8 +20,5 @@
 	* {
 		width: 100% !important;
 		height: 100% !important;
-	}
-	img {
-		// object-fit: cover;
 	}
 }

@@ -33,14 +33,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 	var Y = nowTime.getFullYear();
 
 	useEffect(() => {
+		if (!CSS.supports("(height: 100dvh)")) {
+			handleResize();
+			window.addEventListener('resize', handleResize)
+			return () => {
+				window.removeEventListener('resize', handleResize)
+			}
+		}
 		function handleResize() {
 			let vh = window.innerHeight;
 			document.documentElement.style.setProperty('--100vh', `${vh}px`);
-		}
-		handleResize();
-		window.addEventListener('resize', handleResize)
-		return () => {
-			window.removeEventListener('resize', handleResize)
 		}
 	}, []);
 

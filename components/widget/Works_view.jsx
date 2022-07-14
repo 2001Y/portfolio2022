@@ -46,7 +46,10 @@ export default function Output({ res }) {
 	const [state_ImgLupe, set_state_ImgLupe] = useState(false);
 	return (
 		<>
-			<Head title={res.title && res.title + "｜2001Y's Works"} />
+			<Head
+				title={res.title && res.title + "｜2001Y's Works"}
+				img={res.cfs.img}
+			/>
 
 			<ImgLupe
 				src={res.cfs.img}

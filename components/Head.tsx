@@ -38,9 +38,9 @@ function Page(props) {
                <meta property="og:title" content={res.title} key="og:title" />
             </>
          )}
-         {res.ogp && (
+         {res.img && (
             <>
-               <meta property="og:image" content={res.ogp} key="ogp" />
+               <meta property="og:image" content={res.img} key="ogp" />
             </>
          )}
          {res.url && (

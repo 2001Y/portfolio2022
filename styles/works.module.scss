@@ -141,8 +141,10 @@
 			padding: 0.7vmin 5vmin;
 			padding-right: 4vmin;
 			text-shadow: var(--c_font_reversal) 0 0 0.3em,
-			var(--c_font_reversal) 0 0 0.5em, var(--c_font_reversal) 0 0 0.5em, var(--c_font_reversal) 0 0 1em;
+				var(--c_font_reversal) 0 0 0.5em, var(--c_font_reversal) 0 0 0.5em,
+				var(--c_font_reversal) 0 0 1em;
 			@include hover {
+				text-shadow: none;
 				& + .subCatList {
 					opacity: 0.3;
 					right: 2vmin;

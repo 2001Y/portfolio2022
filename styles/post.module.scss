@@ -1,5 +1,7 @@
 .h1 {
 	width: fit-content;
+	max-width: calc(100vw - $main_padding * 2);
+	word-wrap: break-word;
 	margin: auto;
 	@media (max-width: 500px) {
 		padding: 0;

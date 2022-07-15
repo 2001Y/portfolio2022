@@ -34,6 +34,11 @@ export default function Output({ res }) {
 	let [state_open, set_state_open] = useState(true);
 	let [state_youtube, set_state_youtube] = useState(false);
 	const [state_ImgLupe, set_state_ImgLupe] = useState(false);
+
+	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
+	const queryParams = JSON.parse(JSON.stringify(router.query));
+	delete queryParams[dynamicRoutesName];
+
 	return (
 		<>
 			<Head
@@ -47,12 +52,13 @@ export default function Output({ res }) {
 				})}
 				onClick={(e) => {
 					set_state_open(false);
+					router.prefetch("/");
 					setTimeout(() => {
 						Router.push(
 							{
 								pathname: `/`,
 								query: {
-									...router.query,
+									...queryParams,
 								},
 							},
 							undefined,
@@ -73,6 +79,7 @@ export default function Output({ res }) {
 				<div className={c_works.main}>
 					<div className={c_works.main_inner}>
 						{res.cfs.img && (
+							
 							<div
 								className={classNames(c_works.tmb, {
 									[c_works.vertical]: res.imgSize.aspect < 1,

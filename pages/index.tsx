@@ -14,12 +14,28 @@ import { viewF } from "lib/viewF";
 
 export default function Output({ res, cat }) {
 	const router = useRouter();
-	const params = router.query
+	const params = router.query;
+	let title = "2001Y's Works";
+
+	// カテゴリフィルタ
+	if (params.cat) {
+		res.flat().filter((e) => {
+			if (e.category) {
+				e.category.map((e1) => {
+					if (e1.slug == params.cat) {
+						title = "#" + e1.name + "｜2001Y's Works";
+					}
+				});
+			}
+			return false;
+		});
+	}0
 
 	res = viewF(res, 3.3)
 
 	return (
 		<>
+			<Head title={title} />
 			<WorksList cat={cat} res={res} lock={false} />
 		</>
 	);

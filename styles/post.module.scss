@@ -14,7 +14,7 @@
 	margin-top: calc($main_marginTop + 5rem);
 	margin-bottom: 5rem;
 	@media (max-width: 800px) {
-		margin-top: var(--main_padding);
+		margin-top: $main_padding;
 	}
 	time {
 		&::before {
@@ -62,9 +62,15 @@
 	p {
 		// <b>もデザイン
 		code {
-			background: rgba(var(--c_font_rgb), 0.03);
-			padding: 0.3em;
-			margin: 0 0.3em;
+			// background: rgba(var(--c_font_rgb), 0.03);
+			padding: 0.2em;
+			// margin: 0 0.1em;
+			opacity: 0.5;
+			&::before,
+			&::after {
+				content: "`";
+				opacity: 0.3;
+			}
 		}
 	}
 	code {
@@ -75,25 +81,31 @@
 	pre {
 		font-size: 0.85em; //サイズ調整
 		background: rgba(var(--c_font_rgb), 0.03);
-		--overMargin: 3rem;
-		--margin: calc(-1 * var(--overMargin));
-		--width: calc(100% + var(--overMargin) * 2);
-		@media (max-width: $main_width) {
-			--margin: calc(-1 * var(--main_padding));
-			--width: calc(100% + var(--main_padding) * 2);
+		$overMargin: 3rem;
+		--overMargin: #{$overMargin};
+		@media (max-width: calc($main_width + $overMargin * 2)) {
+			--overMargin: #{$main_padding};
 		}
-		width: var(--width);
+		--width: calc(100% + var(--overMargin) * 2);
+		--margin: calc(-1 * var(--overMargin));
+		min-width: var(--width);
 		margin-right: var(--margin);
 		margin-left: var(--margin);
+
 		overflow: hidden;
 		overflow-x: scroll;
+		padding: 1.8rem 0;
+
+		// スクロールの余白確保
+		display: flex;
+		&::before,
+		&::after {
+			content: "";
+			min-width: var(--overMargin);
+			min-height: 100%;
+		}
 		code {
-			box-sizing: content-box;
-			width: fit-content;
-			margin: 1.8rem var(--overMargin);
-			@media (max-width: $main_width) {
-				margin: 1.8rem var(--main_padding);
-			}
+			min-width: fit-content;
 			display: block;
 		}
 	}

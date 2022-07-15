@@ -7,6 +7,8 @@ import classNames from "classnames";
 import Router, { useRouter } from "next/router";
 
 export default function Output({ res, countSum }) {
+	const router = useRouter();
+	const params = router.query
 	return (
 		<>
 			<li
@@ -16,7 +18,13 @@ export default function Output({ res, countSum }) {
 					"--gapCount": countSum - 1,
 				}}
 			>
-				<Link href={"/works/" + decodeURI(res.slug)} shallow={true}>
+				<Link
+					href={{
+						pathname: "/works/" + decodeURI(res.slug),
+						query: { ...router.query },
+					}}
+					shallow={true}
+				>
 					<a>
 						{res.cfs.img && (
 							<div

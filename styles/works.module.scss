@@ -4,7 +4,8 @@
 	margin: 0 calc(50% - 50vw); // 左右MAX
 	margin-top: calc(-1 * $main_marginTop); // ヘッダー分総裁
 	@media (max-width: 800px) {
-		margin-top: calc(-1 * var(--main_padding));
+		margin-top: calc(-1 * $main_padding);
+		margin-bottom: calc(-1 * $main_marginTop);
 	}
 
 	--mainWidth: 100vw;

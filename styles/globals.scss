@@ -59,10 +59,11 @@ iframe {
 }
 
 main {
-	padding: 0 3vw;
+	padding: 0 $main_padding;
 	margin-top: $main_marginTop;
 	@media (max-width: 800px) {
-		margin-top: var(--main_padding);
+		margin-top: $main_padding;
+		margin-bottom: $main_marginTop;
 	}
 	// transform: translateY(50vh);
 	opacity: 0;

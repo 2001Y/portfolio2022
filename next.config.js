@@ -37,7 +37,9 @@ module.exports = {
 		];
 	},
 	experimental: {
-		scrollRestoration: true,
+		images: {
+			allowFutureImage: true,
+		},
 	},
 	// Custom
 	reactStrictMode: true,
@@ -45,7 +47,7 @@ module.exports = {
 	swcMinify: true,
 	cpus: 4,
 	sassOptions: {
-		prependData: '@import "styles/prepend.scss";',
+		prependData: '@import "styles/_prepend.scss";',
 	},
 	images: {
 		domains: ["yoshikitam.wpx.jp", "github.com"],

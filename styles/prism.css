@@ -19,10 +19,10 @@ pre[class*="language-"] {
 .token.comment,
 .token.doctype,
 .token.prolog {
-	color: #999;
+	color: rgba(var(--c_font_rgb),.4);
 }
 .token.punctuation {
-	color: #ccc;
+	color: rgba(var(--c_font_rgb),.6);
 }
 .token.attr-name,
 .token.deleted,

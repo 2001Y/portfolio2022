@@ -70,7 +70,7 @@ export default function Output({ res, cat, lock }) {
 
 	return (
 		<>
-			<Head title={title} />
+			
 			{/* カテゴリーリスト */}
 			<ul className={c_works.catList} id="tagList">
 				<li>

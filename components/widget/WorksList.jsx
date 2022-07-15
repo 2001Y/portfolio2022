@@ -33,7 +33,7 @@ export default function Output({ res, cat, lock }) {
 		res = rr;
 	}
 
-	res = viewF(res, 3.3);
+	res = viewF(res, 3.5);
 
 	const sessionName = "scrollSave";
 	useEffect(() => {

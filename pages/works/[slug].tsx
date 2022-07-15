@@ -19,27 +19,7 @@ export default function Output({ res, cat }) {
          <Head title={title} />
 
          {/* 個別ページ */}
-         <section
-            className={c_works.WorksOverlay}
-            onClick={(e) => {
-               let elm = e.target as HTMLElement;
-               elm.className == c_works.WorksOverlay && Router.push(
-                  {
-                     pathname: `/`,
-                     query: {
-                        ...router.query
-                     },
-                  },
-                  undefined,
-                  {
-                     shallow: true,
-                     scroll: false,
-                  }
-               );;
-            }}
-         >
-            <Works_view res={postRes} />
-         </section>
+         <Works_view res={postRes} />
 
          {/* メイン */}
          <WorksList cat={cat} res={res} lock={false} />

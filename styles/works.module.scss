@@ -246,9 +246,6 @@
 	cursor: pointer;
 	animation: opacityIn 0.3s forwards;
 	z-index: 999;
-	&.lock {
-		overflow: hidden;
-	}
 	@keyframes opacityIn {
 		from {
 			opacity: 0;
@@ -257,6 +254,20 @@
 			opacity: 1;
 		}
 	}
+
+	transition: 0.3s opacity;
+	opacity: 0;
+	.main {
+		transition: 0.3s transform;
+		transform: translateY(100%);
+	}
+	&.open {
+		opacity: 1;
+		.main {
+			transform: translateY(0);
+		}
+	}
+
 	--main_width: 40rem;
 	@media (max-width: 800px) {
 		--main_width: 100vw;
@@ -264,16 +275,7 @@
 	.main {
 		animation: bottomIn 0.3s forwards;
 		pointer-events: none;
-		@keyframes bottomIn {
-			from {
-				opacity: 0;
-				transform: translateY(100%);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
+
 		width: var(--main_width);
 		height: fit-content;
 		min-height: var(--100vh);

@@ -41,7 +41,7 @@ module.exports = {
 	},
 	// Custom
 	reactStrictMode: true,
-	smcLoader: true,
+	swcLoader: true,
 	swcMinify: true,
 	cpus: 4,
 	sassOptions: {

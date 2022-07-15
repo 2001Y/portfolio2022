@@ -2,7 +2,7 @@ import Head from "components/Head";
 import WorksList_post from "components/widget/WorksList_post";
 import { viewF } from "lib/viewF.ts";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import classNames from "classnames";
 import Link from "next/link";
@@ -36,7 +36,7 @@ export default function Output({ res, cat, lock }) {
 	res = viewF(res, 3.5);
 
 	const sessionName = "scrollSave";
-	useEffect(() => {
+	useLayoutEffect(() => {
 		let elm = document.querySelector("#scroll");
 
 		// スクロール位置の復元

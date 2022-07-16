@@ -36,6 +36,7 @@ export default function Output({ res, cat, lock }) {
 	res = viewF(res, 3.5);
 
 	const sessionName = "scrollSave";
+	// if (typeof window !== "undefined") {
 	useLayoutEffect(() => {
 		let elm = document.querySelector("#scroll");
 		// スクロール位置の復元
@@ -44,6 +45,7 @@ export default function Output({ res, cat, lock }) {
 			sessionStorage.removeItem(sessionName);
 		}
 	});
+	// }
 	useEffect(() => {
 		let elm = document.querySelector("#scroll");
 		const onRouteChangeStart = (url) => {
@@ -114,31 +116,12 @@ export default function Output({ res, cat, lock }) {
 	);
 }
 import { GETwpList } from "lib/fetch";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import rehypePrism from "@mapbox/rehype-prism";
-import rehypeSlug from "rehype-slug";
+import { md2html } from "lib/unified";
 export async function getStaticProps() {
 	let res = await GETwpList("/works");
 	let cat = await GETwpList("/works_cat");
 	res.map(async (e, i) => {
-		let result = await unified()
-			// Markdown → HTML
-			.use(remarkParse)
-			.use(remarkGfm) //表対応
-			.use(remarkRehype, {
-				allowDangerousHtml: true, // <html>など
-			})
-			.use(rehypeSlug) //見出しにid
-			.use(rehypePrism, {
-				ignoreMissing: true, // 存在しない言語名を書いていた時に無視する
-			})
-			.use(rehypeStringify, { allowDangerousHtml: true })
-			.process(e.content);
-		e.content = String(result);
+		e.content = await md2html(e.content);
 	});
 	return {
 		props: {

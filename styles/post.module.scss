@@ -13,10 +13,11 @@
 	display: flex;
 	flex-flow: column;
 	align-items: flex-end;
-	margin-top: calc($main_marginTop + 5rem);
+	margin-top: calc($main_marginTop + 4rem);
 	margin-bottom: 5rem;
 	@media (max-width: 800px) {
 		margin-top: $main_padding;
+		margin-bottom: $main_padding;
 	}
 	time {
 		&::before {

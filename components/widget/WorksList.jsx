@@ -2,7 +2,7 @@ import Head from "components/Head";
 import WorksList_post from "components/widget/WorksList_post";
 import { viewF } from "lib/viewF.ts";
 
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import classNames from "classnames";
 import Link from "next/link";
@@ -38,13 +38,14 @@ export default function Output({ res, cat, lock }) {
 	const sessionName = "scrollSave";
 	useLayoutEffect(() => {
 		let elm = document.querySelector("#scroll");
-
 		// スクロール位置の復元
 		if (sessionStorage.getItem(sessionName)) {
 			elm.scrollTop = sessionStorage.getItem(sessionName);
 			sessionStorage.removeItem(sessionName);
 		}
-
+	});
+	useEffect(() => {
+		let elm = document.querySelector("#scroll");
 		const onRouteChangeStart = (url) => {
 			// スクロール位置の保存
 			url = new URL("http://example.com" + url);
@@ -60,7 +61,6 @@ export default function Output({ res, cat, lock }) {
 				sessionStorage.setItem(sessionName, "0");
 			}
 		};
-
 		// このpageを離れる直前に発火
 		Router.events.on("routeChangeStart", onRouteChangeStart);
 		return () => {
@@ -70,7 +70,6 @@ export default function Output({ res, cat, lock }) {
 
 	return (
 		<>
-			
 			{/* カテゴリーリスト */}
 			<ul className={c_works.catList} id="tagList">
 				<li>

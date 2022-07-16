@@ -31,13 +31,17 @@ const processor = unified()
 export default function Output({ res }) {
 	const router = useRouter();
 	let params = router.query;
-	let [state_open, set_state_open] = useState(true);
+	let [state_open, set_state_open] = useState(false);
 	let [state_youtube, set_state_youtube] = useState(false);
 	const [state_ImgLupe, set_state_ImgLupe] = useState(false);
 
 	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
 	const queryParams = JSON.parse(JSON.stringify(router.query));
 	delete queryParams[dynamicRoutesName];
+
+	useEffect(() => {
+		set_state_open(true);
+	}, []);
 
 	return (
 		<>
@@ -79,7 +83,6 @@ export default function Output({ res }) {
 				<div className={c_works.main}>
 					<div className={c_works.main_inner}>
 						{res.cfs.img && (
-							
 							<div
 								className={classNames(c_works.tmb, {
 									[c_works.vertical]: res.imgSize.aspect < 1,

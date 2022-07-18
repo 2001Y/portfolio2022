@@ -51,11 +51,7 @@ import rehypeSlug from 'rehype-slug'
 export async function getStaticProps() {
 	let res = await GETwpList("/works");
 	let cat = await GETwpList("/works_cat");
-	// res.map(async (e, i) => {
-	// 	if (e.content) {
-	// 		e.content = "";
-	// 	}
-	// })
+	res.map(e => e.content = "");
 	return {
 		props: {
 			res,

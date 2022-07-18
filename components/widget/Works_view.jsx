@@ -45,6 +45,25 @@ export default function Output({ res }) {
 		set_state_open(true);
 	}, []);
 
+	function delayPushPage(url) {
+		set_state_open(false);
+		router.prefetch(url);
+		setTimeout(() => {
+			Router.push(
+				{
+					pathname: url,
+					query: {
+						...queryParams,
+					},
+				},
+				undefined,
+				{
+					shallow: true,
+				}
+			);
+		}, 0.3 * 1000);
+	}
+
 	return (
 		<>
 			<Head
@@ -57,22 +76,10 @@ export default function Output({ res }) {
 					[c_works.open]: state_open,
 				})}
 				onClick={(e) => {
-					set_state_open(false);
-					router.prefetch("/");
-					setTimeout(() => {
-						Router.push(
-							{
-								pathname: `/`,
-								query: {
-									...queryParams,
-								},
-							},
-							undefined,
-							{
-								shallow: true,
-							}
-						);
-					}, 0.3 * 1000);
+					console.log(e.target.className.indexOf(c_works.WorksOverlay));
+					if (e.target.className.indexOf(c_works.WorksOverlay) == 0) {
+						delayPushPage("/");
+					}
 				}}
 			>
 				<ImgLupe

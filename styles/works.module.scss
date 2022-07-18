@@ -194,7 +194,7 @@
 }
 .tmb {
 	background: var(--c_bg_body);
-	position: relative;
+	// background: rgba(var(--c_bg_body_rgb), 0.5);
 	&::after {
 		background: rgba(var(--c_bg_body_reversal_rgb), 0.03);
 		content: "";
@@ -328,6 +328,7 @@
 				aspect-ratio: var(--aspect) / 1;
 				margin: auto;
 				cursor: zoom-in;
+				position: relative;
 				> span {
 					display: block !important;
 				}
@@ -448,6 +449,7 @@
 		--padding: 3vw;
 		padding: var(--padding);
 		// box-sizing: content-box;
+		pointer-events: auto;
 
 		opacity: 0;
 		transform: translateX(-100%);

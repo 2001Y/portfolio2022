@@ -22,8 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			// 開くページ：url.pathname
 			if (
 				(url.pathname == router.pathname) ||
-				((router.pathname.split("/")[1] == "") && (url.pathname.split("/")[1] == "works")) ||
-				((router.pathname.split("/")[1] == "works") && (url.pathname.split("/")[1] == ""))
+				((router.pathname.split("/")[1] == "works") || (url.pathname.split("/")[1] == "works"))
 			) {
 				load = false;
 			}

@@ -115,18 +115,18 @@ export default function Output({ res, cat, lock }) {
 		</>
 	);
 }
-import { GETwpList } from "lib/fetch";
-import { md2html } from "lib/unified";
-export async function getStaticProps() {
-	let res = await GETwpList("/works");
-	let cat = await GETwpList("/works_cat");
-	res.map(async (e, i) => {
-		e.content = await md2html(e.content);
-	});
-	return {
-		props: {
-			res,
-			cat,
-		},
-	};
-}
+// import { GETwpList } from "lib/fetch";
+// import { md2html } from "lib/unified";
+// export async function getStaticProps() {
+// 	let res = await GETwpList("/works");
+// 	let cat = await GETwpList("/works_cat");
+// 	res.map(async (e, i) => {
+// 		e.content = await md2html(e.content);
+// 	});
+// 	return {
+// 		props: {
+// 			res,
+// 			cat,
+// 		},
+// 	};
+// }

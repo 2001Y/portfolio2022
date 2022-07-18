@@ -1,5 +1,6 @@
 import Head from "components/Head";
 import Image from "next/image";
+import Link from "next/link";
 import c_works from "styles/works.module.scss";
 
 import { useEffect, useLayoutEffect, useState, createElement } from "react";
@@ -10,6 +11,7 @@ import rehypeReact from "rehype-react";
 import classNames from "classnames";
 
 import ImgLupe from "components/ImgLupe";
+import WorksList_post from "components/widget/WorksList_post";
 
 const CustomLink = ({ children, href }) => (
 	<a href={href} target="_blank" rel="noopener noreferrer">
@@ -160,41 +162,22 @@ export default function Output({ res }) {
 						)}
 					</div>
 				</div>
-			</section>
 
-			{/* Task: 関連記事 */}
-			{/* {res.child && (
-				<div className={c_works.relatedScrollBox}>
-					<ul>
-						{res.child.map((e, i) => (
-							<li
-								className={classNames(c_works.tmb, {
-									[c_works.youtube]: res.cfs.youtube,
-								})}
-							>
-								<div
-									className={c_works.tmb}
-									style={{
-										"--aspect": e.imgSize.aspect,
-									}}
-									onClick={() => {
-										alert("a");
-										console.log(e.slug);
-										pushQuery("post", "e.slug");
-									}}
-								>
-									<Image
-										src={e.cfs.img}
-										height={e.imgSize.height}
-										width={e.imgSize.width}
-										alt={res.title + "のサムネイル"}
-									/>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
-			)} */}
+				{/* Task: 関連記事 */}
+				{res.child && (
+					<div
+						className={classNames(c_works.relatedScrollBox, {
+							[c_works.open]: state_open,
+						})}
+					>
+						<ul>
+							{res.child.map((e, i) => (
+								<WorksList_post key={i} res={e} countSum={res.child.length} />
+							))}
+						</ul>
+					</div>
+				)}
+			</section>
 		</>
 	);
 }

@@ -73,53 +73,55 @@
 				> ul {
 					display: flex;
 					gap: var(--gap);
-					> li {
+					> .work {
 						--width: calc(
 							(var(--viewWidth) - var(--gapCount) * var(--gap)) /
 								var(--aspectSum) * var(--aspect)
 						);
 						width: var(--width);
 						height: calc(var(--width) / var(--aspect));
-						position: relative;
-						.tmb {
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: 100%;
-							height: 100%;
-						}
-						.categoryList {
-							--fontSize: min(1vw, 1.1rem);
-							font-size: var(--fontSize);
-						}
-						.meta {
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: 100%;
-							height: 100%;
-							padding: 1.5rem;
-							background: rgba(#000, 0.5);
-							backdrop-filter: blur(2px);
-							opacity: 0;
-							transition: 0.3s opacity;
-							will-change: opacity;
-							@include hover {
-								opacity: 1;
-							}
-							@media (max-width: 800px) {
-								* {
-									opacity: 0;
-								}
-							}
-							.list_title {
-								margin-bottom: 0.3rem;
-								font-weight: bold;
-							}
-						}
 					}
 				}
 			}
+		}
+	}
+}
+.work {
+	position: relative;
+	.tmb {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.categoryList {
+		--fontSize: min(1vw, 1.1rem);
+		font-size: var(--fontSize);
+	}
+	.meta {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		padding: 1.5rem;
+		background: rgba(#000, 0.5);
+		backdrop-filter: blur(2px);
+		opacity: 0;
+		transition: 0.3s opacity;
+		will-change: opacity;
+		@include hover {
+			opacity: 1;
+		}
+		@media (max-width: 800px) {
+			* {
+				opacity: 0;
+			}
+		}
+		.list_title {
+			margin-bottom: 0.3rem;
+			font-weight: bold;
 		}
 	}
 }
@@ -442,18 +444,32 @@
 		width: 100vw;
 		overflow: hidden;
 		overflow-x: scroll;
-		z-index: 1;
-		padding: 3vw;
+		z-index: -1;
+		--padding: 3vw;
+		padding: var(--padding);
 		// box-sizing: content-box;
+
+		opacity: 0;
+		transform: translateX(-100%);
+		transition: 0.3s opacity, 0.3s transform;
+		&.open {
+			opacity: 1;
+			transform: translateX(0);
+		}
 		> ul {
 			--hight: 25vh;
 			height: var(--hight);
 			width: fit-content;
 			display: flex;
-			gap: 1rem;
-			margin-right: calc(var(--main_width) + 1rem);
+			--gap: 1rem;
+			gap: var(--gap);
+			&::after {
+				content: "";
+				width: calc(var(--main_width) + var(--padding));
+				height: 100%;
+			}
 		}
-		.tmb {
+		.work {
 			height: 100%;
 			width: calc(var(--hight) * var(--aspect));
 		}

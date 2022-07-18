@@ -6,6 +6,8 @@ export function viewF(res, level) {
 	let aspectList = [];
 	res.flat().map((e, i) => {
 		aspectSum += e.imgSize.aspect;
+		// console.log(i);
+		// console.log(e.imgSize);
 		resChild.push(e);
 		if (level <= aspectSum || i == res.length - 1) {
 			// 行終了

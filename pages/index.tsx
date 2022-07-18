@@ -29,7 +29,7 @@ export default function Output({ res, cat }) {
 			}
 			return false;
 		});
-	}0
+	} 0
 
 	res = viewF(res, 3.3)
 
@@ -51,22 +51,11 @@ import rehypeSlug from 'rehype-slug'
 export async function getStaticProps() {
 	let res = await GETwpList("/works");
 	let cat = await GETwpList("/works_cat");
-	res.map(async (e, i) => {
-		let result = await unified()
-			// Markdown → HTML
-			.use(remarkParse)
-			.use(remarkGfm) //表対応
-			.use(remarkRehype, {
-				allowDangerousHtml: true // <html>など
-			})
-			.use(rehypeSlug) //見出しにid
-			.use(rehypePrism, {
-				ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
-			})
-			.use(rehypeStringify, { allowDangerousHtml: true })
-			.process(e.content);
-		e.content = String(result);
-	})
+	// res.map(async (e, i) => {
+	// 	if (e.content) {
+	// 		e.content = "";
+	// 	}
+	// })
 	return {
 		props: {
 			res,

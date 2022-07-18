@@ -8,10 +8,16 @@ import Router, { useRouter } from "next/router";
 
 export default function Output({ res, countSum }) {
 	const router = useRouter();
-	const params = router.query
+	const params = router.query;
+
+	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
+	const queryParams = JSON.parse(JSON.stringify(router.query));
+	delete queryParams[dynamicRoutesName];
+
 	return (
 		<>
 			<li
+				className={c_works.work}
 				style={{
 					"--aspectSum": res.imgSize.aspectSum,
 					"--aspect": res.imgSize.aspect,
@@ -21,7 +27,7 @@ export default function Output({ res, countSum }) {
 				<Link
 					href={{
 						pathname: "/works/" + decodeURI(res.slug),
-						query: { ...router.query },
+						query: { ...queryParams },
 					}}
 					shallow={true}
 				>
@@ -41,13 +47,11 @@ export default function Output({ res, countSum }) {
 							</div>
 						)}
 						{res.category && (
-							<>
-								<ul className={classNames(c_works.categoryList)}>
-									{res.category.map((e2, i2) => (
-										<li key={i2}>{e2.name}</li>
-									))}
-								</ul>
-							</>
+							<ul className={classNames(c_works.categoryList)}>
+								{res.category.map((e2, i2) => (
+									<li key={i2}>{e2.name}</li>
+								))}
+							</ul>
 						)}
 						<div className={c_works.meta}>
 							<h3

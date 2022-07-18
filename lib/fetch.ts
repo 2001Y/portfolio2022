@@ -1,6 +1,9 @@
 import urlJoin from "url-join";
 export async function json(e) {
-	return await fetch(urlJoin(process.env.wpURL, e)).then((res) => res.json());
+	let json = await fetch(urlJoin(process.env.wpURL, e))
+		.then((res) => res.json())
+		.catch((e) => console.error(e));
+	return json;
 }
 
 export async function GETpostList(tags) {
@@ -9,7 +12,9 @@ export async function GETpostList(tags) {
 			process.env.wpURL,
 			"posts?per_page=18&_fields=id,title,slug,date,voting,tags" + tags
 		)
-	);
+	).catch((e) => console.log(e));
+	console.log("aa");
+	console.log(res);
 	return {
 		postList: await res.json(),
 		totalpages: await res.headers.get("x-wp-totalpages"),
@@ -25,7 +30,9 @@ export async function GETwp(url) {
 	return a;
 }
 export async function GETwpList(url) {
-	let fetchJson = await fetch(process.env.wpURL + url);
+	let fetchJson = await fetch(process.env.wpURL + url).catch((e) =>
+		console.log(e)
+	);
 	let totalpages = await fetchJson.headers.get("x-wp-totalpages");
 
 	let res = await Promise.all(

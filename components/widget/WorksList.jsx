@@ -33,7 +33,7 @@ export default function Output({ res, cat, lock }) {
 		res = rr;
 	}
 
-	res = viewF(res, 3.5);
+	res = viewF(res);
 
 	const sessionName = "scrollSave";
 	// if (typeof window !== "undefined") {
@@ -43,6 +43,8 @@ export default function Output({ res, cat, lock }) {
 		if (sessionStorage.getItem(sessionName)) {
 			elm.scrollTop = sessionStorage.getItem(sessionName);
 			sessionStorage.removeItem(sessionName);
+		} else {
+			elm.scrollTop = 0;
 		}
 	});
 	// }
@@ -68,7 +70,7 @@ export default function Output({ res, cat, lock }) {
 		return () => {
 			Router.events.off("routeChangeStart", onRouteChangeStart);
 		};
-	});
+	}, []);
 
 	return (
 		<>

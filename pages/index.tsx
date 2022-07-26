@@ -29,9 +29,8 @@ export default function Output({ res, cat }) {
 			}
 			return false;
 		});
+		res = viewF(res)
 	} 0
-
-	res = viewF(res, 3.3)
 
 	return (
 		<>

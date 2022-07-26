@@ -22,6 +22,9 @@
 		left: 50%;
 		transform-origin: center;
 		transform: translate(-50%, -50%) rotate(-10deg);
+		// @media (max-width: 800px) {
+		// 	transform: translate(-50%, -50%) rotate(0);
+		// }
 		image-rendering: -webkit-optimize-contrast;
 		backface-visibility: hidden;
 		--sin10: 0.17364817766693034885171662676931479600037567718407;
@@ -39,17 +42,22 @@
 
 		overflow: hidden;
 		overflow-y: scroll;
-		display: grid;
-		place-items: center;
+		// display: grid;
+		// place-items: center;
 		.list {
 			// 斜めスクロール：表示エリア
-			--size: 0.95;
-			@media (max-width: 800px) {
-				--size: 1;
-			}
-			--viewWidth: calc(
-				var(--scrollWidth) * var(--size) - var(--mainHeight) * var(--sin10) * 2
+			// --size: 0.95;
+			--viewWidth:calc(
+				var(--scrollWidth) * 0.95 - var(--mainHeight) * var(--sin10) * 2
 			);
+			margin: auto;
+			@media (max-width: 800px) {
+				--viewWidth: calc(100vw * var(--cos10));
+				margin-right: 0;
+			}
+			// --viewWidth: calc(
+			// 	var(--scrollWidth) * var(--size) - var(--mainHeight) * var(--sin10) * 2
+			// );
 			width: var(--viewWidth);
 			& > * {
 				// 上下の余白確保

@@ -1,4 +1,4 @@
-export function viewF(res, level) {
+export function viewF(res, level = 3.6) {
 	// aspectの合計5までを区切る
 	let aspectSum = 0;
 	let result = [];

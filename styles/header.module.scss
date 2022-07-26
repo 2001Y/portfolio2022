@@ -158,6 +158,10 @@
 }
 .subMenu {
 	overflow: hidden;
+	pointer-events: none;
+	> * {
+		pointer-events: auto;
+	}
 	padding: 0.5rem;
 	margin-left: calc(
 		-0.5rem + ($profileIMGwrap_size - var(--subMenu_width)) / 2

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-// import { MDtoHTML } from "lib/unified"
+import { MDtoHTML, HTMLtoJSX } from "lib/unified"
 
 import Contact from "components/Contact"
 
@@ -21,7 +21,11 @@ export default function Output({ res }) {
   return (
     <>
       <section>
-        <p>工事中...🚧<br /><br /><br /><br /></p>
+        <p>
+          工事中...🚧<br /><br />
+          デザインデータ： <a href="https://www.figma.com/file/W8Cko1PAv7Irc472cSAtUg/%E7%84%A1%E9%A1%8C?node-id=0%3A1" target="_blank" rel="noopener noreferrer">https://www.figma.com/file/W8Cko1PAv7Irc472cSAtUg/%E7%84%A1%E9%A1%8C</a>
+          <br /><br /><br />
+        </p>
         <h1>Yoshiki TAMURA</h1>
         <p>
           武蔵野美術大学 造形構想学部
@@ -34,7 +38,7 @@ export default function Output({ res }) {
           <br />
           age: {Y + M + D}
         </p>
-        {/* <article>{MDtoHTML(res.content)}</article> */}
+        {/* <article>{HTMLtoJSX(res.content)}</article> */}
         {/* <button onClick={onSubmit}>ttt</button> */}
         <Contact name={"About"}></Contact>
       </section>
@@ -59,7 +63,7 @@ import { md2html } from "lib/unified"
 export async function getStaticProps() {
   let res = await GETwp("/pages?slug=about");
   res = res[0];
-  // res.content = await md2html(res.content);
+  res.content = await MDtoHTML(res.content);
   return {
     props: {
       res

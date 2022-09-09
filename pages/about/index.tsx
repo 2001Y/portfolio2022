@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { MDtoHTML, HTMLtoJSX } from "lib/unified"
+// import { MDtoHTML, HTMLtoJSX } from "lib/unified"
 
 import Contact from "components/Contact"
 
@@ -59,11 +59,10 @@ export default function Output({ res }) {
 }
 
 import { GETwp } from "lib/fetch";
-import { md2html } from "lib/unified"
 export async function getStaticProps() {
   let res = await GETwp("/pages?slug=about");
   res = res[0];
-  res.content = await MDtoHTML(res.content);
+  // res.content = await MDtoHTML(res.content);
   return {
     props: {
       res

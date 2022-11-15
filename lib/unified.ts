@@ -7,7 +7,10 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypePrism from '@mapbox/rehype-prism';
 import rehypeSlug from 'rehype-slug'
-export async function MDtoHTML(res) {
+export function MDtoHTML(res) {
+	return md(res);
+}
+async function md(res) {
 	let result = await unified()
 		.use(remarkParse)
 		.use(remarkGfm) //表対応
@@ -41,3 +44,12 @@ export async function HTMLtoJSX(res) {
 		});
 	return processor.processSync(res).result;
 }
+
+export const processor = unified()
+	.use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
+	.use(rehypeReact, {
+		createElement,
+		components: {
+			a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
+		},
+	});

@@ -2,7 +2,7 @@ import Link from 'next/link'
 export default function Output({ children, href }) {
   const isMyPageLink = href.startsWith('/') || href === ''
   return isMyPageLink ? (
-    <Link href={href}>
+    <Link legacyBehavior href={href}>
       <a>{children}</a>
     </Link>
   ) : (

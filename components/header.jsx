@@ -111,7 +111,7 @@ export default function Output() {
 								].map((e, i) => (
 									<>
 										<li key={i}>
-											<Link href={e[1]}>
+											<Link legacyBehavior href={e[1]}>
 												<a
 													target="_blank"
 													onClick={() => setPageName(e[1])}
@@ -141,7 +141,7 @@ export default function Output() {
 							].map((e, i) => (
 								<>
 									<li key={i}>
-										<Link href={e[1]}>
+										<Link legacyBehavior href={e[1]}>
 											<a onClick={() => setPageName(e[1])}>{e[0]}</a>
 										</Link>
 									</li>

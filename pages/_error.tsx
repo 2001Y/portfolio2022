@@ -9,7 +9,7 @@ function Error({ statusCode }) {
                : 'クライアントでエラーが発生しました。'}
          </p>
          <p>
-            <Link href="/">
+            <Link legacyBehavior href="/">
                <a>トップページにもどる</a>
             </Link>
          </p>

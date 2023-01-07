@@ -51,14 +51,14 @@ export default function Output({ res }) {
 						<div className={classNames(c_blog.title)}>
 							<div className={c_blog.title_inner}>
 								<h2 className={classNames(c_Heading.h2, c_Heading.h2_tag)}>
-									<Link href={"/blog/tag/" + e.slug}>
+									<Link legacyBehavior href={"/blog/tag/" + e.slug}>
 										<a className={classNames(c_V.animeBG_font)}>#{e.name}</a>
 									</Link>
 								</h2>
 								<ol className={classNames(c_blog.tagList, c_blog.hover)}>
 									{e.tagList.map((e1, i1) => (
 										<li key={i1}>
-											<Link href={"/blog/tag/" + e1.slug}>
+											<Link legacyBehavior href={"/blog/tag/" + e1.slug}>
 												<a>
 													#{e1.name}({e1.allCount})
 												</a>

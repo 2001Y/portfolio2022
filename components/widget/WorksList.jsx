@@ -77,13 +77,13 @@ export default function Output({ res, cat, lock }) {
 			{/* カテゴリーリスト */}
 			<ul className={c_works.catList} id="tagList">
 				<li>
-					<Link href={"/"} shallow={true} scroll={true}>
+					<Link legacyBehavior href={"/"} shallow={true} scroll={true}>
 						<a className={classNames(c_V.animeBG_font)}>all</a>
 					</Link>
 				</li>
 				{cat.map((e, i) => (
 					<li key={i}>
-						<Link href={"?cat=" + e.slug} shallow={true} scroll={true}>
+						<Link legacyBehavior href={"?cat=" + e.slug} shallow={true} scroll={true}>
 							<a className={classNames(c_V.animeBG_font)}>#{e.name}</a>
 						</Link>
 						<ul className={classNames(c_works.subCatList, c_works.tagList)}>

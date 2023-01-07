@@ -37,16 +37,9 @@ module.exports = {
 			},
 		];
 	},
-	experimental: {
-		images: {
-			allowFutureImage: true,
-		},
-	},
 	// Custom
 	reactStrictMode: true,
-	swcLoader: true,
 	swcMinify: true,
-	cpus: 4,
 	sassOptions: {
 		prependData: '@import "styles/_prepend.scss";',
 	},

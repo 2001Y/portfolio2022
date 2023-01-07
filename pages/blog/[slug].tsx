@@ -60,7 +60,7 @@ export default function Output({ res, content }) {
 				<ul className={classNames(c_blog.tagList, c_blog.hover)}>
 					{res.tags.map((e, i) => (
 						<li key={i}>
-							<Link href={"/blog/tag/" + e.slug}>
+							<Link legacyBehavior href={"/blog/tag/" + e.slug}>
 								<a>#{e.name}</a>
 							</Link>
 						</li>

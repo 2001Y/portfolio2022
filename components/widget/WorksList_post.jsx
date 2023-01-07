@@ -24,7 +24,7 @@ export default function Output({ res, countSum }) {
 					"--gapCount": countSum - 1,
 				}}
 			>
-				<Link
+				<Link legacyBehavior
 					href={{
 						pathname: "/works/" + decodeURI(res.slug),
 						query: { ...queryParams },
@@ -41,8 +41,8 @@ export default function Output({ res, countSum }) {
 								<Image
 									alt={res.title + "のサムネイル"}
 									src={res.cfs.img}
-									height={res.imgSize.height}
-									width={res.imgSize.width}
+									width={500}
+									height={500 / res.imgSize.aspect}
 								/>
 							</div>
 						)}

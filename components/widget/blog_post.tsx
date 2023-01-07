@@ -8,7 +8,7 @@ import c_heading from "styles/heading.module.scss";
 export default function Output({ res }) {
     return (
         <>
-            <Link href={"/blog/" + res.slug}>
+            <Link legacyBehavior href={"/blog/" + res.slug}>
                 <a>
                     <h3 className={c_heading.h3} dangerouslySetInnerHTML={{ __html: res.title }}></h3>
                     <ul className={c_blog.post_meta}>
@@ -21,7 +21,7 @@ export default function Output({ res }) {
                                 <ul className={classNames(c_blog.tagList)}>
                                     {res.tags.map((e2, i2) => (
                                         <li key={i2}>
-                                            {/* <Link href={"/blog/tag/" + e2.slug}>
+                                            {/* <Link legacyBehavior href={"/blog/tag/" + e2.slug}>
                                     <a> */}
                                             #{e2.name}
                                             {/* </a>

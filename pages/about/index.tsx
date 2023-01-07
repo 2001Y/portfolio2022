@@ -20,6 +20,8 @@ export default function Output({ res }) {
     var max = 50;
     return Math.floor(Math.random() * (max + 1 - min)) + min;
   }
+
+  console.log(res.profile_imgList)
   return (
     <>
       <section>
@@ -45,8 +47,13 @@ export default function Output({ res }) {
               <Image
                 alt={res.title + "のサムネイル"}
                 src={e.img}
-                width={500}
-                height={500 / e.size.aspect}
+                width={300}
+                height={300 / e.size.aspect}
+                style={{
+                  maxInlineSize: "unset"
+                  // height: "auto","
+                  // objectFit: "cover"
+                }}
               />
             </li>
           ))}

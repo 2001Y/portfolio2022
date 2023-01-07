@@ -46,7 +46,7 @@ function Page(props) {
          {res.url && (
             <>
                <meta property="og:url" content={res.url} key="og:url" />
-               <link rel="canonical" href={res.url} key="canonical" />
+               <Link legacyBehavior rel="canonical" href={res.url} key="canonical" />
             </>
          )}
          {res.description && (

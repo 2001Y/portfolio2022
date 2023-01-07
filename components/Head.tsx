@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 
 function Page(props) {
    let res = JSON.parse(JSON.stringify(props));

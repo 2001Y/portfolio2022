@@ -29,11 +29,11 @@ const processor = unified()
 export default function Output({ res, content }) {
 	const { asPath } = useRouter()
 	useEffect(() => {
-		console.log(asPath)
-		try {
-			(window.adsbygoogle = window.adsbygoogle || []).push({})
-		} catch (error) {
-			console.error(error);
+		var ads = document.getElementsByClassName("adsbygoogle").length;
+		for (var i = 0; i < ads; i++) {
+			try {
+				(window.adsbygoogle = window.adsbygoogle || []).push({})
+			} catch (e) { }
 		}
 	}, [asPath])
 	// console.log(res)
@@ -77,7 +77,7 @@ export default function Output({ res, content }) {
 				</div>
 				<div key={asPath}>
 					<ins className="adsbygoogle"
-						style={{display: "block"}}
+						style={{ display: "block" }}
 						data-ad-client="ca-pub-3750999099107987"
 						data-ad-slot="6726245863"
 						data-full-width-responsive="false"></ins>

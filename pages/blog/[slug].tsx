@@ -6,11 +6,6 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Script from 'next/script'
-import { MDtoHTML, HTMLtoJSX } from "lib/unified"
-
-const ResponsiveImage = (props) => (
-	<Image alt={props.alt} layout="responsive" {...props} />
-);
 
 import c_Heading from "styles/heading.module.scss";
 import c_blog from "styles/blog.module.scss";
@@ -43,14 +38,14 @@ export default function Output({ res, content }) {
 	// console.log(res)
 	return (
 		<>
-			<NextHead>
-				<Script
-					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
-					crossOrigin="anonymous"
-					async={true}
-				// strategy="beforeInteractive"
-				/>
-			</NextHead>
+			<Script
+				id="adsence"
+				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
+				crossOrigin="anonymous"
+				async={true}
+				strategy="afterInteractive"
+				onError={(e) => { console.error('Script failed to load', e) }}
+			/>
 			<Head title={res.title && res.title + "｜2001Y's Blog"} />
 			<div className={c_Post.meta}>
 				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>

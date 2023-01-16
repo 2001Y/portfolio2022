@@ -5,6 +5,7 @@ import "../styles/prism.css"
 // import Head from "components/Head";
 import Head from "next/head";
 import Header from "components/header";
+import Script from 'next/script'
 
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -58,8 +59,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head >
-				<script async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></script>
-				<script dangerouslySetInnerHTML={{
+				<Script async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></Script>
+				<Script dangerouslySetInnerHTML={{
 					__html: `
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
@@ -67,9 +68,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 					gtag('config', 'G-51E14JSXC0');
 				`,
 				}}>
-				</script>
+				</Script>
 
 			</Head>
+			<script> </script>
 			<Header />
 			<main className={String(pageLoading)}>
 				<Component {...pageProps} />

@@ -30,7 +30,7 @@ export default function Output({ res, cat }) {
 			return false;
 		});
 		res = viewF(res)
-	} 0
+	}
 
 	return (
 		<>

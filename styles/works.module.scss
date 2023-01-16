@@ -337,9 +337,9 @@
 				margin: auto;
 				cursor: zoom-in;
 				position: relative;
-				> span {
-					display: block !important;
-				}
+				// > * {
+				// 	display: block !important;
+				// }
 				&.youtube {
 					cursor: pointer;
 					&::before {

@@ -72,6 +72,8 @@ export default function Output({ res, cat, lock }) {
 		};
 	}, []);
 
+	console.log(res)
+
 	return (
 		<>
 			{/* カテゴリーリスト */}

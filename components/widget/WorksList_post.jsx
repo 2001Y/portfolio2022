@@ -41,8 +41,8 @@ export default function Output({ res, countSum }) {
 								<Image
 									alt={res.title + "のサムネイル"}
 									src={res.cfs.img}
-									width={500}
-									height={500 / res.imgSize.aspect}
+									height={400}
+									width={400 * res.imgSize.aspect}
 								/>
 							</div>
 						)}

@@ -34,10 +34,11 @@ const processor = unified()
 export default function Output({ res, content }) {
 	const { asPath } = useRouter()
 	useEffect(() => {
-		document.addEventListener('DOMContentLoaded', function () {
+		try {
 			(window.adsbygoogle = window.adsbygoogle || []).push({})
-
-		});
+		} catch (error) {
+			console.error(error);
+		}
 	}, [asPath])
 	// console.log(res)
 	return (
@@ -47,7 +48,7 @@ export default function Output({ res, content }) {
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
 					crossOrigin="anonymous"
 					async={true}
-					strategy="beforeInteractive"
+				// strategy="beforeInteractive"
 				/>
 			</NextHead>
 			<Head title={res.title && res.title + "｜2001Y's Blog"} />
@@ -75,7 +76,7 @@ export default function Output({ res, content }) {
 					<ins className="adsbygoogle"
 						style={{ display: "block" }}
 						data-ad-client="ca-pub-3750999099107987"
-						data-ad-slot="3114303912"
+						data-ad-slot="7157516277"
 						data-ad-format="auto"
 						data-full-width-responsive="true"></ins>
 				</div>
@@ -88,7 +89,6 @@ export default function Output({ res, content }) {
 						data-full-width-responsive="true"></ins>
 				</div>
 			</div>
-
 
 		</>
 	);

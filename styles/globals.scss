@@ -3,22 +3,27 @@ body {
 	// min-height: 100vh;
 	font-family: var(--baseFont);
 }
+
 html {
 	font-size: 15px;
 	color: var(--c_font);
 	background: var(--c_bg_body);
 	transition: color 0.3s, background 0.3s;
 	will-change: color, background;
+
 	@keyframes accentC {
 		$num: 10;
+
 		@for $i from 1 through $num {
 			$hsla: 360 / $num * $i;
+
 			#{100/$num*$i}% {
 				--c_accent: hsla($hsla, 100%, 75%, 1);
 			}
 		}
 	}
 }
+
 body {
 	display: flex;
 	flex-flow: column;
@@ -27,18 +32,22 @@ body {
 	--gradient_1: hsl(33.833333333333336, 100%, 70%);
 	--gradient_2: hsl(67.16666666666667, 100%, 70%);
 }
+
 canvas {
 	outline: none;
 }
+
 iframe {
 	frameborder: 0;
 }
+
 #wrap {
 	transition: 0.3s opacity, 0.3s filter;
 }
+
 #tagList {
 	@include hover {
-		& + #wrap {
+		&+#wrap {
 			opacity: 0.5;
 			filter: blur(10px);
 		}
@@ -61,21 +70,26 @@ iframe {
 main {
 	padding: 0 $main_padding;
 	margin-top: $main_marginTop;
+
 	@media (max-width: 800px) {
 		margin-top: $main_padding;
 		margin-bottom: $main_marginTop;
 	}
+
 	// transform: translateY(50vh);
 	opacity: 0;
 	transition: opacity 0.1s;
 	will-change: opacity;
+
 	&.false {
 		// transform: translateY(0);
 		opacity: 1;
 	}
 }
+
 .loading {
 	opacity: 0;
+
 	// transition: .1s .3s;
 	&.true {
 		opacity: 1;
@@ -86,6 +100,7 @@ main {
 footer {
 	text-align: right;
 	padding: 2vh $header_padding;
+
 	@media (max-width: 800px) {
 		margin-bottom: $main_marginTop;
 	}
@@ -96,6 +111,7 @@ footer {
 		transform: translateX(calc(100% - $widthOver * 2));
 	}
 }
+
 .about {
 	ul::after {
 		transform: translateX(calc(200% - $widthOver * 4));
@@ -109,10 +125,12 @@ footer {
 .last-comment a {
 	display: none !important;
 }
+
 .blog-card-left,
 .blog-card-right {
 	margin-bottom: 0.3em;
 }
+
 .diff {
 	display: flex;
 	place-items: center;
@@ -128,12 +146,17 @@ mobile-scroll {
 	display: flex;
 	flex-flow: column;
 	gap: 1rem;
-	--width: 300px;
-	width: var(--width);
 	position: fixed;
 	left: 0;
 	bottom: 0;
-	> div {
-		height: calc(var(--width) * 2 / 3);
+
+	>div {
+		width: 336px;
+		height: 280px;
+		background-color: rgba(var(--c_bg_body_reversal_rgb), .3);
+		.adsbygoogle {
+			width: 336px;
+			height: 280px;
+		}
 	}
 }

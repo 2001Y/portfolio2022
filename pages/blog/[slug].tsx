@@ -66,8 +66,8 @@ export default function Output({ res, content }) {
 			<article className={c_Post.article}>
 				{processor.processSync(res.content).result}
 			</article>
-			<div key={asPath} className={"kooookoku"}>
-				<div>
+			<div className={"kooookoku"}>
+				<div key={asPath}>
 					<ins className="adsbygoogle"
 						style={{ display: "block" }}
 						data-ad-client="ca-pub-3750999099107987"
@@ -75,7 +75,7 @@ export default function Output({ res, content }) {
 						data-ad-format="auto"
 						data-full-width-responsive="true"></ins>
 				</div>
-				<div>
+				<div key={asPath}>
 					<ins className="adsbygoogle"
 						style={{ display: "block" }}
 						data-ad-client="ca-pub-3750999099107987"

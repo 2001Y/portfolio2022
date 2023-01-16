@@ -172,7 +172,8 @@ mobile-scroll {
 			display: none;
 		}
 
-		width: var(--width) height: var(--height);
+		width: var(--width);
+		height: var(--height);
 
 		&:nth-child(even) {
 			@media (max-width:(660px + 300px * 2 + 100px)) {

@@ -58,20 +58,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<Head >
-				<Script async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></Script>
-				<Script dangerouslySetInnerHTML={{
-					__html: `
+			<Script id="ga-file" async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></Script>
+			<Script id="ga-script" dangerouslySetInnerHTML={{
+				__html: `
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
 					gtag('js', new Date());
 					gtag('config', 'G-51E14JSXC0');
 				`,
-				}}>
-				</Script>
-
-			</Head>
-			<script> </script>
+			}}>
+			</Script>
 			<Header />
 			<main className={String(pageLoading)}>
 				<Component {...pageProps} />

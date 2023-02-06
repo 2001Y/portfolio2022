@@ -129,6 +129,7 @@ export default function Output({ res }) {
 									></iframe>
 								)}
 								<Image
+									className={c_works.tmbIMG}
 									src={res.cfs.img}
 									height={res.imgSize.height}
 									width={res.imgSize.width}

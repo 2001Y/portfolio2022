@@ -3,6 +3,7 @@
 
 	margin: 0 calc(50% - 50vw); // 左右MAX
 	margin-top: calc(-1 * $main_marginTop); // ヘッダー分総裁
+
 	@media (max-width: 800px) {
 		margin-top: calc(-1 * $main_padding);
 		margin-bottom: calc(-1 * $main_marginTop);
@@ -15,6 +16,7 @@
 
 	position: relative;
 	overflow: hidden;
+
 	.scroll {
 		//スクロールエリアを全画面に反映
 		position: absolute;
@@ -42,29 +44,33 @@
 
 		overflow: hidden;
 		overflow-y: scroll;
+
 		// display: grid;
 		// place-items: center;
 		.list {
 			// 斜めスクロール：表示エリア
 			// --size: 0.95;
-			--viewWidth:calc(
-				var(--scrollWidth) * 0.95 - var(--mainHeight) * var(--sin10) * 2
-			);
+			--viewWidth: calc(var(--scrollWidth) * 0.95 - var(--mainHeight) * var(--sin10) * 2);
 			margin: auto;
+
 			@media (max-width: 800px) {
 				--viewWidth: calc(100vw * var(--cos10));
 				margin-right: 0;
 			}
+
 			// --viewWidth: calc(
 			// 	var(--scrollWidth) * var(--size) - var(--mainHeight) * var(--sin10) * 2
 			// );
 			width: var(--viewWidth);
-			& > * {
+
+			&>* {
 				// 上下の余白確保
 				--viewPadding: calc(var(--viewWidth) * var(--tan10));
+
 				&:first-child {
 					margin-top: calc(var(--viewPadding) + $main_marginTop + 4vw);
 				}
+
 				&:last-child {
 					margin-bottom: calc(var(--viewPadding) + $main_marginTop);
 				}
@@ -75,17 +81,17 @@
 			flex-flow: column;
 			--gap: 1vw;
 			gap: var(--gap);
-			> li {
+
+			>li {
 				// position: relative;
 				cursor: pointer;
-				> ul {
+
+				>ul {
 					display: flex;
 					gap: var(--gap);
-					> .work {
-						--width: calc(
-							(var(--viewWidth) - var(--gapCount) * var(--gap)) /
-								var(--aspectSum) * var(--aspect)
-						);
+
+					>.work {
+						--width: calc((var(--viewWidth) - var(--gapCount) * var(--gap)) / var(--aspectSum) * var(--aspect));
 						width: var(--width);
 						height: calc(var(--width) / var(--aspect));
 					}
@@ -94,8 +100,10 @@
 		}
 	}
 }
+
 .work {
 	position: relative;
+
 	.tmb {
 		position: absolute;
 		top: 0;
@@ -103,10 +111,12 @@
 		width: 100%;
 		height: 100%;
 	}
+
 	.categoryList {
 		--fontSize: min(1vw, 1.1rem);
 		font-size: var(--fontSize);
 	}
+
 	.meta {
 		position: absolute;
 		top: 0;
@@ -119,20 +129,24 @@
 		opacity: 0;
 		transition: 0.3s opacity;
 		will-change: opacity;
+
 		@include hover {
 			opacity: 1;
 		}
+
 		@media (max-width: 800px) {
 			* {
 				opacity: 0;
 			}
 		}
+
 		.list_title {
 			margin-bottom: 0.3rem;
 			font-weight: bold;
 		}
 	}
 }
+
 .catList {
 	font-size: 1.6rem;
 	position: fixed;
@@ -140,30 +154,37 @@
 	bottom: 0;
 	left: 0;
 	z-index: 99;
+
 	@media (max-width: 800px) {
 		bottom: $main_marginTop;
 	}
+
 	display: flex;
 	flex-flow: column;
 	gap: 0.4em;
-	& > li {
-		& > a {
+
+	&>li {
+		&>a {
 			font-weight: bold;
 			padding: 0.7vmin 5vmin;
 			padding-right: 4vmin;
 			text-shadow: var(--c_font_reversal) 0 0 0.3em,
 				var(--c_font_reversal) 0 0 0.5em, var(--c_font_reversal) 0 0 0.5em,
 				var(--c_font_reversal) 0 0 1em;
+
 			@include hover {
 				text-shadow: none;
-				& + .subCatList {
+
+				&+.subCatList {
 					opacity: 0.3;
 					right: 2vmin;
 				}
 			}
 		}
+
 		width: fit-content;
 		position: relative;
+
 		.subCatList {
 			width: 9999vw;
 			width: max-content;
@@ -182,6 +203,7 @@
 			transition: 0.6s opacity, 0.3s right;
 			will-change: opacity, right;
 			pointer-events: none;
+
 			&::before {
 				content: "";
 				width: 1em;
@@ -191,7 +213,8 @@
 				border-radius: 999rem;
 				margin-right: 0.2em;
 			}
-			& > li {
+
+			&>li {
 				&:not(:last-child)::after {
 					content: ",";
 					margin-right: 0.2em;
@@ -200,8 +223,10 @@
 		}
 	}
 }
+
 .tmb {
 	background: var(--c_bg_body);
+
 	// background: rgba(var(--c_bg_body_rgb), 0.5);
 	&::after {
 		background: rgba(var(--c_bg_body_reversal_rgb), 0.03);
@@ -213,6 +238,7 @@
 		left: 0;
 	}
 }
+
 .categoryList {
 	position: absolute;
 	right: 0;
@@ -222,7 +248,8 @@
 	transition: 0.3s transform;
 	text-transform: uppercase;
 	z-index: 9;
-	> li {
+
+	>li {
 		padding: calc(var(--fontSize) / 6) calc(var(--fontSize) / 2.5);
 		margin-right: calc(var(--fontSize) / 2);
 		color: var(--c_font_light);
@@ -230,17 +257,20 @@
 		opacity: 0.6;
 	}
 }
+
 .tagList {
 	display: flex;
 	flex-wrap: wrap;
 	opacity: 0.85;
-	> li {
+
+	>li {
 		&:not(:last-child)::after {
 			content: ",";
 			margin-right: 0.5em;
 		}
 	}
 }
+
 .WorksOverlay {
 	position: fixed;
 	top: 0;
@@ -257,21 +287,26 @@
 	// 出たり入ったり
 	opacity: 0;
 	transition: 0.3s opacity;
+
 	.main {
 		transform: translateY(100%);
 		transition: 0.3s transform;
 	}
+
 	&.open {
 		opacity: 1;
+
 		.main {
 			transform: translateY(0);
 		}
 	}
 
 	--main_width: 40rem;
+
 	@media (max-width: 800px) {
 		--main_width: 100vw;
 	}
+
 	.main {
 		pointer-events: none;
 
@@ -287,13 +322,17 @@
 		right: 2.5vw;
 
 		--padding: min(4vw, 2.5rem);
+
 		@media (max-width: 800px) {
 			right: 0;
 		}
+
 		z-index: 2;
-		> .main_inner {
+
+		>.main_inner {
 			// ヘッダー余白
 			margin-top: calc($main_marginTop + var(--padding));
+
 			@media (max-width: 800px) {
 				margin-top: var(--padding);
 				// margin-top: var(--padding);
@@ -306,15 +345,16 @@
 			height: fit-content;
 			padding: var(--padding);
 			padding-top: 0;
-			--padding-bottom: calc(
-				var(--padding) * 0.9 + env(safe-area-inset-bottom, 0)
-			);
+			--padding-bottom: calc(var(--padding) * 0.9 + env(safe-area-inset-bottom, 0));
 			padding-bottom: var(--padding-bottom);
+
 			@media (max-width: 800px) {
 				padding-bottom: calc(var(--padding-bottom) + $main_marginTop);
 			}
+
 			position: relative;
 			--gap: 1rem;
+
 			&::after {
 				box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 				content: "";
@@ -328,20 +368,25 @@
 				right: 0;
 				z-index: -1;
 			}
+
 			.tmb {
 				box-shadow: var(--shadow_menu), var(--shadow_menuSub);
-				position: relative;
 				max-width: 100%;
-				max-height: 60vh;
-				aspect-ratio: var(--aspect) / 1;
+				// max-height: 60vh;
+				aspect-ratio: var(--aspect);
 				margin: auto;
 				cursor: zoom-in;
 				position: relative;
-				// > * {
-				// 	display: block !important;
-				// }
+				overflow: hidden;
+
+				img {
+					width: 100%;
+					height: 100%;
+				}
+
 				&.youtube {
 					cursor: pointer;
+
 					&::before {
 						content: url("/youtube-dark.svg");
 						width: 16%;
@@ -352,13 +397,15 @@
 						z-index: 1;
 						transition: opacity 0.1s;
 					}
+
 					@include hover {
 						&::before {
 							opacity: 0.8;
 						}
 					}
 				}
-				> .youtube {
+
+				>.youtube {
 					position: absolute;
 					top: 0;
 					left: 0;
@@ -366,18 +413,22 @@
 					height: 100%;
 					z-index: 2;
 					display: none;
+
 					&.play {
 						display: block;
 					}
 				}
-				> .categoryList {
+
+				>.categoryList {
 					--fontSize: 0.9rem;
 					font-size: var(--fontSize);
 				}
-				& + * {
+
+				&+* {
 					margin-top: calc(var(--gap) * 1.5);
 				}
 			}
+
 			.title {
 				font-size: 1.5rem;
 				font-weight: bold;
@@ -385,29 +436,37 @@
 				display: inline-block;
 				position: relative;
 			}
+
 			.meta {
 				opacity: 0.3;
+
 				.tagList {
 					opacity: 1;
 				}
 			}
+
 			article {
 				// letter-spacing: 0.07em;
 				margin-top: var(--gap);
+
 				p {
 					margin-top: 1em;
+
 					strong {
 						font-weight: bold;
 					}
 				}
+
 				a {
 					color: var(--gradient_1);
 					text-shadow: 0 0 0.05em rgba(var(--c_bg_body_reversal_rgb), 0.7),
 						0 0 0.2em rgba(var(--c_bg_body_reversal_rgb), 0.2);
+
 					@include hover {
 						opacity: 0.7;
 					}
 				}
+
 				hr {
 					width: 30%;
 					height: 0.2rem;
@@ -415,13 +474,17 @@
 					border-radius: 99rem;
 					margin: 1em auto;
 				}
+
 				h2 {
 					font-weight: bold;
+
 					&:not(:first-child, hr + h2) {
 						margin-top: 1.5rem;
 					}
+
 					display: flex;
 					align-items: center;
+
 					&::after {
 						flex: 1;
 						content: "";
@@ -433,10 +496,12 @@
 						margin-left: 1em;
 					}
 				}
+
 				h3 {
 					font-weight: bold;
 					margin-top: 1.2rem;
 				}
+
 				iframe {
 					width: 80%;
 					aspect-ratio: 16/9;
@@ -446,6 +511,7 @@
 			}
 		}
 	}
+
 	.relatedScrollBox {
 		position: fixed;
 		bottom: 0;
@@ -462,23 +528,27 @@
 		opacity: 0;
 		transform: translateX(-100%);
 		transition: 0.3s opacity, 0.3s transform;
+
 		&.open {
 			opacity: 1;
 			transform: translateX(0);
 		}
-		> ul {
+
+		>ul {
 			--hight: 25vh;
 			height: var(--hight);
 			width: fit-content;
 			display: flex;
 			--gap: 1rem;
 			gap: var(--gap);
+
 			&::after {
 				content: "";
 				width: calc(var(--main_width) + var(--padding));
 				height: 100%;
 			}
 		}
+
 		.work {
 			height: 100%;
 			width: calc(var(--hight) * var(--aspect));

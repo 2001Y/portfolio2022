@@ -20,23 +20,23 @@ export default function Output() {
 		}
 
 		// グラデアニメーション
-		let count = 0;
-		setInterval(() => {
-			count = (count + 0.5) % 360;
-			color(count);
-		}, 100);
+		// let count = 0;
+		// setInterval(() => {
+		// 	count = (count + 0.5) % 360;
+		// 	color(count);
+		// }, 100);
 
-		let pointCount = 3;
-		let colorRange = 100;
-		function color(e) {
-			[...Array(pointCount)].map((_, i) => {
-				let h = (e + (colorRange / pointCount) * i) % 360;
-				document.body.style.setProperty(
-					"--gradient_" + i,
-					"hsl(" + h + ",100%,70%)"
-				);
-			});
-		}
+		// let pointCount = 3;
+		// let colorRange = 100;
+		// function color(e) {
+		// 	[...Array(pointCount)].map((_, i) => {
+		// 		let h = (e + (colorRange / pointCount) * i) % 360;
+		// 		document.body.style.setProperty(
+		// 			"--gradient_" + i,
+		// 			"hsl(" + h + ",100%,70%)"
+		// 		);
+		// 	});
+		// }
 
 		// subMenuを自動的に閉じる
 		window.setTimeout(() => {

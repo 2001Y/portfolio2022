@@ -170,6 +170,11 @@
 .tmb {
 	background: var(--c_bg_body);
 
+	img {
+		width: 100%;
+		height: 100%;
+	}
+
 	// background: rgba(var(--c_bg_body_rgb), 0.5);
 	&::after {
 		background: rgba(var(--c_bg_body_reversal_rgb), 0.03);

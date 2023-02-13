@@ -76,7 +76,6 @@ export default function Output({ res }) {
 					[c_works.open]: state_open,
 				})}
 				onClick={(e) => {
-					console.log(e.target.className.indexOf(c_works.WorksOverlay));
 					if (e.target.className.indexOf(c_works.WorksOverlay) == 0) {
 						delayPushPage("/");
 					}

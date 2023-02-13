@@ -1,9 +1,18 @@
+.view {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
 .wrapper {
 	--base: 90vmax;
 	width: var(--base);
 	height: calc(var(--base) * var(--height) / var(--width));
 	overflow: hidden;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	will-change: transform;
@@ -12,7 +21,6 @@
 		calc(-1% * var(--positionY) + 50vh),
 		0
 	);
-	pointer-events: none;
 	opacity: 0;
 	&.open {
 		opacity: 1;

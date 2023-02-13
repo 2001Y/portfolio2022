@@ -40,7 +40,7 @@ export async function getStaticProps({ params }) {
    let res = await GETwpList("/works");
    let cat = await GETwpList("/works_cat");
    res.map(async (e, i) => {
-      if (e.slug == params) {
+      if (e.slug == params.slug) {
          let result = await unified()
             // Markdown → HTML
             .use(remarkParse)

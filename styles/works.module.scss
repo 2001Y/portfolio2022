@@ -11,8 +11,9 @@
 	left: 0;
 
 	--gap: 1vw;
-	--viewWidth: clac(100vw - var(--viewWidth)*2);
+	--viewWidth: calc(100vw - var(--viewWidth)*2);
 	padding: var(--gap);
+	padding-top: calc(var(--header_height) + 2.7vw * 2);
 	margin: 0 calc(50% - 50vw); // 左右MAX
 
 	.scroll {
@@ -265,15 +266,15 @@
 		flex-flow: column;
 		justify-content: flex-end;
 
-		position: absolute;
-		top: 0;
-		right: 2.5vw;
+		margin: auto;
+		// position: absolute;
+		// top: 0;
+		// right: 2.5vw;
+		// @media (max-width: 800px) {
+		// 	right: 0;
+		// }
 
 		--padding: min(4vw, 2.5rem);
-
-		@media (max-width: 800px) {
-			right: 0;
-		}
 
 		z-index: 2;
 

@@ -5,7 +5,7 @@ import c_imgLupe from "styles/components/imgLupe.module.scss";
 export default function Output({ src, height, width, alt, position }) {
 	// console.log(state_ImgLupe);
 	return (
-		<>
+		<section className={c_imgLupe.view}>
 			<div
 				className={classNames(c_imgLupe.wrapper, {
 					[c_imgLupe.open]: position,
@@ -19,6 +19,6 @@ export default function Output({ src, height, width, alt, position }) {
 			>
 				<Image src={src} alt={alt} width={width} height={height} />
 			</div>
-		</>
+		</section>
 	);
 }

@@ -36,20 +36,17 @@ export default function Output({ res, cat, lock }) {
 	res = viewF(res);
 
 	const sessionName = "scrollSave";
-	// if (typeof window !== "undefined") {
 	useLayoutEffect(() => {
-		let elm = document.querySelector("#scroll");
+		let elm = document.querySelector("#wrap");
 		// スクロール位置の復元
 		if (sessionStorage.getItem(sessionName)) {
 			elm.scrollTop = sessionStorage.getItem(sessionName);
-			sessionStorage.removeItem(sessionName);
 		} else {
 			elm.scrollTop = 0;
 		}
 	});
-	// }
 	useEffect(() => {
-		let elm = document.querySelector("#scroll");
+		let elm = document.querySelector("#wrap");
 		const onRouteChangeStart = (url) => {
 			// スクロール位置の保存
 			url = new URL("http://example.com" + url);
@@ -72,7 +69,7 @@ export default function Output({ res, cat, lock }) {
 		};
 	}, []);
 
-	console.log(res)
+	// console.log(res)
 
 	return (
 		<>

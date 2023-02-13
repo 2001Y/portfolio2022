@@ -1,89 +1,32 @@
 .wrap {
 	color: var(--c_font_dark);
 
-	margin: 0 calc(50% - 50vw); // 左右MAX
-	margin-top: calc(-1 * $main_marginTop); // ヘッダー分総裁
-
-	@media (max-width: 800px) {
-		margin-top: calc(-1 * $main_padding);
-		margin-bottom: calc(-1 * $main_marginTop);
-	}
-
-	--mainWidth: 100vw;
-	--mainHeight: var(--100vh);
-	width: var(--mainWidth);
-	height: var(--mainHeight);
-
-	position: relative;
 	overflow: hidden;
+	overflow-y: scroll;
+	width: 100vw;
+	height: 100vh;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	--gap: 1vw;
+	--viewWidth: clac(100vw - var(--viewWidth)*2);
+	padding: var(--gap);
+	margin: 0 calc(50% - 50vw); // 左右MAX
 
 	.scroll {
-		//スクロールエリアを全画面に反映
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform-origin: center;
-		transform: translate(-50%, -50%) rotate(-10deg);
-		// @media (max-width: 800px) {
-		// 	transform: translate(-50%, -50%) rotate(0);
-		// }
-		image-rendering: -webkit-optimize-contrast;
-		backface-visibility: hidden;
-		--sin10: 0.17364817766693034885171662676931479600037567718407;
-		--cos10: 0.98480775301220805936674302458952301367064325171984;
-		--tan10: 0.1763269807084649734710903868686189861216330623481;
 
-		--w1: calc(var(--mainHeight) * var(--sin10));
-		--w2: calc(var(--mainWidth) * var(--cos10));
-		--scrollWidth: calc(var(--w1) + var(--w2));
-		width: var(--scrollWidth);
-
-		--h1: calc(var(--mainHeight) * var(--cos10));
-		--h2: calc(var(--mainWidth) * var(--sin10));
-		height: calc(var(--h1) + var(--h2));
-
-		overflow: hidden;
-		overflow-y: scroll;
-
-		// display: grid;
-		// place-items: center;
 		.list {
-			// 斜めスクロール：表示エリア
-			// --size: 0.95;
-			--viewWidth: calc(var(--scrollWidth) * 0.95 - var(--mainHeight) * var(--sin10) * 2);
-			margin: auto;
-
-			@media (max-width: 800px) {
-				--viewWidth: calc(100vw * var(--cos10));
-				margin-right: 0;
-			}
-
-			// --viewWidth: calc(
-			// 	var(--scrollWidth) * var(--size) - var(--mainHeight) * var(--sin10) * 2
-			// );
-			width: var(--viewWidth);
-
-			&>* {
-				// 上下の余白確保
-				--viewPadding: calc(var(--viewWidth) * var(--tan10));
-
-				&:first-child {
-					margin-top: calc(var(--viewPadding) + $main_marginTop + 4vw);
-				}
-
-				&:last-child {
-					margin-bottom: calc(var(--viewPadding) + $main_marginTop);
-				}
-			}
+			--viewWidth: 100vw;
+			--gap: 1vw;
 
 			// 段組レイアウト
 			display: flex;
 			flex-flow: column;
-			--gap: 1vw;
 			gap: var(--gap);
 
 			>li {
-				// position: relative;
 				cursor: pointer;
 
 				>ul {

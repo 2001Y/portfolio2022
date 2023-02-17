@@ -46,7 +46,7 @@ export default function Embed({ res, imgSize }) {
         <div className={c_carousel.carousel}
             style={{
                 "--aspect": imgSize.aspect,
-            }}
+            } as any}
         >
             <div className={c_carousel.contents} ref={containerRef} onScroll={() => setModuleState(false)}>
                 {res.map((embed, index) => (

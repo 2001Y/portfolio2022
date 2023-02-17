@@ -20,12 +20,7 @@ export default function Output({ name }) {
                onClick={() => stateOpen_set(true)}
             >
                <h3>Contact</h3>
-               <form action="https://api.staticforms.xyz/submit" method="post">
-                  <input
-                     type="hidden"
-                     name="Form Name"
-                     value={name}
-                  />
+               <form method="post" action="https://2001y-portfolio.form.newt.so/v1/ktMviMs9b">
                   <h6>お名前</h6>
                   <input type="text" name="name" placeholder="田中 太郎" required />
                   <h6>メールアドレス</h6>
@@ -36,22 +31,10 @@ export default function Output({ name }) {
                      required
                   />
                   <textarea
-                     name="$問い合わせ"
+                     name="body"
                      placeholder="その他、ご自由にご記入ください。"
                   ></textarea>
-                  <input type="text" name="honeypot" className="honeypot" />
-                  <input type="hidden" name="replyTo" value="@" />
-                  <input
-                     type="hidden"
-                     name="redirectTo"
-                     value="https://2001y.me/contact/done"
-                  />
-                  <input
-                     type="hidden"
-                     name="accessKey"
-                     value="44801933-9e6a-4b67-a226-63fe8599568b"
-                  />
-                  <input type="submit" value="送信" />
+                  <button type="submit">Submit</button>
                </form>
             </div>
          </section>

@@ -97,14 +97,14 @@ main {
 	}
 }
 
-footer {
-	text-align: right;
-	padding: 2vh $header_padding;
+// footer {
+// 	text-align: right;
+// 	padding: 2vh $header_padding;
 
-	@media (max-width: 800px) {
-		margin-bottom: $main_marginTop;
-	}
-}
+// 	@media (max-width: 800px) {
+// 		margin-bottom: $main_marginTop;
+// 	}
+// }
 
 .blog {
 	ul::after {

@@ -1,11 +1,7 @@
 import Head from "components/Head";
 import WorksList from "components/widget/WorksList"
 import Works_view from "components/widget/Works_view";
-import Router, { useRouter } from 'next/router'
-
-import c_works from "styles/works.module.scss"
-
-
+import { useRouter } from 'next/router'
 
 export default function Output({ res, cat }) {
    const router = useRouter();
@@ -35,12 +31,13 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypePrism from '@mapbox/rehype-prism';
 import rehypeSlug from 'rehype-slug'
-import { stringify } from "querystring";
 export async function getStaticProps({ params }) {
    let res = await GETwpList("/works");
    let cat = await GETwpList("/works_cat");
    res.map(async (e, i) => {
       if (e.slug == params.slug) {
+
+         // 本文
          let result = await unified()
             // Markdown → HTML
             .use(remarkParse)
@@ -55,6 +52,27 @@ export async function getStaticProps({ params }) {
             .use(rehypeStringify, { allowDangerousHtml: true })
             .process(e.content);
          e.content = String(result);
+
+         // タイトル
+         let title = e.title;
+         const segmenterJp = new Intl.Segmenter('ja-JP', { granularity: 'word' });
+         const segments = segmenterJp.segment(title);
+         title = Array.from(segments).map((target) => target.segment == '\n' ? '<br>' : `<span style="display: inline-block">${target.segment}</span>`).join('');
+         e.title_html = title;
+
+         // カールセル
+         if (e.cfs.embed) {
+            e.cfs.embed = Object.values(e.cfs.embed)
+         } else if (e.cfs.youtube) {
+            e.cfs.embed = [{
+               youtube: e.cfs.youtube
+            }]
+         } else {
+            e.cfs.embed = [{
+               image: e.cfs.img
+            }]
+         }
+
       } else {
          e.content = "";
       }

@@ -1,6 +1,7 @@
 import Head from "components/Head";
 import Image from "next/image";
 import Link from "next/link";
+
 import c_works from "styles/works.module.scss";
 
 import { useEffect, useLayoutEffect, useState, createElement } from "react";
@@ -11,7 +12,7 @@ import rehypeReact from "rehype-react";
 import classNames from "classnames";
 
 import ImgLupe from "components/ImgLupe";
-import WorksList_post from "components/widget/WorksList_post";
+import Carousel from "components/Carousel";
 
 const CustomLink = ({ children, href }) => (
 	<a href={href} target="_blank" rel="noopener noreferrer">
@@ -89,8 +90,8 @@ export default function Output({ res }) {
 					position={state_ImgLupe}
 				/>
 				<div className={c_works.main}>
-					<div className={c_works.main_inner}>
-						{res.cfs.img && (
+					{/* {res.cfs.img && (
+						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
 							<div
 								className={classNames(c_works.tmb, {
 									[c_works.vertical]: res.imgSize.aspect < 1,
@@ -142,36 +143,55 @@ export default function Output({ res }) {
 									</ul>
 								)}
 							</div>
-						)}
-						{res.title && (
-							<h2
-								className={c_works.title}
-								dangerouslySetInnerHTML={{ __html: res.title }}
-							></h2>
-						)}
-						{(res.cfs.time || res.tags || res.cfs.location) && (
-							<ul className={c_works.meta}>
+						</div>
+					)} */}
+
+					{res.cfs.embed && (
+						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
+
+							<div
+								className={classNames(c_works.thumbnail)}
+								style={{
+									"--aspect": res.imgSize.aspect,
+								}}
+							>
+								<Carousel className={classNames(c_works.tmb)} res={res.cfs.embed} imgSize={res.imgSize} />
+							</div>
+
+						</div>
+					)}
+
+					<div className={classNames(c_works.mainArea, c_works.modalWindow)}>
+						<article>
+							<div className={c_works.meta}>
+								{res.title && (
+									<h2
+										className={c_works.title}
+										dangerouslySetInnerHTML={{ __html: res.title_html }}
+									></h2>
+								)}
 								{res.tags && (
-									<li>
-										<ul className={c_works.tagList}>
-											{res.tags.map((e, i) => (
-												<li key={i}>#{e.name}</li>
-											))}
-										</ul>
-									</li>
+									<ul className={c_works.tagList}>
+										{res.tags.map((e, i) => (
+											<li key={i}>#{e.name}</li>
+										))}
+									</ul>
 								)}
 								{res.cfs.time && <li>{res.cfs.time}</li>}
 								{res.cfs.location && <li>{res.cfs.location}</li>}
-							</ul>
-						)}
-						{res.content && (
-							<article>{processor.processSync(res.content).result}</article>
-						)}
+							</div>
+							{res.content && processor.processSync(res.content).result}
+						</article>
+
 					</div>
+					<footer>
+						©︎ 2015-2023, 2001Y<br />
+						引用や転載の際は当URLを掲載すること。
+					</footer>
 				</div>
 
 				{/* Task: 関連記事 */}
-				{res.child && (
+				{/* {res.child && (
 					<div
 						className={classNames(c_works.relatedScrollBox, {
 							[c_works.open]: state_open,
@@ -183,7 +203,7 @@ export default function Output({ res }) {
 							))}
 						</ul>
 					</div>
-				)}
+				)} */}
 			</section>
 		</>
 	);

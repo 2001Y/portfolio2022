@@ -10,6 +10,8 @@ import Link from "next/link";
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss";
 
+import useMatchMedia from "lib/useMatchMedia.ts"
+
 export default function Output({ res, cat, lock }) {
 	const router = useRouter();
 	const params = router.query;
@@ -33,7 +35,10 @@ export default function Output({ res, cat, lock }) {
 		res = rr;
 	}
 
-	res = viewF(res);
+	console.log(useMatchMedia(600))
+
+	res = viewF(res, 3.5);
+	useMatchMedia(800) && (res = viewF(res, 2))
 
 	const sessionName = "scrollSave";
 	useLayoutEffect(() => {
@@ -83,7 +88,7 @@ export default function Output({ res, cat, lock }) {
 				{cat.map((e, i) => (
 					<li key={i}>
 						<Link legacyBehavior href={"?cat=" + e.slug} shallow={true} scroll={true}>
-							<a className={classNames(c_V.animeBG_font)}>#{e.name}</a>
+							<a className={classNames(c_V.animeBG_font)}>{e.name}</a>
 						</Link>
 						<ul className={classNames(c_works.subCatList, c_works.tagList)}>
 							{e.tagList.map((e1, i1) => (

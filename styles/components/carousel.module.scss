@@ -1,0 +1,92 @@
+/* container要素をスクロール可能にする */
+.contents {
+    display: flex;
+    overflow: hidden;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    width: 100%;
+    height: 100%;
+
+    >* {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+
+        >* {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: rgb(var(--c_bg_rgb), 0.7);
+    backdrop-filter: blur(20px);
+}
+
+.nextButton,
+.prevButton,
+.module {
+    // color: #fff;
+    border-radius: 1rem;
+    background: rgb(var(--c_bg_rgb), 0.7);
+    backdrop-filter: blur(6px);
+    box-shadow: var(--shadow_menu), var(--shadow_menuSub);
+    position: absolute;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.module {
+    font-size: .85em;
+    padding: .9em 1.5em;
+    width: max-content;
+    max-width: 80%;
+    bottom: 2%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .2s opacity;
+    opacity: 0;
+
+    &.open {
+        opacity: 1;
+    }
+}
+
+.nextButton,
+.prevButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .1s opacity, .1s transform;
+}
+
+.nextButton {
+    right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover,
+    &.active {
+        opacity: .5;
+        transform: translateY(-50%) translateX(8%);
+    }
+}
+
+.prevButton {
+    left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    &:hover,
+    &.active {
+        opacity: .8;
+        transform: translateY(-50%) translateX(-7%);
+    }
+}

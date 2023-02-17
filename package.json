@@ -33,6 +33,7 @@
 		"remark-parse": "^10.0.1",
 		"remark-rehype": "^10.1.0",
 		"sass": "^1.57.1",
+		"sharp": "^0.31.3",
 		"swr": "^2.0.0",
 		"terser-webpack-plugin": "^5.3.6",
 		"the-new-css-reset": "^1.8.2",

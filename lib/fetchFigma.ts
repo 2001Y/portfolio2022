@@ -1,6 +1,6 @@
 import { Client } from 'figma-js';
 
-export default async function fetchFigma(fileId, pageName) {
+export default async function fetchFigma(fileId: string, pageName: string): Promise<any> {
 
     const client = await Client({
         personalAccessToken: process.env.FIGMA_ACCESS_TOKEN,
@@ -9,11 +9,11 @@ export default async function fetchFigma(fileId, pageName) {
     const fileResponse = await client.file(fileId);
     const file = fileResponse.data;
 
-    const page = file.document.children.find((node) => node.name === pageName);
+    const page = file.document.children.find((node: any) => node.name === pageName);
 
-    const frames = page.children.filter((node) => node.type === 'FRAME');
+    const frames = (page as any).children.filter((node: any) => node.type === 'FRAME');
 
-    const imagesPromises = frames.map(async (frame) => {
+    const imagesPromises = frames.map(async (frame: any) => {
         const imageResponse = await client.fileImages(fileId, {
             format: 'jpg',
             ids: [frame.id],

@@ -2,11 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import classNames from "classnames";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import c_V from "styles/_V.module.scss";
 
 import c_header from "styles/header.module.scss";
+
+import useMatchMedia from "lib/useMatchMedia"
 
 export default function Output() {
 	let [profile, setProfile] = useState(true);
@@ -56,21 +58,7 @@ export default function Output() {
 	}
 
 	let [search, setSearch] = useState(false);
-	let [voting, setVoting] = useState(false);
 	let [pageName, setPageName] = useState(router.pathname);
-
-	let [spState, setSpState] = useState(false);
-	useEffect(() => {
-		window.addEventListener("resize", winSize);
-		winSize();
-	}, []);
-	function winSize() {
-		if (window.innerWidth < 800) {
-			setSpState(true);
-		} else {
-			setSpState(false);
-		}
-	}
 
 	let nowPath = pageName.split("/")[1];
 	if (!nowPath) {
@@ -163,7 +151,7 @@ export default function Output() {
 						style={{ "--icon": "url(#menu)" }}
 						onClick={() => set_state_menu(!state_menu)}
 					></div>
-					<div className={classNames({ [c_header.subMenu]: spState })}>
+					<div className={classNames({ [c_header.subMenu]: useMatchMedia(800) })}>
 						<ul
 							className={classNames(c_header.setting, {
 								[c_header.subMenu_open]: state_menu,

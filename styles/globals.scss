@@ -22,6 +22,12 @@ html {
 			}
 		}
 	}
+
+	&[data-header="false"] {
+		header {
+			opacity: 0;
+		}
+	}
 }
 
 body {

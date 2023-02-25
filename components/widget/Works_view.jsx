@@ -146,16 +146,9 @@ export default function Output({ res }) {
 					{res.cfs.embed && (
 						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
 
-							<div
-								className={classNames(c_works.thumbnail)}
-								style={{
-									"--aspect": res.imgSize.aspect,
-								}}
-							>
-								<Carousel className={classNames(c_works.tmb)} res={res.cfs.embed} imgSize={res.imgSize} />
-							</div>
-
+							<Carousel className={classNames(c_works.tmb)} res={res.cfs.embed} imgSize={res.imgSize} />
 						</div>
+
 					)}
 
 					<div className={classNames(c_works.mainArea, c_works.modalWindow)}>

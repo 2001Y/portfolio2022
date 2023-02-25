@@ -10,7 +10,7 @@ import Link from "next/link";
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss";
 
-import useMatchMedia from "lib/useMatchMedia.ts"
+import useMatchMedia from "lib/useMatchMedia"
 
 export default function Output({ res, cat, lock }) {
 	const router = useRouter();
@@ -34,8 +34,6 @@ export default function Output({ res, cat, lock }) {
 		});
 		res = rr;
 	}
-
-	console.log(useMatchMedia(600))
 
 	res = viewF(res, 3.5);
 	useMatchMedia(800) && (res = viewF(res, 2))

@@ -39,13 +39,11 @@ body {
 	--gradient_2: hsl(67.16666666666667, 100%, 70%);
 }
 
-canvas {
-	outline: none;
-}
-
 iframe,
-img {
+img,
+canvas {
 	border: none;
+	outline: none;
 }
 
 #wrap {

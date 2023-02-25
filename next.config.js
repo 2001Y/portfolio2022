@@ -7,12 +7,7 @@ module.exports = {
 	env: {
 		title: "2001Y's Site",
 		domain: "https://2001y.me",
-		wpURL: "https://yoshikitam.wpx.jp/2001y/wp-json/wp/v2",
-		recaptcha: {
-			siteKEY: "6LftP-cfAAAAAHLMQW44OmVE1-TZ6OMx0ZYvUnIk",
-			secretKEY: "6LftP-cfAAAAAI9Z-xUQAazRXpnQ038keebNPsTp",
-		},
-		FIGMA_ACCESS_TOKEN: "figd_kPGM8zEaI4J7FUIkhjq4JbfTxs21os0AGSgZV5OL",
+		wpURL: "https://yoshikitam.wpx.jp/2001y/wp-json/wp/v2"
 	},
 	async redirects() {
 		return [

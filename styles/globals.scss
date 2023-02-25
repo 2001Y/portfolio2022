@@ -37,8 +37,9 @@ canvas {
 	outline: none;
 }
 
-iframe {
-	border: 0;
+iframe,
+img {
+	border: none;
 }
 
 #wrap {

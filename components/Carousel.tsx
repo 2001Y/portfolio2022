@@ -112,7 +112,7 @@ export default function Embed({ res, imgSize }) {
                     >
                         矢印キー や 横スクロール でも操作できます。
                     </div>
-                    
+
                 </>
             )}
         </div>

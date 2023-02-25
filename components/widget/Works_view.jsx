@@ -19,9 +19,6 @@ const CustomLink = ({ children, href }) => (
 		{children}
 	</a>
 );
-const CustomImg = ({ src, width, height, alt }) => (
-	<Image src={src} alt={alt} />
-);
 const processor = unified()
 	.use(rehypeParse, { fragment: true }) // fragmentは必ずtrueにする
 	.use(rehypeReact, {

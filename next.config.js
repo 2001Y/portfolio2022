@@ -12,6 +12,7 @@ module.exports = {
 			siteKEY: "6LftP-cfAAAAAHLMQW44OmVE1-TZ6OMx0ZYvUnIk",
 			secretKEY: "6LftP-cfAAAAAI9Z-xUQAazRXpnQ038keebNPsTp",
 		},
+		FIGMA_ACCESS_TOKEN: "figd_kPGM8zEaI4J7FUIkhjq4JbfTxs21os0AGSgZV5OL",
 	},
 	async redirects() {
 		return [
@@ -44,7 +45,7 @@ module.exports = {
 		prependData: '@import "styles/_prepend.scss";',
 	},
 	images: {
-		domains: ["yoshikitam.wpx.jp", "github.com"],
+		domains: ["yoshikitam.wpx.jp", "github.com", "figma-alpha-api.s3.us-west-2.amazonaws.com"],
 		formats: ["image/avif", "image/webp"],
 	},
 	webpack(config, options) {

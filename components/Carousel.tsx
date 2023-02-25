@@ -4,6 +4,7 @@ import c_carousel from "styles/components/carousel.module.scss"
 import classNames from "classnames";
 
 export default function Embed({ res, imgSize }) {
+
     const containerRef = useRef(null);
     const [moduleState, setModuleState] = useState(true);
     const [nextState, setNextState] = useState(false);
@@ -55,8 +56,8 @@ export default function Embed({ res, imgSize }) {
                             <Image
                                 src={embed.image}
                                 alt="embed image"
-                                height={imgSize.height}
-                                width={imgSize.width}
+                                width={830}
+                                height={830 * imgSize.aspect}
                             />
                         )}
                         {embed.code && (
@@ -111,6 +112,7 @@ export default function Embed({ res, imgSize }) {
                     >
                         矢印キー や 横スクロール でも操作できます。
                     </div>
+                    
                 </>
             )}
         </div>

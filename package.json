@@ -15,6 +15,7 @@
 		"@types/recoil": "^0.0.9",
 		"body-scroll-lock": "^4.0.0-beta.0",
 		"classnames": "^2.3.2",
+		"figma-js": "^1.16.0",
 		"lodash.throttle": "^4.1.1",
 		"matter-js": "^0.18.0",
 		"next": "^13.1.1",

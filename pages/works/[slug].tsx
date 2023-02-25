@@ -25,6 +25,7 @@ export default function Output({ res, cat }) {
 
 import { GETwpList } from "lib/fetch";
 import { unified } from "unified";
+import fetchFigma from "lib/fetchFigma";
 import remarkParse from "remark-parse";
 import remarkGfm from 'remark-gfm'
 import remarkRehype from "remark-rehype";
@@ -34,7 +35,7 @@ import rehypeSlug from 'rehype-slug'
 export async function getStaticProps({ params }) {
    let res = await GETwpList("/works");
    let cat = await GETwpList("/works_cat");
-   res.map(async (e, i) => {
+   await Promise.all(res.map(async (e, i) => {
       if (e.slug == params.slug) {
 
          // 本文
@@ -62,26 +63,31 @@ export async function getStaticProps({ params }) {
 
          // カールセル
          if (e.cfs.embed) {
-            e.cfs.embed = Object.values(e.cfs.embed)
-         } else if (e.cfs.youtube) {
-            e.cfs.embed = [{
-               youtube: e.cfs.youtube
-            }]
-         } else {
-            e.cfs.embed = [{
-               image: e.cfs.img
-            }]
-         }
+            e.cfs.embed = await Promise.all(
+               e.cfs.embed.map(async (embeds, i) => {
+                  let figma_fileID = embeds.figma_fileID;
+                  let figma_pageName = embeds.figma_pageName;
+                  if (figma_fileID && figma_pageName) {
+                     return await fetchFigma(figma_fileID, figma_pageName);
+                  }
+                  return embeds;
+               })
+            );
+            e.cfs.embed = e.cfs.embed.flat();
 
+         } else {
+            e.cfs.img && (e.cfs.embed = [{ image: e.cfs.img }]);
+            e.cfs.youtube && (e.cfs.embed = [{ youtube: e.cfs.youtube }]);
+         }
       } else {
          e.content = "";
       }
+   }));
 
-   })
    return {
       props: {
          res,
-         cat
+         cat,
       },
    };
 }

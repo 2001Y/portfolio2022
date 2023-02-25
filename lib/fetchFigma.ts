@@ -21,7 +21,7 @@ export default async function fetchFigma(fileId: string, pageName: string): Prom
     });
 
     const imageIds = frames.map((frame: any) => frame.id);
-    const batchSize = 50;
+    const batchSize = 25;
     const imageBatches = [];
 
     for (let i = 0; i < imageIds.length; i += batchSize) {

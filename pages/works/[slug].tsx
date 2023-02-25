@@ -58,7 +58,15 @@ export async function getStaticProps({ params }) {
          let title = e.title;
          const segmenterJp = new Intl.Segmenter('ja-JP', { granularity: 'word' });
          const segments = segmenterJp.segment(title);
-         title = Array.from(segments).map((target) => target.segment == '\n' ? '<br>' : `<span style="display: inline-block">${target.segment}</span>`).join('');
+         title = Array.from(segments).map((target) => {
+            if (target.segment == '\n') {
+               return '<br>';
+            } else if (target.segment == ' ') {
+               return '<span style="display: inline"> </span>';
+            } else {
+               return `<span style="display: inline-block">${target.segment}</span>`;
+            }
+         }).join('');
          e.title_html = title;
 
          // カールセル

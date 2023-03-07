@@ -1,17 +1,15 @@
 import Head from "components/Head";
-import Image from "next/image";
 import Link from "next/link";
 
 import c_works from "styles/works.module.scss";
 
-import { useEffect, useLayoutEffect, useState, createElement } from "react";
+import { useEffect, useState, createElement } from "react";
 import Router, { useRouter } from "next/router";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import classNames from "classnames";
 
-import ImgLupe from "components/ImgLupe";
 import Carousel from "components/Carousel";
 
 const CustomLink = ({ children, href }) => (
@@ -30,17 +28,24 @@ const processor = unified()
 
 export default function Output({ res }) {
 	const router = useRouter();
-	let params = router.query;
 	let [state_open, set_state_open] = useState(false);
-	let [state_youtube, set_state_youtube] = useState(false);
-	const [state_ImgLupe, set_state_ImgLupe] = useState(false);
 
 	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
 	const queryParams = JSON.parse(JSON.stringify(router.query));
 	delete queryParams[dynamicRoutesName];
 
+	const handleKeyUp = (event) => {
+		if (event.key === 'Escape') {
+			delayPushPage("/");
+		}
+	};
+
 	useEffect(() => {
 		set_state_open(true);
+		document.addEventListener('keyup', handleKeyUp);
+		return () => {
+			document.removeEventListener('keyup', handleKeyUp);
+		};
 	}, []);
 
 	function delayPushPage(url) {
@@ -79,76 +84,12 @@ export default function Output({ res }) {
 					}
 				}}
 			>
-				<ImgLupe
-					src={res.cfs.img}
-					height={res.imgSize.height}
-					width={res.imgSize.width}
-					alt={res.title + "のサムネイル"}
-					position={state_ImgLupe}
-				/>
 				<div className={c_works.main}>
-					{/* {res.cfs.img && (
-						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
-							<div
-								className={classNames(c_works.tmb, {
-									[c_works.vertical]: res.imgSize.aspect < 1,
-									[c_works.youtube]: res.cfs.youtube,
-								})}
-								style={{
-									"--aspect": res.imgSize.aspect,
-								}}
-								onClick={() => set_state_youtube(res.cfs.youtube)}
-								// onMouseEnter={() => set_state_ImgLupe(true)}
-								onMouseMove={(e) => {
-									const rect = e.currentTarget.getBoundingClientRect();
-									let position = {
-										x: ((e.clientX - rect.left) / rect.width) * 100,
-										y: ((e.clientY - rect.top) / rect.height) * 100,
-									};
-									set_state_ImgLupe(position);
-								}}
-								onMouseLeave={() => set_state_ImgLupe(false)}
-							>
-								{res.cfs.youtube && state_youtube && (
-									<iframe
-										className={classNames(c_works.youtube, {
-											[c_works.play]: state_youtube,
-										})}
-										src={
-											"https://www.youtube.com/embed/" +
-											state_youtube +
-											"?autoplay=1"
-										}
-										title={res.title}
-										frameBorder="0"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-										allowFullScreen
-									></iframe>
-								)}
-								<Image
-									className={c_works.tmbIMG}
-									src={res.cfs.img}
-									height={res.imgSize.height}
-									width={res.imgSize.width}
-									alt={res.title + "のサムネイル"}
-								/>
-								{res.category && (
-									<ul className={classNames(c_works.categoryList)}>
-										{res.category.map((e, i) => (
-											<li key={i}>{e.name}</li>
-										))}
-									</ul>
-								)}
-							</div>
-						</div>
-					)} */}
 
 					{res.cfs.embed && (
 						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
-
 							<Carousel className={classNames(c_works.tmb)} res={res.cfs.embed} imgSize={res.imgSize} />
 						</div>
-
 					)}
 
 					<div className={classNames(c_works.mainArea, c_works.modalWindow)}>
@@ -195,6 +136,12 @@ export default function Output({ res }) {
 					</div>
 				)} */}
 			</section>
+
+			{/* <div
+				className={classNames(c_works.backButton)}
+			>
+				Back to Works
+			</div> */}
 		</>
 	);
 }

@@ -485,3 +485,11 @@
 		margin-bottom: calc(var(--shadowSize) + 2rem);
 	}
 }
+
+.backButton {
+	font-size: 1.2rem;
+	position: fixed;
+	bottom: calc(var(--header_height));
+	left: calc(var(--padding) * 2);
+	z-index: 9999;
+}

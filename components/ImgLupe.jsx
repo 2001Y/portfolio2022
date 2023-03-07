@@ -4,6 +4,7 @@ import c_imgLupe from "styles/components/imgLupe.module.scss";
 
 export default function Output({ src, height, width, alt, position }) {
 	// console.log(state_ImgLupe);
+	
 	return (
 		<section className={c_imgLupe.view}>
 			<div

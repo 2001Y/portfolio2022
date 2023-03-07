@@ -21,19 +21,22 @@ export default function Embed({ res, imgSize }) {
 
     const handleKeyDown = (event) => {
         if (event.key === 'ArrowRight') {
-            handleScroll('next');
             setNextState(true)
         } else if (event.key === 'ArrowLeft') {
-            handleScroll('prev');
             setPrevState(true)
         }
     };
     const handleKeyUp = (event) => {
         if (event.key === 'ArrowRight') {
+            handleScroll('next');
             setNextState(false)
         } else if (event.key === 'ArrowLeft') {
+            handleScroll('prev');
             setPrevState(false)
+        } else if (event.key === 'Escape') {
+            zoomState && setZoomState(false);
         }
+
     };
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
@@ -60,7 +63,8 @@ export default function Embed({ res, imgSize }) {
         >
             <div
                 className={classNames(
-                    c_carousel.carousel
+                    c_carousel.carousel,
+                    { [c_carousel.zoom]: zoomState }
                 )}
                 onDoubleClick={() => (setZoomState(!zoomState))}
             >
@@ -98,47 +102,56 @@ export default function Embed({ res, imgSize }) {
                     ))}
                 </div>
 
-                {(res.length > 1) && (
-                    <>
-                        <button
-                            className={classNames(
-                                c_carousel.zoomButton,
-                                { [c_carousel.active]: zoomState }
-                            )}
-                            onClick={() => (setZoomState(!zoomState))}
-                        >
-                            □
-                        </button>
-                        <button
-                            className={classNames(
-                                c_carousel.nextButton,
-                                { [c_carousel.active]: nextState }
-                            )}
-                            onClick={() => handleScroll('next')}
-                        >
-                            ＞
-                        </button>
-                        <button
-                            className={classNames(
-                                c_carousel.prevButton,
-                                { [c_carousel.active]: prevState }
-                            )}
-                            onClick={() => handleScroll('prev')}
-                        >
-                            ＜
-                        </button>
+
                         <div
                             className={classNames(
-                                c_carousel.module,
-                                { [c_carousel.open]: moduleState }
+                                c_carousel.buttonList,
+                                { [c_carousel.active]: nextState }
                             )}
-                            onClick={() => setModuleState(false)}
                         >
-                            矢印キー や 横スクロール でも操作できます。
+                            {(res.length > 1) && (
+                                <button
+                                    className={classNames(
+                                        c_carousel.prevButton,
+                                        { [c_carousel.active]: prevState }
+                                    )}
+                                    onClick={() => handleScroll('prev')}
+                                >
+                                    ＜
+                                </button>
+                            )}
+                            <button
+                                className={classNames(
+                                    c_carousel.zoomButton,
+                                    { [c_carousel.active]: zoomState }
+                                )}
+                                onClick={() => (setZoomState(!zoomState))}
+                            >
+                                □
+                            </button>
+                            {(res.length > 1) && (
+                                <button
+                                    className={classNames(
+                                        c_carousel.nextButton,
+                                        { [c_carousel.active]: nextState }
+                                    )}
+                                    onClick={() => handleScroll('next')}
+                                >
+                                    ＞
+                                </button>
+                            )}
                         </div>
-
-                    </>
-                )}
+                        {(res.length > 1) && (
+                            <div
+                                className={classNames(
+                                    c_carousel.module,
+                                    { [c_carousel.open]: moduleState }
+                                )}
+                                onClick={() => setModuleState(false)}
+                            >
+                                矢印キー や 横スクロール でも操作できます。
+                            </div>
+                        )}
             </div>
 
             <div

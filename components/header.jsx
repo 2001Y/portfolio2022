@@ -27,21 +27,26 @@ export default function Output() {
 		const colorRange = 100;
 
 		let count = 0;
+		let lastTimestamp = 0;
 
-		function animate() {
-			count = (count + 0.5) % 360;
-			color(count);
+		function animate(timestamp) {
+			// 前回の処理から0.5秒以上経過していた場合に処理を実行する
+			if (timestamp - lastTimestamp >= 100) {
+				count = (count + 1) % 360;
+				color(count);
+				lastTimestamp = timestamp;
+			}
 			requestAnimationFrame(animate);
 		}
+		animate();
+
 
 		function color(e) {
 			for (let i = 0; i < pointCount; i++) {
-				const h = (e + (colorRange / pointCount) * i) % 360;
+				const h = Math.floor((e + (colorRange / pointCount) * i) % 360);
 				body.style.setProperty(`--gradient_${i}`, `hsl(${h}, 100%, 70%)`);
 			}
 		}
-
-		animate();
 
 		// subMenuを自動的に閉じる
 		window.setTimeout(() => {

@@ -33,7 +33,7 @@ module.exports = {
 			},
 		];
 	},
-	// Custom
+	// Customa
 	reactStrictMode: true,
 	swcMinify: true,
 	sassOptions: {

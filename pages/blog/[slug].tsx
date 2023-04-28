@@ -91,21 +91,23 @@ export default function Output({ res, content }) {
 import { GETpost } from "lib/fetch";
 
 import { createElement } from "react";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
+import { unified } from "unified"; //Markdown を HTML へと変換するために必要な最低限
+import remarkParse from "remark-parse"; //Markdown を HTML へと変換するために必要な最低限
 import remarkGfm from 'remark-gfm'
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
+import remarkRehype from "remark-rehype"; //Markdown を HTML へと変換するために必要な最低限
+import rehypeStringify from "rehype-stringify"; //Markdown を HTML へと変換するために必要な最低限
 import rehypePrism from '@mapbox/rehype-prism';
 import rehypeParse from "rehype-parse";
 import { Fragment } from 'react'
 import rehypeReact from "rehype-react";
 import rehypeSlug from 'rehype-slug'
+import rehypeRaw from 'rehype-raw'
+import { decode } from 'html-entities';
 export async function getStaticProps({ params }) {
-	// console.log(params)
 	let res = await GETpost(params.slug);
 	let content = await unified()
 		// Markdown → HTML
+		// .use(rehypeRaw) //HTMLなどの文字化けを解消
 		.use(remarkParse)
 		.use(remarkGfm) //表対応
 		.use(remarkRehype, {
@@ -117,14 +119,8 @@ export async function getStaticProps({ params }) {
 		})
 		.use(rehypeStringify, { allowDangerousHtml: true })
 		.process(
-			res.content
-				.replace(/(&lt;)/g, '<')
-				.replace(/(&gt;)/g, '>')
-				.replace(/(&quot;)/g, '"')
-				.replace(/(&#39;)/g, "'")
-				.replace(/(&amp;)/g, '&')
+			decode(res.content)
 		);
-	console.log(content)
 	res.content = String(
 		content
 	);

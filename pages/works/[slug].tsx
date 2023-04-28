@@ -48,7 +48,7 @@ export async function getStaticProps({ params }) {
             })
             .use(rehypeSlug) //見出しにid
             .use(rehypePrism, {
-               ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
+               ignoreMissing: true,  // 存在しない言語名を書いていた時に無視する
             })
             .use(rehypeStringify, { allowDangerousHtml: true })
             .process(e.content);

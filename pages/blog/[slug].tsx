@@ -98,26 +98,70 @@ import remarkRehype from "remark-rehype"; //Markdown を HTML へと変換する
 import rehypeStringify from "rehype-stringify"; //Markdown を HTML へと変換するために必要な最低限
 import rehypePrism from '@mapbox/rehype-prism';
 import rehypeParse from "rehype-parse";
-import { Fragment } from 'react'
 import rehypeReact from "rehype-react";
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
-import rehypeRaw from 'rehype-raw'
 import { decode } from 'html-entities';
+import remarkBreaks from "remark-breaks";
+import remarkUnwrapImages from 'remark-unwrap-images'
+
+// 画像が連続している場合にdivで囲む関数
+function wrapImages() {
+	return function (tree: any) {
+		let images = []
+		for (let i = 0; i < tree.children.length; i++) {
+			let node = tree.children[i]
+			if (node.type === 'image') {
+				// 画像ノードなら配列に追加
+				images.push(node)
+			} else {
+				// 画像ノード以外なら配列をリセット
+				images = []
+			}
+			if (images.length > 1) {
+				// 画像ノードが2つ以上連続している場合
+				if (i === tree.children.length - 1 || tree.children[i + 1].type !== 'image') {
+					// 最後のノードか次のノードが画像ノードでない場合
+					// divノードを作成して画像ノードを子要素にする
+					let div = {
+						type: 'element',
+						tagName: 'div',
+						properties: {},
+						children: images,
+					}
+					// 配列の先頭の位置にdivノードを挿入
+					let index = i - images.length + 1
+					tree.children.splice(index, images.length, div)
+					// 配列をリセット
+					images = []
+				}
+			}
+		}
+	}
+}
 export async function getStaticProps({ params }) {
 	let res = await GETpost(params.slug);
 	let content = await unified()
 		// Markdown → HTML
-		// .use(rehypeRaw) //HTMLなどの文字化けを解消
 		.use(remarkParse)
+		.use(remarkUnwrapImages)
 		.use(remarkGfm) //表対応
+		.use(remarkBreaks)
 		.use(remarkRehype, {
 			allowDangerousHtml: true // <html>など
 		})
+		.use(wrapImages) // ここに wrapImages を追加
 		.use(rehypeSlug) //見出しにid
+		.use(rehypeAutolinkHeadings, {
+			// behavior: "wrap"
+		})
 		.use(rehypePrism, {
 			ignoreMissing: true  // 存在しない言語名を書いていた時に無視する
 		})
-		.use(rehypeStringify, { allowDangerousHtml: true })
+		.use(rehypeStringify, {
+			allowDangerousHtml: true,
+			// closeSelfClosing: true,
+		})
 		.process(
 			decode(res.content)
 		);

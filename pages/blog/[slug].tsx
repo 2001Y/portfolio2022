@@ -150,7 +150,7 @@ export async function getStaticProps({ params }) {
 		.use(remarkRehype, {
 			allowDangerousHtml: true // <html>など
 		})
-		.use(wrapImages) // ここに wrapImages を追加
+		// .use(wrapImages) // ここに wrapImages を追加
 		.use(rehypeSlug) //見出しにid
 		.use(rehypeAutolinkHeadings, {
 			// behavior: "wrap"

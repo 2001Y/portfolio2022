@@ -1,11 +1,11 @@
-import Head from "components/Head";
-import WorksList_post from "components/widget/WorksList_post";
-import { viewF } from "lib/viewF.ts";
-
-import { useLayoutEffect, useEffect } from "react";
+import { useLayoutEffect, useEffect, memo } from "react";
 import Router, { useRouter } from "next/router";
 import classNames from "classnames";
 import Link from "next/link";
+
+import WorksList_post from "components/widget/WorksList_post";
+const WorksList_post_Memo = memo(WorksList_post);
+import { viewF } from "lib/viewF.ts";
 
 import c_V from "styles/_V.module.scss";
 import c_works from "styles/works.module.scss";
@@ -108,7 +108,7 @@ export default function Output({ res, cat, lock }) {
 							<li key={i}>
 								<ul>
 									{e.map((e1, i1) => (
-										<WorksList_post key={i1} res={e1} countSum={e.length} />
+										<WorksList_post_Memo key={i1} res={e1} countSum={e.length} />
 									))}
 								</ul>
 							</li>

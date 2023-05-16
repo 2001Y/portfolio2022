@@ -1,13 +1,15 @@
+import { memo } from 'react';
+
 import Head from "components/Head";
 import WorksList from "components/widget/WorksList"
 
 export default function Output({ res, cat }) {
 	let title = "2001Y's Works";
-
+	const WorksList_Memo = memo(WorksList);
 	return (
 		<>
 			<Head title={title} />
-			<WorksList cat={cat} res={res} lock={false} />
+			<WorksList_Memo cat={cat} res={res} lock={false} />
 		</>
 	);
 }

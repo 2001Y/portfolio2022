@@ -1,11 +1,11 @@
-import NextHead from 'next/head'
+// import NextHead from 'next/head'
 import Head from "components/Head";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Script from 'next/script'
+// import { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+// import Script from 'next/script'
 
 import c_Heading from "styles/heading.module.scss";
 import c_blog from "styles/blog.module.scss";
@@ -27,26 +27,26 @@ const processor = unified()
 	});
 
 export default function Output({ res, content }) {
-	const { asPath } = useRouter()
-	useEffect(() => {
-		var ads = document.getElementsByClassName("adsbygoogle").length;
-		for (var i = 0; i < ads; i++) {
-			try {
-				(window.adsbygoogle = window.adsbygoogle || []).push({})
-			} catch (e) { }
-		}
-	}, [asPath])
+	// const { asPath } = useRouter()
+	// useEffect(() => {
+	// 	var ads = document.getElementsByClassName("adsbygoogle").length;
+	// 	for (var i = 0; i < ads; i++) {
+	// 		try {
+	// 			(window.adsbygoogle = window.adsbygoogle || []).push({})
+	// 		} catch (e) { }
+	// 	}
+	// }, [asPath])
 	// console.log(res)
 	return (
 		<>
-			<Script
+			{/* <Script
 				id="adsence"
 				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
 				crossOrigin="anonymous"
 				async={true}
 				strategy="afterInteractive"
 				onError={(e) => { console.error('Script failed to load', e) }}
-			/>
+			/> */}
 			<Head title={res.title && res.title + "｜2001Y's Blog"} />
 			<div className={c_Post.meta}>
 				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
@@ -67,7 +67,7 @@ export default function Output({ res, content }) {
 			<article className={c_Post.article}>
 				{processor.processSync(res.content).result}
 			</article>
-			<div className={"kooookoku"}>
+			{/* <div className={"kooookoku"}>
 				<div key={asPath}>
 					<ins className="adsbygoogle"
 						style={{ display: "block" }}
@@ -82,7 +82,7 @@ export default function Output({ res, content }) {
 						data-ad-slot="6726245863"
 						data-full-width-responsive="false"></ins>
 				</div>
-			</div>
+			</div> */}
 
 		</>
 	);

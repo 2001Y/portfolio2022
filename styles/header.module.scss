@@ -1,7 +1,41 @@
+.blur {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 9;
+	pointer-events: none;
+
+	&::after,
+	&:before {
+		content: "";
+		width: 100%;
+		left: 0;
+		position: absolute;
+		backdrop-filter: blur(999999px);
+		background: var(--c_bg_body);
+		mask-image: linear-gradient(var(--c_bg_body), transparent);
+		z-index: -9999;
+	}
+
+	&:before {
+		top: 0;
+		height: calc(var(--header_height) + 5.4vw);
+	}
+
+	&::after {
+		bottom: 0;
+		transform: rotate(180deg);
+		height: 10vh;
+	}
+}
+
 .header {
 	@media (max-width: 500px) {
 		font-size: 0.9em;
 	}
+
 	width: 100vw;
 	height: 100%;
 	font-weight: bold;
@@ -13,33 +47,42 @@
 	pointer-events: none;
 	display: flex;
 	flex-direction: column;
+
 	@media (max-width: 800px) {
 		justify-content: flex-end;
 	}
-	> * {
+
+	>* {
 		position: relative;
-		> * {
+
+		>* {
 			pointer-events: auto;
+
 			&:nth-child(1) {
 				flex: 5;
 			}
+
 			&:nth-child(2) {
 				flex: 1;
 			}
+
 			&:nth-child(3) {
 				flex: 5;
 				display: flex;
 				justify-content: flex-end;
 			}
-			> * {
+
+			>* {
 				width: fit-content;
 			}
 		}
 	}
 }
+
 .fixed {
 	display: flex;
 	justify-content: space-between;
+
 	&.true {
 		top: 0;
 	}
@@ -55,16 +98,20 @@
 	box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 	position: relative;
 	cursor: pointer;
+
 	span {
 		font-size: 0.7em;
 		opacity: 0.3;
 	}
+
 	h1 {
 		margin-right: 1.3rem;
+
 		@media (max-width: 800px) {
 			display: none;
 		}
 	}
+
 	.profileIMGwrap {
 		width: $profileIMGwrap_size;
 		height: $profileIMGwrap_size;
@@ -74,6 +121,7 @@
 		place-items: center;
 		box-shadow: var(--shadow_menuActive);
 		margin-left: -1px;
+
 		.profileIMG {
 			width: 85%;
 			height: 85%;
@@ -89,6 +137,7 @@
 	background: var(--c_bg_menu);
 	border-radius: 99rem;
 	box-shadow: var(--shadow_menu), var(--shadow_menuSub);
+
 	&::after,
 	&::before {
 		content: "";
@@ -98,17 +147,21 @@
 		top: calc((100% - $borderHeight) / 2);
 		z-index: 0;
 	}
+
 	&::before {
 		left: calc($aWidth + var(--header_padding));
 	}
+
 	&::after {
 		left: calc($aWidth * 2 + var(--header_padding));
 	}
+
 	ul {
 		display: flex;
 		align-items: center;
 		padding: 0 var(--header_padding);
 		background: none;
+
 		li {
 			a {
 				height: var(--header_height);
@@ -117,15 +170,22 @@
 				justify-content: center;
 				align-items: center;
 			}
+
 			z-index: 99;
 			display: flex;
-			transition: opacity 0.3s, box-shadow 0.1s, transform 0.1s;
-			will-change: opacity, box-shadow, transform;
+			transition: opacity 0.3s,
+			box-shadow 0.1s,
+			transform 0.1s;
+			will-change: opacity,
+			box-shadow,
+			transform;
+
 			@include hover {
 				opacity: 0.6;
 				transform: scale(0.94);
 			}
 		}
+
 		&::after {
 			content: "";
 			box-shadow: var(--shadow_menuActive);
@@ -149,6 +209,7 @@
 	background-size: calc(100% + 2px) calc(100% + 2px);
 	background-position: -1px -1px;
 }
+
 .border_after {
 	&::after {
 		border: solid rgba(var(--c_bg_body_light_rgb), 0.2) 1px;
@@ -156,28 +217,32 @@
 		background-position: -1px -1px;
 	}
 }
+
 .subMenu {
 	overflow: hidden;
 	pointer-events: none;
-	> * {
+
+	>* {
 		pointer-events: auto;
 	}
+
 	padding: 0.5rem;
-	margin-left: calc(
-		-0.5rem + ($profileIMGwrap_size - var(--subMenu_width)) / 2
-	);
+	margin-left: calc(-0.5rem + ($profileIMGwrap_size - var(--subMenu_width)) / 2);
 	// transform: translateY(-0.7rem);
 	position: absolute;
 	z-index: -1;
 	top: calc(var(--header_height) / 2);
+
 	@media (min-width: 800px) {
 		padding-top: 0;
 	}
+
 	@media (max-width: 800px) {
 		padding-bottom: 0;
 		top: auto;
 		bottom: calc(var(--header_height) / 2);
 	}
+
 	ul {
 		width: var(--subMenu_width);
 		display: grid;
@@ -186,35 +251,45 @@
 		box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 		transform: translateY(-100%);
 		border-radius: 0 0 999rem 999rem;
+
 		@media (max-width: 800px) {
 			transform: translateY(100%);
 			border-radius: 999rem 999rem 0 0;
 		}
+
 		transition: transform 0.3s;
 		padding: 1rem 0;
+
 		@media (min-width: 800px) {
 			padding-top: 1.8em;
 		}
+
 		@media (max-width: 800px) {
 			padding-bottom: 1.8em;
 		}
+
 		&.subMenu_open {
 			transform: translateY(0);
 		}
+
 		li {
 			width: 100%;
 			display: grid;
 			place-items: center;
+
 			@include hover {
 				background: rgba(var(--c_bg_reversal_rgb), 0.1);
 			}
+
 			a {
 				padding: var(--header_subMenu_icon_padding);
 				display: block;
 				width: 100%;
+
 				&.icon {
 					background: none !important;
 					position: relative;
+
 					&::before,
 					&::after {
 						content: "";
@@ -228,12 +303,15 @@
 						transition: background 0.3s, opacity 0.3s;
 						will-change: background, opacity;
 					}
+
 					&::before {
 						background: var(--c_font_dark);
 					}
+
 					&::after {
 						opacity: 0;
 					}
+
 					@include hover {
 						&::after {
 							opacity: 1;
@@ -241,6 +319,7 @@
 					}
 				}
 			}
+
 			.iconBtn {
 				background: none;
 				box-shadow: none;
@@ -249,6 +328,7 @@
 		}
 	}
 }
+
 .iconBtn {
 	width: calc(var(--header_height) + 0.2em);
 	height: calc(var(--header_height) + 0.2em);
@@ -258,16 +338,20 @@
 	cursor: pointer;
 	transition: box-shadow 0.1s, transform 0.1s;
 	will-change: box-shadow, transform;
+
 	@mixin iconBtn_hover() {
 		transform: scale(0.97);
 		box-shadow: var(--shadow_menuHover), var(--shadow_menuHoverSub);
 	}
+
 	@include hover {
 		@include iconBtn_hover;
 	}
+
 	background: var(--c_bg_menu);
 	position: relative;
 	--iconSize: 50%;
+
 	&::before,
 	&::after {
 		position: absolute;
@@ -280,37 +364,48 @@
 		transition: background 0.3s, opacity 0.3s;
 		will-change: background, opacity;
 	}
+
 	&::before {
 		background: var(--c_font_light);
 	}
+
 	&::after {
 		opacity: 0;
 	}
+
 	&.spMenu {
 		--iconSize: 40%;
 		display: none;
+
 		@media (max-width: 800px) {
 			display: block;
 		}
 	}
+
 	&.darkmode_true {
 		@include iconBtn_hover;
 		background: rgba(var(--c_bg_light_rgb), 0.15);
+
 		&::before {
 			opacity: 0;
 		}
+
 		&::after {
 			opacity: 1;
 		}
 	}
+
 	&.filter {
 		display: none;
+
 		&.index {
 			display: block;
 		}
+
 		position: absolute;
 		bottom: $header_padding;
 		right: $header_padding;
+
 		@media (max-width: 800px) {
 			top: $header_padding;
 		}
@@ -322,9 +417,11 @@
 	display: flex;
 	gap: 0.5rem;
 	align-items: center;
+
 	li {
 		&.searchWrap {
 			position: relative;
+
 			form {
 				height: calc(var(--header_height) + 0.4em);
 				position: absolute;
@@ -334,6 +431,7 @@
 				will-change: width;
 				width: 0;
 				overflow: hidden;
+
 				input {
 					margin-top: 0.1em;
 					width: 15em;
@@ -345,7 +443,9 @@
 					box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 				}
 			}
+
 			&.searchWrap_true {
+
 				// width: 10rem;
 				form {
 					// transform: translateX(var(--header_height));

@@ -10,7 +10,8 @@ import classNames from "classnames";
 import c_Heading from "styles/heading.module.scss";
 import c_blog from "styles/blog.module.scss";
 import c_Post from "styles/post.module.scss";
-
+import AdSence from "components/AdSence/AdSence"
+import CustomH2 from "components/unified/CustomH2"
 
 const CustomLink = ({ children, href }) => (
 	<a href={href} target="_blank" rel="noopener noreferrer">
@@ -23,6 +24,7 @@ const processor = unified()
 		createElement,
 		components: {
 			a: CustomLink, // ←ここで、<a>を<CustomLink>に置き換えるよう設定
+			h2: CustomH2
 		},
 	});
 
@@ -83,7 +85,7 @@ export default function Output({ res, content }) {
 						data-full-width-responsive="false"></ins>
 				</div>
 			</div> */}
-
+			{/* <AdSence /> */}
 		</>
 	);
 }

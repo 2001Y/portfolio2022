@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from 'next/script'
 
-export default function Output({ res, content }) {
+export default function Output() {
+
     const { asPath } = useRouter()
     useEffect(() => {
         var ads = document.getElementsByClassName("adsbygoogle").length;
@@ -13,24 +14,24 @@ export default function Output({ res, content }) {
         }
     }, [asPath])
     // console.log(res)
+
     return (
         <>
             <Script
-                id="adsence"
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
                 crossOrigin="anonymous"
                 async={true}
                 strategy="afterInteractive"
                 onError={(e) => { console.error('Script failed to load', e) }}
             />
-            <div className={"kooookoku"}>
-                <div key={asPath}>
+            {/* <div className={"kooookoku"}>
+                <div key={asPath}> */}
                     <ins className="adsbygoogle"
                         style={{ display: "block" }}
                         data-ad-client="ca-pub-3750999099107987"
                         data-ad-slot="7157516277"
                         data-full-width-responsive="false"></ins>
-                </div>
+                {/* </div>
                 <div key={asPath}>
                     <ins className="adsbygoogle"
                         style={{ display: "block" }}
@@ -38,7 +39,7 @@ export default function Output({ res, content }) {
                         data-ad-slot="6726245863"
                         data-full-width-responsive="false"></ins>
                 </div>
-            </div>
+            </div> */}
 
         </>
     );

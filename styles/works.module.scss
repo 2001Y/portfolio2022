@@ -4,7 +4,7 @@
 	overflow: hidden;
 	overflow-y: scroll;
 	width: 100vw;
-	height: 100vh;
+	height: var(--100vh);
 
 	position: fixed;
 	top: 0;

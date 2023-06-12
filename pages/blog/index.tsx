@@ -6,8 +6,6 @@ export default function Output({ res, totalpages }) {
     return (
         <>
             <TagListRender res={res} />
-
-
         </>
     );
 }

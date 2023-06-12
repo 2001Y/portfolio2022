@@ -14,21 +14,23 @@ $_headers: (
 		line-height: 1em;
 	}
 	.#{$tag}_tag {
-		&::before,
-		&::after {
-			font-family: var(--baseFont_monospace), var(--baseFont);
-			font-weight: bold;
-			font-size: 0.35em;
-			display: block;
-			opacity: 0.3;
-			line-height: 1em;
-			letter-spacing: 0.1em;
-		}
-		&::before {
-			content: "<#{$tag}>";
-		}
-		&::after {
-			content: "</#{$tag}>";
-		}
+		// margin-bottom: .5em;
+		
+		// &::before,
+		// &::after {
+		// 	font-family: var(--baseFont_monospace), var(--baseFont);
+		// 	font-weight: bold;
+		// 	font-size: 0.35em;
+		// 	display: block;
+		// 	opacity: 0.3;
+		// 	line-height: 1em;
+		// 	letter-spacing: 0.1em;
+		// }
+		// &::before {
+		// 	content: "<#{$tag}>";
+		// }
+		// &::after {
+		// 	content: "</#{$tag}>";
+		// }
 	}
 }

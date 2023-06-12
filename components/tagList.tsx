@@ -6,6 +6,9 @@ import classNames from "classnames";
 import Blog_post from "components/widget/blog_post";
 import { GETpostList } from "lib/fetch";
 import { useState, useEffect } from "react";
+
+// import localFont from 'next/font/local'
+// const myFont = localFont({ src: './public/ia-writer-quattro/iAWriterQuattroS-Bold.woff2' })
 import c_blog from "styles/blog.module.scss";
 import c_Heading from "styles/heading.module.scss";
 import c_V from "styles/_V.module.scss";

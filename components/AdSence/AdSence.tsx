@@ -9,11 +9,12 @@ export default function Output() {
         // var ads = document.getElementsByClassName("adsbygoogle").length;
         // for (var i = 0; i < ads; i++) {
         //     try {
-                (window.adsbygoogle = window.adsbygoogle || []).push({})
-        //     } catch (e) { }
-        // }
+        try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({})
+        } catch (e) {
+            console.error(e);
+        }
     }, [asPath])
-    // console.log(res)
 
     return (
         <>
@@ -24,23 +25,13 @@ export default function Output() {
                 strategy="afterInteractive"
                 onError={(e) => { console.error('Script failed to load', e) }}
             />
-            {/* <div className={"kooookoku"}>
-                <div key={asPath}> */}
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-3750999099107987"
-                        data-ad-slot="7157516277"
-                        data-full-width-responsive="false"></ins>
-                {/* </div>
-                <div key={asPath}>
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-3750999099107987"
-                        data-ad-slot="6726245863"
-                        data-full-width-responsive="false"></ins>
-                </div>
-            </div> */}
-
+            <div key={asPath}>
+                <ins className="adsbygoogle"
+                    style={{ display: "block" }}
+                    data-ad-client="ca-pub-3750999099107987"
+                    data-ad-slot="7157516277"
+                    data-full-width-responsive="false" />
+            </div>
         </>
     );
 }

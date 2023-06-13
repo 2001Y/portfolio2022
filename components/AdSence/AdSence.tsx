@@ -6,9 +6,6 @@ export default function Output() {
 
     const { asPath } = useRouter()
     useEffect(() => {
-        // var ads = document.getElementsByClassName("adsbygoogle").length;
-        // for (var i = 0; i < ads; i++) {
-        //     try {
         try {
             (window.adsbygoogle = window.adsbygoogle || []).push({})
         } catch (e) {
@@ -22,7 +19,7 @@ export default function Output() {
                 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3750999099107987"
                 crossOrigin="anonymous"
                 async={true}
-                strategy="afterInteractive"
+                // strategy="afterInteractive"
                 onError={(e) => { console.error('Script failed to load', e) }}
             />
             <div key={asPath}>

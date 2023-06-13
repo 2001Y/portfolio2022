@@ -30,7 +30,7 @@ export default function Output() {
           data-full-width-responsive="false" />
       </div>
       <style jsx>{`
-        div {
+        div,.adsbygoogle {
           width: 100%;
           height: 100%;
         }

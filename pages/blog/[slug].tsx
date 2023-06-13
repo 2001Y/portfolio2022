@@ -10,7 +10,6 @@ import classNames from "classnames";
 import c_Heading from "styles/heading.module.scss";
 import c_blog from "styles/blog.module.scss";
 import c_Post from "styles/post.module.scss";
-import AdSence from "components/AdSence/AdSence"
 import CustomH2 from "components/unified/CustomH2"
 
 const CustomLink = ({ children, href }) => (

@@ -28,7 +28,10 @@ const processor = unified()
 export default function Output({ res, content }) {
 	return (
 		<>
-			<Head title={res.title && res.title + "｜2001Y's Blog"} />
+			<Head
+				title={res.title && res.title + "｜2001Y's Blog"}
+			// url={}
+			/>
 			<div className={c_Post.meta}>
 				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
 				<time itemProp="datePublished">{res.date}</time>

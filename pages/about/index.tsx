@@ -76,6 +76,20 @@ export default function Output({ res }) {
       <section className={c_ptimeline.timeline} style={{ "--min": "2", "--max": "5" } as React.CSSProperties}>
         <Timeline_post no="1" color="red" />
         <Timeline_post no="2" color="blue" />
+        <Timeline_post no="3" color="#999" />
+        <Timeline_post no="4" color="yellow" />
+        <Timeline_post no="5" color="red" />
+        <Timeline_post no="6" color="blue" />
+        <Timeline_post no="7" color="#999" />
+        <Timeline_post no="8" color="yellow" />
+        <Timeline_post no="9" color="red" />
+        <Timeline_post no="10" color="blue" />
+        <Timeline_post no="11" color="#999" />
+        <Timeline_post no="12" color="yellow" />
+        <Timeline_post no="13" color="red" />
+        <Timeline_post no="14" color="blue" />
+        <Timeline_post no="15" color="#999" />
+        <Timeline_post no="16" color="yellow" />
       </section>
 
     </>

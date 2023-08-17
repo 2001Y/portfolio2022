@@ -80,7 +80,7 @@ export async function tagList(res) {
 	// Latestタグ追加
 	res.push({
 		id: "latest",
-		name: "All",
+		name: "Latest",
 		// slug: "/",
 		tagList: await latestTagList(),
 	});

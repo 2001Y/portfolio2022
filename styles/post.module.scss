@@ -27,11 +27,7 @@
 		&::before {
 			font-family: var(--baseFont_monospace), var(--baseFont);
 			opacity: 0.3;
-			content: "itemprop='" attr(itemprop) "' ";
-
-			@media (max-width: 500px) {
-				content: "" attr(itemprop) ": ";
-			}
+			content: attr(content);
 		}
 	}
 }

@@ -35,9 +35,9 @@ export default function Output({ res, content }) {
 			/>
 			<div className={c_Post.meta}>
 				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
-				<time itemProp="datePublished">{res.date}</time>
+				<time content="Published">{res.date}</time>
 				{res.date !== res.modified && (
-					<time itemProp="dateModified">{res.modified}</time>
+					<time content="Modified">{res.modified}</time>
 				)}
 				<ul className={classNames(c_blog.tagList, c_blog.hover)}>
 					{res.tags.map((e, i) => (

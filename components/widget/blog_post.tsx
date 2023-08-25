@@ -12,7 +12,7 @@ export default function Output({ res }) {
                 <a>
                     <h3 className={c_heading.h3} dangerouslySetInnerHTML={{ __html: res.title }}></h3>
                     <div className={c_blog.post_meta}>
-                        <time itemProp="datePublished">{res.date}</time>
+                        <time content="Published">{res.date}</time>
                         <div>{res.voting.good}</div>
                         {res.tags && (
                             <ul className={classNames(c_blog.tagList)}>

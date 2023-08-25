@@ -4,6 +4,7 @@ import Link from "next/link";
 import classNames from "classnames";
 
 import CustomH2 from "components/unified/CustomH2"
+import css_CutomH2 from "components/unified/CutomH2.module.scss"
 import AdSence from "components/AdSence/AdSence"
 
 import c_Heading from "styles/heading.module.scss";
@@ -50,8 +51,10 @@ export default function Output({ res, content }) {
 			</div>
 			<article className={c_Post.article}>
 				{processor.processSync(res.content).result}
+				<div className={css_CutomH2.adsence}>
+					<AdSence />
+				</div>
 			</article>
-			<AdSence />
 		</>
 	);
 }

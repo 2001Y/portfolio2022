@@ -2,7 +2,7 @@
 .contents {
     display: flex;
     overflow: hidden;
-    overflow-x: scroll;
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     width: 100%;

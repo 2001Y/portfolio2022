@@ -120,9 +120,9 @@
 	color: rgba(var(--c_font_rgb), var(--blog_tagList_opacity));
 
 	display: -webkit-inlinebox;
-overflow: hidden;
--webkit-line-clamp: 1;
--webkit-box-orient: vertical;
+	overflow: hidden;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 
 	li {
 		&:not(:last-child):after {
@@ -151,7 +151,7 @@ overflow: hidden;
 	height: $postList_height;
 	box-sizing: content-box;
 	overflow: hidden;
-	overflow-x: scroll;
+	overflow-x: auto;
 	position: relative;
 
 	// &::before {

@@ -5,7 +5,7 @@ import Script from 'next/script'
 export default function Output() {
 
   const { asPath } = useRouter()
-  useEffect(() => {
+  od() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({})
     } catch (e) {

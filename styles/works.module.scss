@@ -2,7 +2,7 @@
 	color: var(--c_font_dark);
 
 	overflow: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 	width: 100vw;
 	height: var(--100vh);
 
@@ -227,7 +227,7 @@
 	width: 100vw;
 	height: var(--100vh);
 	overflow: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 	background: rgb(#000, 0.5);
 	backdrop-filter: blur(3px);
 	cursor: pointer;
@@ -441,7 +441,7 @@
 		left: 0;
 		width: 100vw;
 		overflow: hidden;
-		overflow-x: scroll;
+		overflow-x: auto;
 		z-index: -1;
 		--padding: 3vw;
 		padding: var(--padding);

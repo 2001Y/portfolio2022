@@ -12,11 +12,13 @@
 .meta {
 	width: fit-content;
 	margin: auto;
-	display: flex;
-	flex-flow: column;
-	align-items: flex-end;
 	margin-top: calc($main_marginTop + 4rem);
 	margin-bottom: 5rem;
+
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	gap: 1rem;
 
 	@media (max-width: 800px) {
 		margin-top: $main_padding;
@@ -25,11 +27,15 @@
 
 	.metaData {
 		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1em;
+
 		time {
+			display: block;
 			&::before {
 				font-family: var(--baseFont_monospace), var(--baseFont);
 				opacity: 0.3;
-				content: attr(content);
 			}
 		}
 	}

@@ -20,7 +20,7 @@ export default function Output({ res }) {
 	let [state_nextPageList, setNextPageList] = useState([[], [], [], []]);
 
 	let title = "2001Y's Blog";
-	if (res[0].name != "All") {
+	if (res[0].name != "Latest") {
 		title = "tag:" + res[0].name + "｜" + title;
 	}
 	// const [ref, inView] = useInView({

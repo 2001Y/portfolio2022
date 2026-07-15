@@ -1,9 +1,65 @@
 import urlJoin from "url-join";
+
+const WORDPRESS_FETCH_ATTEMPTS = 3;
+
+function isRetryableStatus(status) {
+	return status === 408 || status === 429 || (status >= 500 && status <= 599);
+}
+
+async function waitForRetry(attempt, path, error) {
+	console.warn("WordPress API request failed; retrying", {
+		attempt,
+		maxAttempts: WORDPRESS_FETCH_ATTEMPTS,
+		path,
+		errorName: error instanceof Error ? error.name : "UnknownError",
+		errorMessage: error instanceof Error ? error.message : String(error),
+	});
+	await new Promise((resolve) => setTimeout(resolve, attempt * 250));
+}
+
 export async function json(e) {
-	let json = await fetch(urlJoin(process.env.wpURL, e))
-		.then((res) => res.json())
-		.catch((e) => console.error(e));
-	return json;
+	const url = urlJoin(process.env.wpURL, e);
+	const path = new URL(url).pathname;
+	let lastError;
+
+	for (let attempt = 1; attempt <= WORDPRESS_FETCH_ATTEMPTS; attempt++) {
+		let response;
+		try {
+			response = await fetch(url);
+		} catch (error) {
+			lastError = error;
+			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
+				await waitForRetry(attempt, path, error);
+			}
+			continue;
+		}
+
+		if (!response.ok) {
+			const error = new Error(`WordPress API returned HTTP ${response.status} for ${path}`);
+			if (!isRetryableStatus(response.status)) {
+				throw error;
+			}
+			lastError = error;
+			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
+				await waitForRetry(attempt, path, error);
+			}
+			continue;
+		}
+
+		try {
+			return await response.json();
+		} catch (error) {
+			lastError = error;
+			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
+				await waitForRetry(attempt, path, error);
+			}
+		}
+	}
+
+	throw new Error(
+		`WordPress API request failed after ${WORDPRESS_FETCH_ATTEMPTS} attempts for ${path}`,
+		{ cause: lastError }
+	);
 }
 
 export async function GETpostList(tags) {

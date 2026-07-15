@@ -6,8 +6,12 @@
 		"dev": "next dev",
 		"build": "next build && next-sitemap",
 		"start": "next start",
+		"test": "node --test tests/*.test.mjs",
 		"lint": "next lint",
 		"sitemap": "next-sitemap"
+	},
+	"engines": {
+		"node": "24.x"
 	},
 	"dependencies": {
 		"@mapbox/rehype-prism": "^0.8.0",

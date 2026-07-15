@@ -76,12 +76,20 @@ export async function getStaticProps({ params }) {
                   let figma_fileID = embeds.figma_fileID;
                   let figma_pageName = embeds.figma_pageName;
                   if (figma_fileID && figma_pageName) {
-                     return await fetchFigma(figma_fileID, figma_pageName);
+                     try {
+                        return await fetchFigma(figma_fileID, figma_pageName);
+                     } catch (error) {
+                        console.error(`Failed to fetch Figma embed for ${e.slug}`, error);
+                        return null;
+                     }
                   }
                   return embeds;
                })
             );
-            e.cfs.embed = e.cfs.embed.flat();
+            e.cfs.embed = e.cfs.embed.flat().filter(Boolean);
+            if (!e.cfs.embed.length && e.cfs.img) {
+               e.cfs.embed = [{ image: e.cfs.img }];
+            }
 
          } else {
             e.cfs.img && (e.cfs.embed = [{ image: e.cfs.img }]);

@@ -28,7 +28,8 @@ const processor = unified()
 
 export default function Output({ res }) {
 	const router = useRouter();
-	let [state_open, set_state_open] = useState(false);
+	// SSR時点でも本文を表示する。モバイルSafariでhydrationが遅延・失敗しても空画面にしない。
+	let [state_open, set_state_open] = useState(true);
 
 	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
 	const queryParams = JSON.parse(JSON.stringify(router.query));

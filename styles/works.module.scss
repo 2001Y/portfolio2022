@@ -228,6 +228,10 @@
 	height: var(--100vh);
 	overflow: hidden;
 	overflow-y: auto;
+	overscroll-behavior-y: contain;
+	-webkit-overflow-scrolling: touch;
+	touch-action: pan-y;
+	scrollbar-gutter: stable;
 	background: rgb(#000, 0.5);
 	backdrop-filter: blur(3px);
 	cursor: pointer;
@@ -334,6 +338,7 @@
 				margin: auto;
 				cursor: default;
 				pointer-events: auto;
+				touch-action: pan-y;
 
 				// word-break: keep-all;
 				// margin-top: var(--gap);

@@ -1,6 +1,7 @@
 import Head from "components/Head";
 import WorksList from "components/widget/WorksList"
 import Works_view from "components/widget/Works_view";
+import { getWorkAssets, getWorkEmbeds, localizeWorkContent } from "lib/workAssets";
 import { useRouter } from 'next/router'
 
 export default function Output({ res, cat }) {
@@ -25,7 +26,6 @@ export default function Output({ res, cat }) {
 
 import { GETwpList } from "lib/fetch";
 import { unified } from "unified";
-import fetchFigma from "lib/fetchFigma";
 import remarkParse from "remark-parse";
 import remarkGfm from 'remark-gfm'
 import remarkRehype from "remark-rehype";
@@ -69,32 +69,13 @@ export async function getStaticProps({ params }) {
          }).join('');
          e.title_html = title;
 
-         // カールセル
-         if (e.cfs.embed) {
-            e.cfs.embed = await Promise.all(
-               e.cfs.embed.map(async (embeds, i) => {
-                  let figma_fileID = embeds.figma_fileID;
-                  let figma_pageName = embeds.figma_pageName;
-                  if (figma_fileID && figma_pageName) {
-                     try {
-                        return await fetchFigma(figma_fileID, figma_pageName);
-                     } catch (error) {
-                        console.error(`Failed to fetch Figma embed for ${e.slug}`, error);
-                        return null;
-                     }
-                  }
-                  return embeds;
-               })
-            );
-            e.cfs.embed = e.cfs.embed.flat().filter(Boolean);
-            if (!e.cfs.embed.length && e.cfs.img) {
-               e.cfs.embed = [{ image: e.cfs.img }];
-            }
+         const localAssets = getWorkAssets(e.slug);
+         if (localAssets?.cover) e.cfs.img = localAssets.cover;
+         e.content = localizeWorkContent(e.slug, e.content);
 
-         } else {
-            e.cfs.img && (e.cfs.embed = [{ image: e.cfs.img }]);
-            e.cfs.youtube && (e.cfs.embed = [{ youtube: e.cfs.youtube }]);
-         }
+         // 公開ページではFigmaの一時書き出しURLを取得しない。
+         // 永続URLの素材が未同期なら、WordPressの表紙を明示的に表示する。
+         e.cfs.embed = getWorkEmbeds(e.slug, e.cfs);
       } else {
          e.content = "";
       }

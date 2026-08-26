@@ -1728,12 +1728,6 @@ axe-core@^4.6.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.7.2.tgz#040a7342b20765cb18bb50b628394c21bccc17a0"
   integrity sha512-zIURGIS1E1Q4pcrMjp+nnEh+16G56eG/MUllJH8yEvw7asDo7Ac9uhC9KIH5jzpITueEZolfYglnCGIuSBz39g==
 
-axios@^0.21.1:
-  version "0.21.4"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
-  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
-  dependencies:
-    follow-redirects "^1.14.0"
 
 axobject-query@^3.1.1:
   version "3.1.1"
@@ -3074,12 +3068,6 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-figma-js@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/figma-js/-/figma-js-1.16.0.tgz#84bfa6bf8dad25ba106b8b4ffa0d595bd6277e11"
-  integrity sha512-cImQT9DAJp1J0xr6FMUAswXKEnjwrDz4QKAgIBpUyydKAgDS/lm862stjweHp99uco5qLoNv+GbwQWBHyDvDQw==
-  dependencies:
-    axios "^0.21.1"
 
 figures@^3.0.0:
   version "3.2.0"
@@ -3138,10 +3126,6 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-follow-redirects@^1.14.0:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
-  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
 
 for-each@^0.3.3:
   version "0.3.3"

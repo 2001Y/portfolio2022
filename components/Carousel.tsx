@@ -51,8 +51,6 @@ export default function Embed({ res, imgSize }) {
         window.document.documentElement.setAttribute("data-header", String(!zoomState));
     }, [zoomState]);
 
-    console.log(res.length)
-
     return (
         <div
             className={classNames(
@@ -76,7 +74,7 @@ export default function Embed({ res, imgSize }) {
                             {embed.image && (
                                 <Image
                                     src={embed.image}
-                                    alt="embed image"
+                                    alt={embed.name || `作品画像 ${index + 1}`}
                                     width={830}
                                     height={830 * imgSize.aspect}
                                 />

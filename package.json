@@ -8,7 +8,8 @@
 		"start": "next start",
 		"test": "node --test tests/*.test.mjs",
 		"lint": "next lint",
-		"sitemap": "next-sitemap"
+		"sitemap": "next-sitemap",
+		"assets:sync": "node scripts/sync-figma-assets.mjs"
 	},
 	"engines": {
 		"node": "24.x"
@@ -18,7 +19,6 @@
 		"@svgr/webpack": "^8.0.1",
 		"@types/recoil": "^0.0.9",
 		"classnames": "^2.3.2",
-		"figma-js": "^1.16.0",
 		"hast-util-select": "^5.0.5",
 		"html-entities": "^2.3.5",
 		"next": "^13.4.5",

@@ -40,7 +40,7 @@ module.exports = {
 		prependData: '@import "styles/_prepend.scss";',
 	},
 	images: {
-		domains: ["yoshikitam.wpx.jp", "github.com", "figma-alpha-api.s3.us-west-2.amazonaws.com"],
+		domains: ["yoshikitam.wpx.jp", "github.com"],
 		formats: ["image/avif", "image/webp"],
 	},
 	webpack(config, options) {

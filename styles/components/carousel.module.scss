@@ -28,9 +28,12 @@
     pointer-events: none;
     margin: auto;
 
-    width: auto;
+    // width/heightをautoにすると、Safariがaspect-ratioとmax-heightを
+    // 同時に解決できず、carousel全体の高さを0として描画することがある。
+    // 先に表示高さを決め、ポスターの比率から幅も明示する。
+    width: min(var(--tmb_width), calc(55vh * var(--aspect)));
+    height: min(55vh, calc(var(--tmb_width) / var(--aspect)));
     max-width: var(--tmb_width);
-    height: auto;
     max-height: 55vh;
     aspect-ratio: var(--aspect);
 
@@ -70,10 +73,10 @@
 }
 
 .carousel {
-    width: auto;
-    max-width: var(--tmb_width);
-    height: auto;
-    max-height: 55vh;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
     aspect-ratio: var(--aspect);
 
     position: relative;

@@ -4,16 +4,20 @@ export default function useMatchMedia(screenSize) {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia(`(max-width: ${screenSize}px)`);
+        const mediaQuery = window.matchMedia?.(`(max-width: ${screenSize}px)`);
+        if (!mediaQuery) return;
+
         setIsSmallScreen(mediaQuery.matches);
 
         const handleMediaChange = (e) => setIsSmallScreen(e.matches);
-
-        // イベントリスナーを登録
-        mediaQuery.addListener(handleMediaChange);
-
-        // コンポーネントがアンマウントされたときにリスナーを削除
-        return () => mediaQuery.removeListener(handleMediaChange);
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", handleMediaChange);
+            return () => mediaQuery.removeEventListener("change", handleMediaChange);
+        }
+        if (mediaQuery.addListener) {
+            mediaQuery.addListener(handleMediaChange);
+            return () => mediaQuery.removeListener(handleMediaChange);
+        }
     }, [screenSize]);
 
     return isSmallScreen;

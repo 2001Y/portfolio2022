@@ -5,6 +5,7 @@
 	overflow-y: auto;
 	width: 100vw;
 	height: var(--100vh);
+	min-height: 100vh;
 
 	position: fixed;
 	top: 0;
@@ -226,6 +227,7 @@
 	right: 0;
 	width: 100vw;
 	height: var(--100vh);
+	min-height: 100vh;
 	overflow: hidden;
 	overflow-y: auto;
 	overscroll-behavior-y: contain;
@@ -281,6 +283,7 @@
 	.main {
 		pointer-events: none;
 		min-height: var(--100vh);
+		min-height: 100vh;
 
 		// ヘッダー余白
 		padding-top: calc(var(--header_height) + var(--padding));

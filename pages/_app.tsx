@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 
 import LoadAVG from "public/load.svg";
 
-const isWorksPath = (path = "") => path === "/works" || path.startsWith("/works/");
+const isWorksPath = (path = "") =>
+	path === "/" || path === "/works" || path.startsWith("/works/");
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
@@ -64,7 +65,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			document.documentElement.style.setProperty('--100vh', `${vh}px`);
 		}
 	}, []);
-	const visiblePageLoading = pageLoading && !isWorksPath(router.asPath.split("?")[0]);
+	const visiblePageLoading =
+		pageLoading &&
+		!isWorksPath(router.asPath.split("?")[0]) &&
+		!isWorksPath(router.pathname);
 
 	return (
 		<>

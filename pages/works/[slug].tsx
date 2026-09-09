@@ -4,19 +4,17 @@ import Works_view from "components/widget/Works_view";
 import { getWorkAssets, getWorkEmbeds, localizeWorkContent } from "lib/workAssets";
 import { useRouter } from 'next/router'
 
-export default function Output({ res, cat }) {
+export default function Output({ res, selectedWork, cat }) {
    const router = useRouter();
    let params = router.query;
 
    let title = "2001Y's Works";
-   // 個別ページ
-   let postRes = res.find((e) => encodeURI(decodeURI(e.slug)) == encodeURI(String(params.slug)));
    return (
       <>
          <Head title={title} />
 
          {/* 個別ページ */}
-         <Works_view res={postRes} />
+         <Works_view res={selectedWork} />
 
          {/* メイン */}
          <WorksList cat={cat} res={res} lock={false} />
@@ -81,9 +79,12 @@ export async function getStaticProps({ params }) {
       }
    }));
 
+   const selectedWork = res.find((e) => encodeURI(decodeURI(e.slug)) == encodeURI(String(params.slug)));
+
    return {
       props: {
          res,
+         selectedWork,
          cat,
       },
    };

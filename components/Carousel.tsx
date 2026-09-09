@@ -77,6 +77,7 @@ export default function Embed({ res, imgSize }) {
                                     alt={embed.name || `作品画像 ${index + 1}`}
                                     width={830}
                                     height={830 * imgSize.aspect}
+                                    unoptimized
                                 />
                             )}
                             {embed.code && (

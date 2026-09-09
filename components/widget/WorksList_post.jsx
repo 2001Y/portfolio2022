@@ -43,6 +43,7 @@ export default function Output({ res, countSum }) {
 									src={res.cfs.img}
 									height={400}
 									width={400 * res.imgSize.aspect}
+									unoptimized
 								/>
 							</div>
 						)}

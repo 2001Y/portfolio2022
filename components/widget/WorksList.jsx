@@ -39,14 +39,26 @@ export default function Output({ res, cat, lock }) {
 	useMatchMedia(800) && (res = viewF(res, 2))
 
 	const sessionName = "scrollSave";
+	const readScrollPosition = () => {
+		try {
+			return sessionStorage.getItem(sessionName);
+		} catch {
+			return null;
+		}
+	};
+	const saveScrollPosition = (value) => {
+		try {
+			sessionStorage.setItem(sessionName, value);
+		} catch {
+			// Private browsing or an embedded WebView may deny sessionStorage.
+		}
+	};
 	useLayoutEffect(() => {
 		let elm = document.querySelector("#wrap");
+		if (!elm) return;
 		// スクロール位置の復元
-		if (sessionStorage.getItem(sessionName)) {
-			elm.scrollTop = sessionStorage.getItem(sessionName);
-		} else {
-			elm.scrollTop = 0;
-		}
+		const savedPosition = readScrollPosition();
+		elm.scrollTop = savedPosition || 0;
 	});
 	useEffect(() => {
 		let elm = document.querySelector("#wrap");
@@ -59,10 +71,10 @@ export default function Output({ res, cat, lock }) {
 				(now[1] == "" && next[1] == "works") ||
 				(now[1] == "works" && next[1] == "")
 			) {
-				sessionStorage.setItem(sessionName, elm.scrollTop);
+				saveScrollPosition(elm.scrollTop);
 			}
 			if (now == next) {
-				sessionStorage.setItem(sessionName, "0");
+				saveScrollPosition("0");
 			}
 		};
 		// このpageを離れる直前に発火

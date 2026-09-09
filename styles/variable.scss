@@ -1,6 +1,6 @@
 :root {
 
-	// --100vh: 100vh;
+	--100vh: 100vh;
 	@supports (height: 100dvh) {
 		--100vh: 100dvh;
 	}

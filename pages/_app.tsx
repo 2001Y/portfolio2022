@@ -12,6 +12,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import LoadAVG from "public/load.svg";
+
+const isWorksPath = (path = "") => path === "/works" || path.startsWith("/works/");
+
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 	const [pageLoading, setPageLoading] = useState(false);
@@ -19,11 +22,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 		const handleStart = (url) => {
 			let load = true;
 			url = new URL("http://example.com" + url);
-			// 今のページ: router.pathname
-			// 開くページ：url.pathname
+			const currentPath = router.asPath.split("?")[0];
+			// Works pages have their own overlay transition; never hide their content
+			// behind the global loading layer during dynamic-route hydration.
 			if (
-				(url.pathname == router.pathname) ||
-				((router.pathname.split("/")[1] == "works") || (url.pathname.split("/")[1] == "works"))
+				url.pathname == currentPath ||
+				isWorksPath(currentPath) ||
+				isWorksPath(url.pathname)
 			) {
 				load = false;
 			}
@@ -55,6 +60,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			document.documentElement.style.setProperty('--100vh', `${vh}px`);
 		}
 	}, []);
+	const visiblePageLoading = pageLoading && !isWorksPath(router.asPath.split("?")[0]);
 
 	return (
 		<>
@@ -69,10 +75,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			}}>
 			</Script>
 			<Header />
-			<main className={String(pageLoading)}>
+			<main className={String(visiblePageLoading)}>
 				<Component {...pageProps} />
 			</main>
-			<div className={String("loading " + pageLoading)}>
+			<div className={String("loading " + visiblePageLoading)}>
 				<LoadAVG className="load" />
 			</div>
 		</>

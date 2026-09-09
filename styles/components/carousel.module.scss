@@ -85,6 +85,13 @@
     backdrop-filter: blur(20px);
     box-shadow: var(--shadow_menu), var(--shadow_menuSub);
 
+    @media (max-width: 800px) {
+        // Avoid iOS Safari's nested backdrop-filter paint bug inside the
+        // fixed, scrollable work overlay.
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
     cursor: default;
     pointer-events: auto;
 

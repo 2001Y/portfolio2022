@@ -264,6 +264,14 @@
 		}
 	}
 
+	@media (max-width: 800px) {
+		opacity: 1;
+		.main {
+			transform: translateY(0);
+			transition: none;
+		}
+	}
+
 	--main_width: 40rem;
 
 	@media (max-width: 800px) {

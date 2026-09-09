@@ -48,7 +48,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 	var Y = nowTime.getFullYear();
 
 	useEffect(() => {
-		if (!CSS.supports("(height: 100dvh)")) {
+		const supportsDynamicViewport =
+			typeof CSS !== "undefined" &&
+			typeof CSS.supports === "function" &&
+			CSS.supports("(height: 100dvh)");
+		if (!supportsDynamicViewport) {
 			handleResize();
 			window.addEventListener('resize', handleResize)
 			return () => {

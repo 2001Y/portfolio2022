@@ -20,4 +20,8 @@ test("mobile work overlay avoids nested Safari backdrop compositing", () => {
     carouselSource,
     /@media\s*\(max-width:\s*800px\)[\s\S]*?backdrop-filter:\s*none;[\s\S]*?-webkit-backdrop-filter:\s*none;/,
   );
+  assert.match(
+    worksSource,
+    /@media\s*\(max-width:\s*800px\)[\s\S]*?opacity:\s*1;[\s\S]*?\.main\s*\{[\s\S]*?transform:\s*translateY\(0\);[\s\S]*?transition:\s*none;/,
+  );
 });

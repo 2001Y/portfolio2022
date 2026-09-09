@@ -8,8 +8,8 @@ const source = readFileSync(
 );
 
 test("carousel sizing is explicit for Safari mobile layout", () => {
-  assert.match(source, /\.thumbnail\s*\{[\s\S]*?width:\s*min\(/);
-  assert.match(source, /\.thumbnail\s*\{[\s\S]*?height:\s*min\(/);
+  assert.match(source, /\.thumbnail\s*\{[\s\S]*?width:\s*var\(--tmb_width\)/);
+  assert.match(source, /\.thumbnail\s*\{[\s\S]*?height:\s*auto/);
   assert.match(source, /\.carousel\s*\{[\s\S]*?width:\s*100%;/);
   assert.match(source, /\.carousel\s*\{[\s\S]*?height:\s*100%;/);
 });

@@ -12,9 +12,9 @@
 	left: 0;
 
 	--gap: 1vw;
-	--viewWidth: calc(100vw - var(--viewWidth)*2);
+	--viewWidth: 100vw;
 	padding: var(--gap);
-	padding-top: calc(var(--header_height) + 2.7vw * 2);
+	padding-top: calc(var(--header_height) + 2.7vw + 2.7vw);
 	margin: 0 calc(50% - 50vw); // 左右MAX
 
 	.scroll {
@@ -36,9 +36,9 @@
 					gap: var(--gap);
 
 					>.work {
-						--width: calc((var(--viewWidth) - var(--gapCount) * var(--gap)) / var(--aspectSum) * var(--aspect));
-						width: var(--width);
-						height: calc(var(--width) / var(--aspect));
+						flex: var(--aspect) 1 0;
+						aspect-ratio: var(--aspect);
+						min-width: 0;
 					}
 				}
 			}
@@ -297,8 +297,8 @@
 		}
 
 		--padding: min(4vw, 4rem);
-		--width: calc(var(--main_width) + var(--padding)*2);
-		--tmb_width: calc(var(--width) + var(--padding)*2);
+		--width: calc(var(--main_width) + var(--padding) + var(--padding));
+		--tmb_width: calc(var(--width) + var(--padding) + var(--padding));
 
 		z-index: 2;
 
@@ -368,7 +368,7 @@
 
 				// word-break: keep-all;
 				// margin-top: var(--gap);
-				--padding-bottom: calc(var(--padding) * 0.9 + env(safe-area-inset-bottom, 0));
+				--padding-bottom: calc(var(--padding) + env(safe-area-inset-bottom, 0));
 				padding-bottom: var(--padding-bottom);
 
 				@media (max-width: 800px) {
@@ -505,7 +505,8 @@
 
 		.work {
 			height: 100%;
-			width: calc(var(--hight) * var(--aspect));
+			flex: var(--aspect) 1 0;
+			aspect-ratio: var(--aspect);
 		}
 	}
 
@@ -521,6 +522,6 @@
 	font-size: 1.2rem;
 	position: fixed;
 	bottom: calc(var(--header_height));
-	left: calc(var(--padding) * 2);
+	left: calc(var(--padding) + var(--padding));
 	z-index: 9999;
 }

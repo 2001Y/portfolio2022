@@ -8,8 +8,9 @@ test("works routes cannot be hidden by the global loading layer", () => {
   assert.match(source, /const isWorksPath = \(path = \"\"\) =>/);
   assert.match(source, /path === \"\/\" \|\| path === \"\/works\"/);
   assert.match(source, /const visiblePageLoading =/);
-  assert.ok(source.includes('!isWorksPath(router.asPath.split("?")[0])'));
-  assert.ok(source.includes("!isWorksPath(router.pathname)"));
-  assert.match(source, /<main className=\{String\(visiblePageLoading\)\}>/);
+  assert.ok(source.includes('isWorksPath(router.asPath.split("?")[0]) || isWorksPath(router.pathname)'));
+  assert.ok(source.includes('const visiblePageLoading = pageLoading && !isWorksPage;'));
+  assert.match(source, /<main[\s\S]*className=\{String\(visiblePageLoading\)\}/);
+  assert.match(source, /style=\{isWorksPage \? \{ opacity: 1 \} : undefined\}/);
   assert.match(source, /loading \" \+ visiblePageLoading/);
 });

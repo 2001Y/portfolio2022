@@ -65,10 +65,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			document.documentElement.style.setProperty('--100vh', `${vh}px`);
 		}
 	}, []);
-	const visiblePageLoading =
-		pageLoading &&
-		!isWorksPath(router.asPath.split("?")[0]) &&
-		!isWorksPath(router.pathname);
+	const isWorksPage =
+		isWorksPath(router.asPath.split("?")[0]) || isWorksPath(router.pathname);
+	const visiblePageLoading = pageLoading && !isWorksPage;
 
 	return (
 		<>
@@ -83,7 +82,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			}}>
 			</Script>
 			<Header />
-			<main className={String(visiblePageLoading)}>
+			<main
+				className={String(visiblePageLoading)}
+				style={isWorksPage ? { opacity: 1 } : undefined}
+			>
 				<Component {...pageProps} />
 			</main>
 			<div className={String("loading " + visiblePageLoading)}>

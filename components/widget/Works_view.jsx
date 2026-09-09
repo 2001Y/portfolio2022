@@ -68,6 +68,16 @@ export default function Output({ res }) {
 		}, 0.3 * 1000);
 	}
 
+	const renderContent = (content) => {
+		if (!content) return null;
+		try {
+			return processor.processSync(content).result;
+		} catch (error) {
+			console.error("Works content rendering failed", error);
+			return <div dangerouslySetInnerHTML={{ __html: content }} />;
+		}
+	};
+
 	return (
 		<>
 			<Head
@@ -79,13 +89,14 @@ export default function Output({ res }) {
 				className={classNames(c_works.WorksOverlay, {
 					[c_works.open]: state_open,
 				})}
+				style={{ opacity: state_open ? 1 : 0 }}
 				onClick={(e) => {
 					if (e.target.className.indexOf(c_works.WorksOverlay) == 0) {
 						delayPushPage("/");
 					}
 				}}
 			>
-				<div className={c_works.main}>
+				<div className={c_works.main} style={{ transform: state_open ? "translateY(0)" : "translateY(100%)" }}>
 
 					{res.cfs.embed && (
 						<div className={classNames(c_works.tmbArea, c_works.modalWindow)}>
@@ -112,7 +123,7 @@ export default function Output({ res }) {
 								{res.cfs.time && <li>{res.cfs.time}</li>}
 								{res.cfs.location && <li>{res.cfs.location}</li>}
 							</div>
-							{res.content && processor.processSync(res.content).result}
+							{renderContent(res.content)}
 						</article>
 
 					</div>

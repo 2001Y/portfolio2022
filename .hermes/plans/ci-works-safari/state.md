@@ -1,5 +1,5 @@
 # STATE: ci-works mobile rendering
-updated: 2026-09-10T12:27:13+09:00
+updated: 2026-09-10T12:43:00+09:00
 
 ## 目的
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
@@ -42,6 +42,10 @@ updated: 2026-09-10T12:27:13+09:00
 - production `next start`: HTML HTTP 200、167,905 bytes。HTMLにWorks overlay、画像URL、本文が存在した。
 - production PDF: HTTP 200、3,557,935 bytes、`application/pdf`。
 - iOS Simulator Safari（UDID `00514918-1431-474B-9B65-26B6B6C62EF2`）で、恒久CSSのみのproduction buildをfresh URLから30秒後に撮影し、ポスター・タイトル・本文を確認した。
+- commit `24d8e76`を`origin/main`へpushし、remote readbackでSHA一致を確認した。
+- Vercel statusは`success: Deployment has completed`。公開CSS`324deb6344ca2c09.css`に`html,body,#__next{height:100%;min-height:100%}`をreadbackした。
+- 公開HTMLはHTTP 200、Works overlay・8画像・本文・`/works/ci-works.pdf`リンクをreadbackした。公開PDFはHTTP 200、3,557,935 bytes、`application/pdf`。
+- 公開URLを同じiOS Simulator Safariでfresh起動し、ポスター・タイトル・本文が表示されることを確認した。修正前の公開blankとの差分も同一Simulatorで確認した。
 - `public/sitemap-0.xml`のbuild生成差分は変更に含めず復元した。
 
 ## 決定事項
@@ -60,12 +64,8 @@ updated: 2026-09-10T12:27:13+09:00
 - `.hermes/plans/ci-works-safari/state.md`
 
 ## 未解決 / リスク
-- iPhone実機SafariとSlack内蔵ブラウザでのfresh確認は未実施。
-- Vercel公開deploy後の実画面確認はこれから行う。
+- iPhone実機SafariとSlack内蔵ブラウザでのfresh確認は未実施。Simulator Safariでの修正結果はpassしている。
 - lintの既存React Hook warning 4件は今回の範囲外。
 
 ## 次の一手
-1. stateと変更ファイルのtextlintおよびgit diffを確認する。
-2. 変更をcommitして`origin/main`へpushする。
-3. Vercel反映後、公開URLをiOS Simulator Safariでfresh起動し、overlay・ポスター・タイトル・本文・PDFリンクを確認する。
-4. 公開版の実画面確認結果をstateへreadbackし、iPhone実機/Slack未確認を明記する。
+- 今回の修正・commit・Vercel公開反映・公開Simulator確認は完了。iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。

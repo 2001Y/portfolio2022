@@ -1,4 +1,4 @@
-import { useLayoutEffect, useEffect, memo } from "react";
+import { useEffect, memo } from "react";
 import Router, { useRouter } from "next/router";
 import classNames from "classnames";
 import Link from "next/link";
@@ -53,7 +53,7 @@ export default function Output({ res, cat, lock }) {
 			// Private browsing or an embedded WebView may deny sessionStorage.
 		}
 	};
-	useLayoutEffect(() => {
+	useEffect(() => {
 		let elm = document.querySelector("#wrap");
 		if (!elm) return;
 		// スクロール位置の復元

@@ -7,6 +7,16 @@ body {
 	overflow-x: hidden;
 }
 
+// Keep the fixed Works overlay inside a viewport-sized root. iOS Safari can
+// clip fixed descendants to the body's content height when the root only
+// contains the header in normal flow.
+html,
+body,
+#__next {
+	height: 100%;
+	min-height: 100%;
+}
+
 html {
 	font-size: 15px;
 	color: var(--c_font);

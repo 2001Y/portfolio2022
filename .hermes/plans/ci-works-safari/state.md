@@ -1,11 +1,11 @@
 # STATE: ci-works mobile rendering
-updated: 2026-09-11T00:00:00+09:00
+updated: 2026-09-11T17:00:00+09:00
 
 ## 目的
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
 
 ## 現在の判定
-- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証済み。再公開待ち。**
+- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証し、`origin/main`とVercel liveへ反映済み。**
 - iOS Simulator Safariの修正前は、WorksのSSR HTML・DOM・画像・本文が存在するにもかかわらず、背景と固定navだけが表示されていた。
 - `html/body`の実rectが`402x61`で、`WorksOverlay`は`position:fixed`・rect`402x754`・`display:block`・`visibility:visible`・`opacity:1`だった。
 - `html/body/#__next`へ`height:100%; min-height:100%`をinline適用するA/Bで、ポスター・タイトル・本文が復帰した。
@@ -50,6 +50,10 @@ updated: 2026-09-11T00:00:00+09:00
 - 公開HTMLはHTTP 200、Works overlay・8画像・本文・`/works/ci-works.pdf`リンクをreadbackした。公開PDFはHTTP 200、3,557,935 bytes、`application/pdf`。
 - 公開URLを同じiOS Simulator Safariでfresh起動し、ポスター・タイトル・本文が表示されることを確認した。修正前の公開blankとの差分も同一Simulatorで確認した。
 - `public/sitemap-0.xml`のbuild生成差分は変更に含めず復元した。
+- `origin/main`はcommit `b4cd209da4e319474a228bf1dbe338f5c17afb81`でremote readback一致。
+- Vercel live `https://2001y.me/works/ci-works`はHTTP 200、HTML 155,098 bytes、local releaseと同じCSS/JS hash、`x-vercel-cache: HIT`でreadbackした。
+- live PDFはHTTP 200、3,557,935 bytes、`application/pdf`。HTMLには8画像識別子、本文、`ci-works.pdf`リンクが存在する。
+- 公開DOMの8画像はnatural dimensionsを取得し、computed `object-fit: contain`を確認した。共通表示box 695.52x212.14px内のcontent ratioは8枚ともnatural ratioと一致したため、画像の引き伸ばしはない。
 
 ## 決定事項
 - Works detailの正本データは`getStaticProps`で確定した`selectedWork`とする。
@@ -68,7 +72,7 @@ updated: 2026-09-11T00:00:00+09:00
 
 ## 未解決 / リスク
 - iPhone実機SafariとSlack内蔵ブラウザでのfresh確認は未実施。Simulator Safariでの修正結果はpassしている。
-- Vercelの今回revisionのdeployment readbackはcommit/push後に実施する。
+- 今回revisionのVercel deployment readbackは完了済み。
 
 ## 今回の追加修正
 - Carouselの画像表示を`object-fit: contain`とintrinsic aspect sizingへ修正し、`object-fit: fill`による横伸びを除去。
@@ -77,5 +81,5 @@ updated: 2026-09-11T00:00:00+09:00
 - `next lint`をESLint CLIへ移行、Sass slash divisionを`math.div`へ移行、package managerをBunへ一本化。
 
 ## 次の一手
-- 変更をtask-wise commit/pushし、Vercel deploymentと公開URL・PDF・実画面をreadbackする。
+- コード修正・commit・push・Vercel公開・公開DOM/PDF readbackは完了。
 - iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。

@@ -40,9 +40,8 @@ module.exports = {
 	},
 	// Customa
 	reactStrictMode: true,
-	swcMinify: true,
 	sassOptions: {
-		prependData: '@import "styles/_prepend.scss";',
+		prependData: '@use "sass:math"; @import "styles/_prepend.scss";',
 	},
 	images: {
 		domains: ["yoshikitam.wpx.jp", "github.com"],

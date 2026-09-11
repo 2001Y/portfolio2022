@@ -82,7 +82,7 @@ export default function Output({ res, cat, lock }) {
 		return () => {
 			Router.events.off("routeChangeStart", onRouteChangeStart);
 		};
-	}, []);
+	}, [router.pathname]);
 
 	// console.log(res)
 
@@ -95,14 +95,14 @@ export default function Output({ res, cat, lock }) {
 						<a className={classNames(c_V.animeBG_font)}>all</a>
 					</Link>
 				</li>
-				{cat.map((e, i) => (
-					<li key={i}>
+				{cat.map((e) => (
+					<li key={e.id || e.slug || e.name}>
 						<Link legacyBehavior href={"?cat=" + e.slug} shallow={true} scroll={true}>
 							<a className={classNames(c_V.animeBG_font)}>{e.name}</a>
 						</Link>
 						<ul className={classNames(c_works.subCatList, c_works.tagList)}>
-							{e.tagList.map((e1, i1) => (
-								<li key={i1}>{e1.name}</li>
+							{e.tagList.map((e1) => (
+								<li key={e1.id || e1.slug || e1.name}>{e1.name}</li>
 							))}
 						</ul>
 					</li>
@@ -116,11 +116,11 @@ export default function Output({ res, cat, lock }) {
 			>
 				<div className={c_works.scroll} id="scroll">
 					<ul className={c_works.list} id="box_">
-						{res.map((e, i) => (
-							<li key={i}>
+						{res.map((e) => (
+							<li key={e[0]?.id || e[0]?.slug || e[0]?.category || "works-group"}>
 								<ul>
-									{e.map((e1, i1) => (
-										<WorksList_post_Memo key={i1} res={e1} countSum={e.length} />
+									{e.map((e1) => (
+										<WorksList_post_Memo key={e1.id || e1.slug || e1.title} res={e1} countSum={e.length} />
 									))}
 								</ul>
 							</li>

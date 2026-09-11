@@ -30,9 +30,14 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypePrism from '@mapbox/rehype-prism';
 import rehypeSlug from 'rehype-slug'
+
+const japaneseSegmenter = new Intl.Segmenter('ja-JP', { granularity: 'word' });
+
 export async function getStaticProps({ params }) {
-   let res = await GETwpList("/works");
-   let cat = await GETwpList("/works_cat");
+	let [res, cat] = await Promise.all([
+		GETwpList("/works"),
+		GETwpList("/works_cat"),
+	]);
    await Promise.all(res.map(async (e, i) => {
       if (e.slug == params.slug) {
 
@@ -54,8 +59,7 @@ export async function getStaticProps({ params }) {
 
          // タイトル
          let title = e.title;
-         const segmenterJp = new Intl.Segmenter('ja-JP', { granularity: 'word' });
-         const segments = segmenterJp.segment(title);
+         const segments = japaneseSegmenter.segment(title);
          title = Array.from(segments).map((target) => {
             if (target.segment == '\n') {
                return '<br>';

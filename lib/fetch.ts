@@ -17,6 +17,37 @@ async function waitForRetry(attempt, path, error) {
 	await new Promise((resolve) => setTimeout(resolve, attempt * 250));
 }
 
+async function fetchResponse(url, path) {
+	let lastError;
+	for (let attempt = 1; attempt <= WORDPRESS_FETCH_ATTEMPTS; attempt++) {
+		try {
+			const response = await fetch(url);
+			if (!response.ok) {
+				const error = Object.assign(
+					new Error(`WordPress API returned HTTP ${response.status} for ${path}`),
+					{ status: response.status }
+				);
+				if (!isRetryableStatus(response.status)) throw error;
+				throw error;
+			}
+			return response;
+		} catch (error) {
+			lastError = error;
+			const errorStatus = typeof error === "object" && error !== null && "status" in error
+				? error.status
+				: undefined;
+			if (typeof errorStatus === "number" && !isRetryableStatus(errorStatus)) throw error;
+			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
+				await waitForRetry(attempt, path, error);
+			}
+		}
+	}
+	throw Object.assign(
+		new Error(`WordPress API request failed after ${WORDPRESS_FETCH_ATTEMPTS} attempts for ${path}`),
+		{ cause: lastError }
+	);
+}
+
 export async function json(e) {
 	const url = urlJoin(process.env.wpURL, e);
 	const path = new URL(url).pathname;
@@ -56,23 +87,51 @@ export async function json(e) {
 		}
 	}
 
-	throw new Error(
-		`WordPress API request failed after ${WORDPRESS_FETCH_ATTEMPTS} attempts for ${path}`,
+	throw Object.assign(
+		new Error(`WordPress API request failed after ${WORDPRESS_FETCH_ATTEMPTS} attempts for ${path}`),
 		{ cause: lastError }
 	);
 }
 
 export async function GETpostList(tags) {
-	var res: any = await fetch(
-		urlJoin(
-			process.env.wpURL,
-			"posts?per_page=18&_fields=id,title,slug,date,voting,tags" + tags
-		)
+	const url = urlJoin(
+		process.env.wpURL,
+		"posts?per_page=18&_fields=id,title,slug,date,voting,tags" + tags
 	);
-	return {
-		postList: await res.json(),
-		totalpages: await res.headers.get("x-wp-totalpages"),
-	};
+	const path = new URL(url).pathname;
+	let lastError;
+
+	for (let attempt = 1; attempt <= WORDPRESS_FETCH_ATTEMPTS; attempt++) {
+		try {
+			const response = await fetch(url);
+			if (!response.ok) {
+				const error = Object.assign(
+					new Error(`WordPress API returned HTTP ${response.status} for ${path}`),
+					{ status: response.status }
+				);
+				if (!isRetryableStatus(response.status)) throw error;
+				throw error;
+			}
+			return {
+				postList: await response.json(),
+				totalpages: response.headers.get("x-wp-totalpages"),
+			};
+		} catch (error) {
+			lastError = error;
+			const errorStatus = typeof error === "object" && error !== null && "status" in error
+				? error.status
+				: undefined;
+			if (typeof errorStatus === "number" && !isRetryableStatus(errorStatus)) throw error;
+			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
+				await waitForRetry(attempt, path, error);
+			}
+		}
+	}
+
+	throw Object.assign(
+		new Error(`WordPress API request failed after ${WORDPRESS_FETCH_ATTEMPTS} attempts for ${path}`),
+		{ cause: lastError }
+	);
 }
 export async function GETpost(slug) {
 	var res = await json("/posts?slug=" + encodeURI(slug));
@@ -84,18 +143,30 @@ export async function GETwp(url) {
 	return a;
 }
 export async function GETwpList(url) {
-	let fetchJson: any = await fetch(process.env.wpURL + url).catch((e) =>
-		console.log(e)
-	);
-	let totalpages = await fetchJson.headers.get("x-wp-totalpages");
+	const firstPageUrl = urlJoin(process.env.wpURL, url);
+	const firstResponse = await fetchResponse(firstPageUrl, new URL(firstPageUrl).pathname);
+	const totalpages = Number(firstResponse.headers.get("x-wp-totalpages") || 1);
+	const wpBaseUrl = process.env.wpURL;
+	if (typeof wpBaseUrl !== "string") {
+		throw new Error("wpURL must be an absolute URL");
+	}
+	let wpBasePath;
+	try {
+		wpBasePath = new URL(wpBaseUrl).pathname.replace(/\/$/, "");
+	} catch {
+		throw new Error("wpURL must be an absolute URL");
+	}
 
 	let res = await Promise.all(
 		Array(Number(totalpages))
 			.fill(0)
-			.map(async (e, i) => {
-				url = urlJoin(url, "?page=" + (i + 1));
-				let a = await json(url);
-				return a;
+			.map(async (_, i) => {
+				const pageUrl = new URL(firstPageUrl);
+				pageUrl.searchParams.set("page", String(i + 1));
+				const relativePath = pageUrl.pathname.startsWith(wpBasePath)
+					? pageUrl.pathname.slice(wpBasePath.length) || "/"
+					: pageUrl.pathname;
+				return json(relativePath + pageUrl.search);
 			})
 	);
 	return res.flat();
@@ -113,16 +184,15 @@ export async function tagList(res) {
 	var mainTags = res.map((e, i) => e.id);
 
 	// 各tagListの調整
-	let viewTagList = []; //表示されてる全ての記事
-	viewTagList = viewTagList.concat(mainTags);
+	const viewTagIds = new Set(mainTags); //表示されてる全ての記事
 	res = res
 		.reverse()
 		.map((e, i) => {
 			let count = 0; //親タグあたりの子タグの数
 			e.tagList = e.tagList.filter((e1) => {
-				if (!viewTagList.includes(e1.id)) {
+				if (!viewTagIds.has(e1.id)) {
 					if (count < 3) {
-						viewTagList.push(e1.id);
+						viewTagIds.add(e1.id);
 						count++;
 						return true;
 					}
@@ -141,14 +211,14 @@ export async function tagList(res) {
 		tagList: await latestTagList(),
 	});
 	async function latestTagList() {
-		let viewTagList = res
+		const viewTagIds = new Set(res
 			.map((e) => e.tagList.map((e1) => e1.id))
 			.concat(mainTags)
-			.flat();
+			.flat());
 		let topTag100 = await json(
 			"/tags?per_page=100&orderby=count&order=desc&_fields=id,name,slug,count,allCount"
 		);
-		return topTag100.filter((e) => !viewTagList.includes(e.id)).slice(0, 3);
+		return topTag100.filter((e) => !viewTagIds.has(e.id)).slice(0, 3);
 	}
 
 	// 記事追加
@@ -167,7 +237,7 @@ export async function tagList(res) {
 		})
 	);
 	// 記事の重複削除
-	let viewPostList = []; //表示されてる全ての記事
+	const viewPostIds = new Set(); //表示されてる全ての記事
 	res = res
 		.reverse()
 		.map((e, i, selfArr) => {
@@ -176,9 +246,9 @@ export async function tagList(res) {
 			e.postList = e.postList.filter((e1, i1) => {
 				// 記事ごとの処理
 				if (count < 12) {
-					if (!viewPostList.includes(e1.id)) {
+					if (!viewPostIds.has(e1.id)) {
 						// 重複がない場合
-						viewPostList.push(e1.id);
+						viewPostIds.add(e1.id);
 						count++;
 						return true;
 					}

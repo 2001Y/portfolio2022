@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import c_works from "styles/works.module.scss";
 
-import { useEffect, useState, createElement } from "react";
+import { useCallback, useEffect, useMemo, useState, createElement } from "react";
 import Router, { useRouter } from "next/router";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
@@ -26,30 +26,42 @@ const processor = unified()
 		},
 	});
 
+const titleSegmenter = new Intl.Segmenter("ja-JP", { granularity: "word" });
+
+function renderWorkTitle(title) {
+	return Array.from(titleSegmenter.segment(title || "")).map((target) => {
+		const key = `${target.index}:${target.segment}`;
+		if (target.segment === "\n") return <br key={key} />;
+		if (target.segment === " ") {
+			return <span key={key} style={{ display: "inline" }}> </span>;
+		}
+		return <span key={key} style={{ display: "inline-block" }}>{target.segment}</span>;
+	});
+}
+
+function renderContent(content) {
+	if (!content) return null;
+	try {
+		return processor.processSync(content).result;
+	} catch (error) {
+		console.error("Works content rendering failed", error);
+		return <p>本文を表示できませんでした。</p>;
+	}
+}
+
 export default function Output({ res }) {
 	const router = useRouter();
 	// SSR時点でも本文を表示する。モバイルSafariでhydrationが遅延・失敗しても空画面にしない。
 	let [state_open, set_state_open] = useState(true);
 
 	let dynamicRoutesName = router.pathname.split(/\[|\]/)[1];
-	const queryParams = JSON.parse(JSON.stringify(router.query));
-	delete queryParams[dynamicRoutesName];
+	const queryParams = useMemo(() => {
+		const params = { ...router.query };
+		delete params[dynamicRoutesName];
+		return params;
+	}, [dynamicRoutesName, router.query]);
 
-	const handleKeyUp = (event) => {
-		if (event.key === 'Escape') {
-			delayPushPage("/");
-		}
-	};
-
-	useEffect(() => {
-		set_state_open(true);
-		document.addEventListener('keyup', handleKeyUp);
-		return () => {
-			document.removeEventListener('keyup', handleKeyUp);
-		};
-	}, []);
-
-	function delayPushPage(url) {
+	const delayPushPage = useCallback((url) => {
 		set_state_open(false);
 		router.prefetch(url);
 		setTimeout(() => {
@@ -66,17 +78,21 @@ export default function Output({ res }) {
 				}
 			);
 		}, 0.3 * 1000);
-	}
+	}, [queryParams, router]);
 
-	const renderContent = (content) => {
-		if (!content) return null;
-		try {
-			return processor.processSync(content).result;
-		} catch (error) {
-			console.error("Works content rendering failed", error);
-			return <div dangerouslySetInnerHTML={{ __html: content }} />;
+	const handleKeyUp = useCallback((event) => {
+		if (event.key === 'Escape') {
+			delayPushPage("/");
 		}
-	};
+	}, [delayPushPage]);
+
+	useEffect(() => {
+		set_state_open(true);
+		document.addEventListener('keyup', handleKeyUp);
+		return () => {
+			document.removeEventListener('keyup', handleKeyUp);
+		};
+	}, [handleKeyUp]);
 
 	return (
 		<>
@@ -85,15 +101,17 @@ export default function Output({ res }) {
 				img={res.cfs.img}
 			/>
 
-			<section
+			<dialog
 				className={classNames(c_works.WorksOverlay, {
 					[c_works.open]: state_open,
 				})}
-				style={{ opacity: state_open ? 1 : 0 }}
-				onClick={(e) => {
-					if (e.target.className.indexOf(c_works.WorksOverlay) == 0) {
-						delayPushPage("/");
-					}
+			open
+			aria-label="作品詳細"
+			aria-hidden={!state_open}
+			style={{ opacity: state_open ? 1 : 0 }}
+			onCancel={(e) => {
+					e.preventDefault();
+					delayPushPage("/");
 				}}
 			>
 				<div className={c_works.main} style={{ transform: state_open ? "translateY(0)" : "translateY(100%)" }}>
@@ -110,13 +128,12 @@ export default function Output({ res }) {
 								{res.title && (
 									<h2
 										className={c_works.title}
-										dangerouslySetInnerHTML={{ __html: res.title_html }}
-									></h2>
+									>{renderWorkTitle(res.title)}</h2>
 								)}
 								{res.tags && (
 									<ul className={c_works.tagList}>
-										{res.tags.map((e, i) => (
-											<li key={i}>#{e.name}</li>
+										{res.tags.map((e) => (
+											<li key={e.slug || e.id || e.name}>#{e.name}</li>
 										))}
 									</ul>
 								)}
@@ -147,7 +164,7 @@ export default function Output({ res }) {
 						</ul>
 					</div>
 				)} */}
-			</section>
+			</dialog>
 
 			{/* <div
 				className={classNames(c_works.backButton)}

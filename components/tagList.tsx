@@ -50,7 +50,7 @@ export default function Output({ res }) {
 			<Head title={title} />
 			<ol className={c_blog.postSection}>
 				{res.map((e, i) => (
-					<li key={i} data-count={e.allCount}>
+					<li key={e.id || e.slug || e.name} data-count={e.allCount}>
 						<div className={classNames(c_blog.title)}>
 							<div className={c_blog.title_inner}>
 								<h2 className={classNames(c_Heading.h2, c_Heading.h2_tag)}>
@@ -59,8 +59,8 @@ export default function Output({ res }) {
 									</Link>
 								</h2>
 								<ol className={classNames(c_blog.tagList, c_blog.hover)}>
-									{e.tagList.map((e1, i1) => (
-										<li key={i1}>
+									{e.tagList.map((e1) => (
+										<li key={e1.id || e1.slug || e1.name}>
 											<Link legacyBehavior href={"/blog/tag/" + e1.slug}>
 												<a>
 													#{e1.name}({e1.allCount})
@@ -73,13 +73,13 @@ export default function Output({ res }) {
 							</div>
 						</div>
 						<ul className={c_blog.postList}>
-							{e.postList.map((e1, i1) => (
-								<li key={i1}>
+							{e.postList.map((e1) => (
+								<li key={e1.id || e1.slug}>
 									<Blog_post res={e1} />
 								</li>
 							))}
-							{state_nextPageList[i].map((e1, i1) => (
-								<li key={i1}>
+							{state_nextPageList[i].map((e1) => (
+								<li key={e1.id || e1.slug}>
 									<Blog_post res={e1} />
 								</li>
 							))}

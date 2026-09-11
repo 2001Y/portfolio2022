@@ -15,8 +15,10 @@ export default function Output({ res, cat }) {
 }
 import { GETwpList } from "lib/fetch";
 export async function getStaticProps() {
-	let res = await GETwpList("/works");
-	let cat = await GETwpList("/works_cat");
+	let [res, cat] = await Promise.all([
+		GETwpList("/works"),
+		GETwpList("/works_cat"),
+	]);
 	res.map(e => e.content = "");
 	return {
 		props: {

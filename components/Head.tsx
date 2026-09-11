@@ -2,12 +2,14 @@ import Head from "next/head";
 import Link from "next/link";
 
 function Page(props) {
-   let res = JSON.parse(JSON.stringify(props));
-   if (res.title) {
-      res.title = res.title;
-   } else {
-      res.title = process.env.title;
-   }
+   const title = props.title || process.env.title;
+   const jsonLd = props.breadcrumb
+      ? JSON.stringify(props.breadcrumb).replace(/[<>&]/g, (character) => ({
+         "<": "\\u003c",
+         ">": "\\u003e",
+         "&": "\\u0026",
+      }[character]))
+      : null;
 
    // if (res.breadcrumb) {
    //    res.breadcrumb = res.breadcrumb.map((e, i) => ({
@@ -33,34 +35,35 @@ function Page(props) {
                <meta property="og:site_name" content={process.env.title} key="og:site_name" />
             </>
          )}
-         {res.title && (
+         {title && (
             <>
-               <title key="title">{res.title}</title>
-               <meta property="og:title" content={res.title} key="og:title" />
+               <title key="title">{title}</title>
+               <meta property="og:title" content={title} key="og:title" />
             </>
          )}
-         {res.img && (
+         {props.img && (
             <>
-               <meta property="og:image" content={res.img} key="ogp" />
+               <meta property="og:image" content={props.img} key="ogp" />
             </>
          )}
-         {res.url && (
+         {props.url && (
             <>
-               <meta property="og:url" content={res.url} key="og:url" />
-               <link rel="canonical" href={res.url} key="canonical" />
+               <meta property="og:url" content={props.url} key="og:url" />
+               <link rel="canonical" href={props.url} key="canonical" />
             </>
          )}
-         {res.description && (
+         {props.description && (
             <>
-               <meta property="og:description" content={res.description} key="og:description" />
+               <meta property="og:description" content={props.description} key="og:description" />
             </>
          )}
-         {res.breadcrumb && (
+         {jsonLd && (
             <>
                <script
                   type="application/ld+json"
-                  dangerouslySetInnerHTML={{ __html: JSON.stringify(res.breadcrumb) }}
-               />
+               >
+                  {jsonLd}
+               </script>
             </>
          )}
       </Head>

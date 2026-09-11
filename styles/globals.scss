@@ -28,9 +28,9 @@ html {
 		$num: 10;
 
 		@for $i from 1 through $num {
-			$hsla: 360 / $num * $i;
+			$hsla: math.div(360, $num) * $i;
 
-			#{100/$num*$i}% {
+			#{math.div(100, $num) * $i}% {
 				--c_accent: hsla($hsla, 100%, 75%, 1);
 			}
 		}

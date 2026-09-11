@@ -15,13 +15,6 @@ export default function Output({ res }) {
   let D = nowTime.getDay() / 30 / 365;
 
 
-  function ram() {
-    var min = -50;
-    var max = 50;
-    return Math.floor(Math.random() * (max + 1 - min)) + min;
-  }
-
-  console.log(res.profile_imgList)
   return (
     <>
       <section>
@@ -42,8 +35,8 @@ export default function Output({ res }) {
       </section>
       <section>
         <ul className={c_photoDrop.box}>
-          {res.profile_imgList.map((e, i) => (
-            <li key={i} className={c_photoDrop.img} style={{ "--ram": ram() + "%" } as React.CSSProperties}>
+          {res.profile_imgList.map((e) => (
+            <li key={e.id || e.img} className={c_photoDrop.img} style={{ "--ram": ram(e.img) + "%" } as React.CSSProperties}>
               <Image
                 alt={res.title + "のサムネイル"}
                 src={e.img}
@@ -60,12 +53,12 @@ export default function Output({ res }) {
         </ul>
         {/* スキルシート */}
         <ul>
-          {res.cfs.skill_list.map((skill_list, i) => (
-            <li key={i}>
+          {res.cfs.skill_list.map((skill_list) => (
+            <li key={skill_list.id || skill_list.skill_cat_name}>
               {skill_list.skill_cat_name}
               <ul>
-                {skill_list.skill.map((skill, i_skill) => (
-                  <li key={i_skill}>{skill.skill_name}</li>
+                {skill_list.skill.map((skill) => (
+                  <li key={skill.id || skill.skill_name}>{skill.skill_name}</li>
                 ))}
               </ul>
             </li>
@@ -108,6 +101,15 @@ import rehypeParse from "rehype-parse";
 import { Fragment } from 'react'
 import rehypeReact from "rehype-react";
 import rehypeSlug from 'rehype-slug'
+
+function ram(seed = "") {
+  const hash = Array.from(seed).reduce((value, character) =>
+    (value * 31 + character.charCodeAt(0)) % 101,
+    0,
+  );
+  return hash - 50;
+}
+
 export async function getStaticProps() {
   let res = await GETwp("/pages?slug=about");
 

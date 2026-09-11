@@ -99,6 +99,19 @@
 	position: relative;
 	cursor: pointer;
 
+	> button {
+		border: 0;
+		padding: 0;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		cursor: pointer;
+	}
+
 	span {
 		font-size: 0.7em;
 		opacity: 0.3;
@@ -330,6 +343,10 @@
 }
 
 .iconBtn {
+	border: 0;
+	padding: 0;
+	font: inherit;
+	color: inherit;
 	width: calc(var(--header_height) + 0.2em);
 	height: calc(var(--header_height) + 0.2em);
 	background: var(--c_bg_menu);

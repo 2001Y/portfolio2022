@@ -1,11 +1,11 @@
 # STATE: ci-works mobile rendering
-updated: 2026-09-10T12:43:00+09:00
+updated: 2026-09-11T00:00:00+09:00
 
 ## 目的
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
 
 ## 現在の判定
-- **根本原因を特定し、localのdevelopment buildとproduction buildで修正を実画面確認済み。**
+- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証済み。再公開待ち。**
 - iOS Simulator Safariの修正前は、WorksのSSR HTML・DOM・画像・本文が存在するにもかかわらず、背景と固定navだけが表示されていた。
 - `html/body`の実rectが`402x61`で、`WorksOverlay`は`position:fixed`・rect`402x754`・`display:block`・`visibility:visible`・`opacity:1`だった。
 - `html/body/#__next`へ`height:100%; min-height:100%`をinline適用するA/Bで、ポスター・タイトル・本文が復帰した。
@@ -35,9 +35,12 @@ updated: 2026-09-10T12:43:00+09:00
 - Worksの`next/image`を`unoptimized`にしてVercel optimizer 402を回避した。
 
 ## 検証結果
-- local `bun run test`: 26 passed。
-- `bun run lint`: exit 0。既存React Hook warning 4件のみ、新規errorなし。
-- `bun run build`: success、571ページ生成。
+- local `bun run test`: 27 passed、0 failed。
+- `bun run lint`: exit 0、ESLint 0 warning / 0 error。
+- `tsc --noEmit`: exit 0。
+- `bun install --frozen-lockfile`: exit 0、Bun lockfile再現性確認済み。
+- `react-doctor`: 0 error / 0 warning / 0 affected files。
+- `bun run build`: success、571ページ生成、next-sitemap success、build warning/errorなし。
 - `git diff --check`: success。
 - production `next start`: HTML HTTP 200、167,905 bytes。HTMLにWorks overlay、画像URL、本文が存在した。
 - production PDF: HTTP 200、3,557,935 bytes、`application/pdf`。
@@ -65,7 +68,14 @@ updated: 2026-09-10T12:43:00+09:00
 
 ## 未解決 / リスク
 - iPhone実機SafariとSlack内蔵ブラウザでのfresh確認は未実施。Simulator Safariでの修正結果はpassしている。
-- lintの既存React Hook warning 4件は今回の範囲外。
+- Vercelの今回revisionのdeployment readbackはcommit/push後に実施する。
+
+## 今回の追加修正
+- Carouselの画像表示を`object-fit: contain`とintrinsic aspect sizingへ修正し、`object-fit: fill`による横伸びを除去。
+- `dangerouslySetInnerHTML`、index key、static interactive element、stale effect、timer/RAF cleanup、HTTP status/body retry、Set利用、並列取得、Google Analytics手書きscriptを修正。
+- Nextを`15.5.25`、Reactを`18.3.1`へ更新し、`@next/third-parties/google`へ移行。
+- `next lint`をESLint CLIへ移行、Sass slash divisionを`math.div`へ移行、package managerをBunへ一本化。
 
 ## 次の一手
-- 今回の修正・commit・Vercel公開反映・公開Simulator確認は完了。iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。
+- 変更をtask-wise commit/pushし、Vercel deploymentと公開URL・PDF・実画面をreadbackする。
+- iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。

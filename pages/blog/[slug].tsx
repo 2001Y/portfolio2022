@@ -40,10 +40,10 @@ export default function Output({ res, content }) {
 						<time content="Modified">{res.modified}</time>
 					)}
 				</div>
-				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)} dangerouslySetInnerHTML={{ __html: res.title }}></h1>
+				<h1 className={classNames(c_Post.h1, c_Heading.h1, c_Heading.h1_tag)}>{res.title}</h1>
 				<ul className={classNames(c_blog.tagList, c_blog.hover)}>
-					{res.tags.map((e, i) => (
-						<li key={i}>
+					{res.tags.map((e) => (
+						<li key={e.slug || e.id || e.name}>
 							<Link legacyBehavior href={"/blog/tag/" + e.slug}>
 								<a>#{e.name}</a>
 							</Link>

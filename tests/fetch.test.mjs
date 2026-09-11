@@ -5,8 +5,19 @@ process.env.wpURL = "https://wordpress.example/wp-json/wp/v2";
 
 const { json } = await import("../lib/fetch.ts");
 
+function captureRetryWarnings(t) {
+  const originalWarn = console.warn;
+  const warnings = [];
+  console.warn = (...args) => warnings.push(args);
+  t.after(() => {
+    console.warn = originalWarn;
+  });
+  return warnings;
+}
+
 test("json retries transient request failures", async (t) => {
   const originalFetch = globalThis.fetch;
+  const warnings = captureRetryWarnings(t);
   let calls = 0;
 
   t.after(() => {
@@ -30,10 +41,12 @@ test("json retries transient request failures", async (t) => {
 
   assert.deepEqual(result, [{ id: 583, slug: "server" }]);
   assert.equal(calls, 2);
+  assert.equal(warnings.length, 1);
 });
 
 test("json retries transient HTTP failures", async (t) => {
   const originalFetch = globalThis.fetch;
+  const warnings = captureRetryWarnings(t);
   let calls = 0;
 
   t.after(() => {
@@ -61,6 +74,7 @@ test("json retries transient HTTP failures", async (t) => {
 
   assert.deepEqual(result, [{ id: 583, slug: "server" }]);
   assert.equal(calls, 2);
+  assert.equal(warnings.length, 1);
 });
 
 test("json does not retry permanent HTTP failures", async (t) => {
@@ -113,6 +127,7 @@ test("json does not retry statuses outside the 5xx range", async (t) => {
 
 test("json stops after the retry limit and preserves the cause", async (t) => {
   const originalFetch = globalThis.fetch;
+  const warnings = captureRetryWarnings(t);
   const failure = new Error("WordPress connection reset");
   let calls = 0;
 
@@ -131,4 +146,5 @@ test("json stops after the retry limit and preserves the cause", async (t) => {
     return true;
   });
   assert.equal(calls, 3);
+  assert.equal(warnings.length, 2);
 });

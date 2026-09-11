@@ -12,6 +12,11 @@
     pointer-events: none;
 
     .bg {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        font: inherit;
+        color: inherit;
         position: absolute;
         top: 0;
         left: 0;

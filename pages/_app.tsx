@@ -3,9 +3,8 @@ import "../styles/variable.scss";
 import "../styles/globals.scss";
 import "../styles/prism.css"
 // import Head from "components/Head";
-import Head from "next/head";
 import Header from "components/header";
-import Script from 'next/script'
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -71,16 +70,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<Script id="ga-file" async src="https://www.googletagmanager.com/gtag/js?id=G-51E14JSXC0"></Script>
-			<Script id="ga-script" dangerouslySetInnerHTML={{
-				__html: `
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', 'G-51E14JSXC0');
-				`,
-			}}>
-			</Script>
+			<GoogleAnalytics gaId="G-51E14JSXC0" />
 			<Header />
 			<main
 				className={String(visiblePageLoading)}

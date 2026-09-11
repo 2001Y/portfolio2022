@@ -62,29 +62,29 @@ $theme-colors: (
 );
 
 @function hexToRGB($hex) {
-	@return red($hex),
-	green($hex),
-	blue($hex);
+	@return color.channel($hex, "red", $space: rgb),
+	color.channel($hex, "green", $space: rgb),
+	color.channel($hex, "blue", $space: rgb);
 }
 
 html {
 
 	@each $name,
 	$color in $theme-colors {
-		#{$name}: #{nth($color, 1)};
-		#{$name}_rgb: #{hexToRGB(nth($color, 1))};
-		#{$name}_light: #{nth($color, 1)};
-		#{$name}_light_rgb: #{hexToRGB(nth($color, 1))};
-		#{$name}_dark: #{nth($color, 2)};
-		#{$name}_dark_rgb: #{hexToRGB(nth($color, 2))};
-		#{$name}_reversal: #{nth($color, 2)};
-		#{$name}_reversal_rgb: #{hexToRGB(nth($color, 2))};
+		#{$name}: #{list.nth($color, 1)};
+		#{$name}_rgb: #{hexToRGB(list.nth($color, 1))};
+		#{$name}_light: #{list.nth($color, 1)};
+		#{$name}_light_rgb: #{hexToRGB(list.nth($color, 1))};
+		#{$name}_dark: #{list.nth($color, 2)};
+		#{$name}_dark_rgb: #{hexToRGB(list.nth($color, 2))};
+		#{$name}_reversal: #{list.nth($color, 2)};
+		#{$name}_reversal_rgb: #{hexToRGB(list.nth($color, 2))};
 
 		&[data-darkmode="true"] {
-			#{$name}: #{nth($color, 2)};
-			#{$name}_rgb: #{hexToRGB(nth($color, 2))};
-			#{$name}_reversal: #{nth($color, 1)};
-			#{$name}_reversal_rgb: #{hexToRGB(nth($color, 1))};
+			#{$name}: #{list.nth($color, 2)};
+			#{$name}_rgb: #{hexToRGB(list.nth($color, 2))};
+			#{$name}_reversal: #{list.nth($color, 1)};
+			#{$name}_reversal_rgb: #{hexToRGB(list.nth($color, 1))};
 		}
 	}
 }
@@ -111,14 +111,14 @@ html {
 
 	@each $name,
 	$e in $theme-variable {
-		#{$name}: #{nth($e, 1)};
-		#{$name}_light: #{nth($e, 1)};
-		#{$name}_dark: #{nth($e, 2)};
-		#{$name}_reversal: #{nth($e, 2)};
+		#{$name}: #{list.nth($e, 1)};
+		#{$name}_light: #{list.nth($e, 1)};
+		#{$name}_dark: #{list.nth($e, 2)};
+		#{$name}_reversal: #{list.nth($e, 2)};
 
 		&[data-darkmode="true"] {
-			#{$name}: #{nth($e, 2)};
-			#{$name}_reversal: #{nth($e, 1)};
+			#{$name}: #{list.nth($e, 2)};
+			#{$name}_reversal: #{list.nth($e, 1)};
 		}
 	}
 }

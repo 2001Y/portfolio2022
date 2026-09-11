@@ -1,11 +1,11 @@
 # STATE: ci-works mobile rendering
-updated: 2026-09-11T17:00:00+09:00
+updated: 2026-09-11T18:30:00+09:00
 
 ## 目的
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
 
 ## 現在の判定
-- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証し、`origin/main`とVercel liveへ反映済み。**
+- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証済み。既存修正はlive反映済み、追加の依存/Sass warning修正はpush直前。**
 - iOS Simulator Safariの修正前は、WorksのSSR HTML・DOM・画像・本文が存在するにもかかわらず、背景と固定navだけが表示されていた。
 - `html/body`の実rectが`402x61`で、`WorksOverlay`は`position:fixed`・rect`402x754`・`display:block`・`visibility:visible`・`opacity:1`だった。
 - `html/body/#__next`へ`height:100%; min-height:100%`をinline適用するA/Bで、ポスター・タイトル・本文が復帰した。
@@ -41,6 +41,10 @@ updated: 2026-09-11T17:00:00+09:00
 - `bun install --frozen-lockfile`: exit 0、Bun lockfile再現性確認済み。
 - `react-doctor`: 0 error / 0 warning / 0 affected files。
 - `bun run build`: success、571ページ生成、next-sitemap success、build warning/errorなし。
+- Sass 1.104更新後に表面化した`@import`/legacy builtin deprecationを`@use`、`color.channel`、`list.nth`、`map.get`へ移行し、最終buildのwarningを0件にした。
+- semver範囲内の依存を更新し、`@mapbox/rehype-prism`を0.9.0、`sharp`を0.35.4へ更新。未使用のStylelint/Prettier toolchainは削除した。
+- 依存更新後も`bun install --frozen-lockfile`、27 tests、ESLint、TypeScript、React Doctor（0 error / 0 warning / 0 affected files）、571ページbuildを再通過した。
+- `bun audit`は43件（critical 1 / high 26 / moderate 13 / low 3）残存。主因はNext 15の`styled-jsx`/Babel、Next/PostCSS、ESLint/next-sitemapのtransitive toolchainで、Next 16等のmajor migrationなしに安全な解消経路はないため、0件とは扱わない。
 - `git diff --check`: success。
 - production `next start`: HTML HTTP 200、167,905 bytes。HTMLにWorks overlay、画像URL、本文が存在した。
 - production PDF: HTTP 200、3,557,935 bytes、`application/pdf`。
@@ -79,7 +83,9 @@ updated: 2026-09-11T17:00:00+09:00
 - `dangerouslySetInnerHTML`、index key、static interactive element、stale effect、timer/RAF cleanup、HTTP status/body retry、Set利用、並列取得、Google Analytics手書きscriptを修正。
 - Nextを`15.5.25`、Reactを`18.3.1`へ更新し、`@next/third-parties/google`へ移行。
 - `next lint`をESLint CLIへ移行、Sass slash divisionを`math.div`へ移行、package managerをBunへ一本化。
+- `next.config.js`のSass prependを`@use`へ移行し、`styles/_prepend.scss`と`styles/variable.scss`のSass legacy APIを更新した。
+- 未使用と誤認して削除したSVG loaderは、`/contact/done`のReact #130で必要と判明したため復元した。`@svgr/webpack`は8.1系で保持し、build passを再確認した。
 
 ## 次の一手
-- コード修正・commit・push・Vercel公開・公開DOM/PDF readbackは完了。
+- 追加の依存/Sass修正をtask-wise commit/pushし、Vercel live HTML/PDFとWorks実画面を再readbackする。
 - iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。

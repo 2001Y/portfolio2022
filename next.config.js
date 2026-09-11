@@ -41,7 +41,7 @@ module.exports = {
 	// Customa
 	reactStrictMode: true,
 	sassOptions: {
-		prependData: '@use "sass:math"; @import "styles/_prepend.scss";',
+		prependData: '@use "sass:math"; @use "sass:color"; @use "sass:list"; @use "sass:map"; @use "styles/_prepend.scss" as *;',
 	},
 	images: {
 		domains: ["yoshikitam.wpx.jp", "github.com"],

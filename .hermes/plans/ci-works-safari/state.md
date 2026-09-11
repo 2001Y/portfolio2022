@@ -1,11 +1,11 @@
 # STATE: ci-works mobile rendering
-updated: 2026-09-11T18:30:00+09:00
+updated: 2026-09-11T19:00:00+09:00
 
 ## 目的
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
 
 ## 現在の判定
-- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証済み。既存修正はlive反映済み、追加の依存/Sass warning修正はpush直前。**
+- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証し、`origin/main`とVercel liveへ反映済み。**
 - iOS Simulator Safariの修正前は、WorksのSSR HTML・DOM・画像・本文が存在するにもかかわらず、背景と固定navだけが表示されていた。
 - `html/body`の実rectが`402x61`で、`WorksOverlay`は`position:fixed`・rect`402x754`・`display:block`・`visibility:visible`・`opacity:1`だった。
 - `html/body/#__next`へ`height:100%; min-height:100%`をinline適用するA/Bで、ポスター・タイトル・本文が復帰した。
@@ -45,6 +45,7 @@ updated: 2026-09-11T18:30:00+09:00
 - semver範囲内の依存を更新し、`@mapbox/rehype-prism`を0.9.0、`sharp`を0.35.4へ更新。未使用のStylelint/Prettier toolchainは削除した。
 - 依存更新後も`bun install --frozen-lockfile`、27 tests、ESLint、TypeScript、React Doctor（0 error / 0 warning / 0 affected files）、571ページbuildを再通過した。
 - `bun audit`は43件（critical 1 / high 26 / moderate 13 / low 3）残存。主因はNext 15の`styled-jsx`/Babel、Next/PostCSS、ESLint/next-sitemapのtransitive toolchainで、Next 16等のmajor migrationなしに安全な解消経路はないため、0件とは扱わない。
+- state.mdの最終追補は一時textlint環境で0 findings、exit 0。
 - `git diff --check`: success。
 - production `next start`: HTML HTTP 200、167,905 bytes。HTMLにWorks overlay、画像URL、本文が存在した。
 - production PDF: HTTP 200、3,557,935 bytes、`application/pdf`。
@@ -58,6 +59,9 @@ updated: 2026-09-11T18:30:00+09:00
 - Vercel live `https://2001y.me/works/ci-works`はHTTP 200、HTML 155,098 bytes、local releaseと同じCSS/JS hash、`x-vercel-cache: HIT`でreadbackした。
 - live PDFはHTTP 200、3,557,935 bytes、`application/pdf`。HTMLには8画像識別子、本文、`ci-works.pdf`リンクが存在する。
 - 公開DOMの8画像はnatural dimensionsを取得し、computed `object-fit: contain`を確認した。共通表示box 695.52x212.14px内のcontent ratioは8枚ともnatural ratioと一致したため、画像の引き伸ばしはない。
+- 追加依存/Sass修正commit `a00aa4e0e1bf129be9d6d008a20a75b87c8a2df3`を`origin/main`へpushし、remote readbackでSHA一致。
+- 追加push後のVercel liveはHTML HTTP 200、ETag `13b12ea1f7072462f118a9afb2ac4dd1`、155,098 bytes。8画像識別子・本文・PDFリンクを再readbackした。
+- 追加push後のlive PDFはHTTP 200、3,557,935 bytes、`application/pdf`。browser DOMで8枚すべてのnatural dimensionsと`object-fit: contain`を再readbackした。
 
 ## 決定事項
 - Works detailの正本データは`getStaticProps`で確定した`selectedWork`とする。
@@ -87,5 +91,5 @@ updated: 2026-09-11T18:30:00+09:00
 - 未使用と誤認して削除したSVG loaderは、`/contact/done`のReact #130で必要と判明したため復元した。`@svgr/webpack`は8.1系で保持し、build passを再確認した。
 
 ## 次の一手
-- 追加の依存/Sass修正をtask-wise commit/pushし、Vercel live HTML/PDFとWorks実画面を再readbackする。
+- コード修正・依存整理・commit・push・Vercel公開・公開DOM/PDF/実画面readbackは完了。
 - iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。

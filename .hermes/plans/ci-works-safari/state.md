@@ -100,4 +100,9 @@ updated: 2026-09-11T19:00:00+09:00
 - local `next start`のSSR HTMLは3画像、cover、PDFリンク、本文を含み、別作品5画像は0件だった。local image/PDFはHTTP 200だった。
 - 3ページPDFのページ比率と元画像比率は全件一致した。
 - 最終local検証は29 tests、ESLint、TypeScript、clean build 571/571、React Doctor 100/100（0 issue）。
-- ここから今回分をcommit/pushし、Vercel live HTML・画像・PDF・公開DOMをreadbackする。
+- commit `b7f6b6cef0ba6acaf6bd88dceb0bf71fa86867ae`を`origin/main`へpushし、remote readbackでSHA一致。
+- Vercel deployment `8En7DDxVNaZYkKPpP6ahYo9KiFUn`はGitHub status `success`。
+- live HTMLはHTTP 200、cover 4件、正しい3画像、別作品5画像0件、本文・タイトル・`/works/ci-works.pdf`リンクをreadbackした。
+- liveのcover/3画像/PDFはHTTP 200。PDFは8,362,161 bytes、`application/pdf`、3ページで、3ページの比率は元画像の1.95966475、2.13122687、2.08238173と一致した。
+- Browser CDP/Safari GUIはこのセッションで接続できなかったため、公開画面のDOM console readbackは未実行。代替としてlive SSR HTML、各asset HTTP、PDF本体を検証した。
+- ここで今回作業を完了とする。

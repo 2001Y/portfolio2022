@@ -13,9 +13,13 @@ function readOption(name) {
 
 function usage() {
   console.error(
-    "Usage: FIGMA_ACCESS_TOKEN=... (or FIGMA_TOKEN=...) bun run assets:sync -- --slug ci-works --file G8jmXOQKLj1y2EjEg8214k --page 'Page 1'"
+    "Usage: FIGMA_ACCESS_TOKEN=... (or FIGMA_TOKEN=...) bun run assets:sync -- --slug ci-works --file G8jmXOQKLj1y2EjEg8214k --page 'Page 1' [--include-names 'Frame 35,Frame 34 (a),Frame 26']"
   );
 }
+
+const WORK_FRAME_SELECTION = {
+  "ci-works": ["Frame 35", "Frame 34 (a)", "Frame 26"],
+};
 
 async function requestBuffer(url, headers = {}) {
   return new Promise((resolve, reject) => {
@@ -164,11 +168,34 @@ function makePosterPdf(images) {
   return Buffer.concat(chunks);
 }
 
+function selectFrames(page, slug, includeNamesValue) {
+  const candidates = page?.children
+    ?.filter((node) => node.type === "FRAME" && node.id && node.absoluteBoundingBox) || [];
+  const requestedNames = includeNamesValue
+    ? includeNamesValue.split(",").map((name) => name.trim()).filter(Boolean)
+    : WORK_FRAME_SELECTION[slug];
+
+  if (!requestedNames) {
+    return candidates.sort((a, b) =>
+      a.absoluteBoundingBox.x - b.absoluteBoundingBox.x ||
+      a.absoluteBoundingBox.y - b.absoluteBoundingBox.y
+    );
+  }
+
+  const byName = new Map(candidates.map((frame) => [frame.name, frame]));
+  const missingNames = requestedNames.filter((name) => !byName.has(name));
+  if (missingNames.length > 0) {
+    throw new Error(`Figma page is missing selected frame(s): ${missingNames.join(", ")}`);
+  }
+  return requestedNames.map((name) => byName.get(name));
+}
+
 async function main() {
   const token = process.env.FIGMA_ACCESS_TOKEN || process.env.FIGMA_TOKEN;
   const slug = readOption("slug");
   const file = readOption("file");
   const pageName = readOption("page");
+  const includeNames = readOption("include-names");
   if (!token || !slug || !file || !pageName) {
     usage();
     process.exitCode = 2;
@@ -177,12 +204,7 @@ async function main() {
 
   const document = await figmaJson(`/files/${encodeURIComponent(file)}`, token);
   const page = document.document?.children?.find((node) => node.name === pageName);
-  const frames = page?.children
-    ?.filter((node) => node.type === "FRAME" && node.id && node.absoluteBoundingBox)
-    ?.sort((a, b) =>
-      a.absoluteBoundingBox.x - b.absoluteBoundingBox.x ||
-      a.absoluteBoundingBox.y - b.absoluteBoundingBox.y
-    );
+  const frames = selectFrames(page, slug, includeNames);
   if (!frames?.length) throw new Error(`No FRAME nodes found on Figma page ${pageName}`);
 
   const imageResponse = await figmaJson(
@@ -201,7 +223,14 @@ async function main() {
     const filename = `${String(index + 1).padStart(2, "0")}.jpg`;
     await writeFile(join(outputDirectory, filename), image);
     images.push(image);
-    embeds.push({ image: `/images/works/${slug}/${filename}`, name: frame.name });
+    const dimensions = jpegSize(image);
+    embeds.push({
+      image: `/images/works/${slug}/${filename}`,
+      name: frame.name,
+      width: dimensions.width,
+      height: dimensions.height,
+      aspect: dimensions.width / dimensions.height,
+    });
   }
 
   const pdfPath = join(root, "public/works", `${slug}.pdf`);
@@ -215,7 +244,7 @@ async function main() {
     // The manifest is created on the first successful sync.
   }
   manifest[slug] = {
-    cover: embeds[0].image,
+    cover: manifest[slug]?.cover || embeds[0].image,
     embeds,
     pdf: `/works/${slug}.pdf`,
     expectedPosters: embeds.length,
@@ -239,4 +268,4 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   });
 }
 
-export { jpegSize, makePosterPdf };
+export { jpegSize, makePosterPdf, selectFrames };

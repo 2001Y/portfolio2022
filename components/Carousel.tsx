@@ -33,6 +33,8 @@ export default function Embed({ res, imgSize }) {
     const [moduleState, setModuleState] = useState(true);
     const [nextState, setNextState] = useState(false);
     const [prevState, setPrevState] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const activeAspect = Number(res[activeIndex]?.aspect || imgSize?.aspect || 1);
 
     const handleScroll = useCallback((direction) => {
         if (!containerRef.current) return;
@@ -42,6 +44,15 @@ export default function Embed({ res, imgSize }) {
             containerRef.current.scrollLeft -= containerRef.current.offsetWidth;
         }
     }, []);
+
+    const handleContentScroll = useCallback(() => {
+        if (!containerRef.current) return;
+        setModuleState(false);
+        const slideWidth = containerRef.current.offsetWidth;
+        if (!slideWidth) return;
+        const nextIndex = Math.round(containerRef.current.scrollLeft / slideWidth);
+        setActiveIndex(Math.max(0, Math.min(nextIndex, res.length - 1)));
+    }, [res.length]);
 
     const handleKeyDown = useCallback((event) => {
         if (event.key === 'ArrowRight') {
@@ -89,7 +100,7 @@ export default function Embed({ res, imgSize }) {
                 { [c_carousel.zoom]: zoomState }
             )}
             style={{
-                "--aspect": imgSize.aspect,
+                "--aspect": activeAspect,
             } as any}
         >
             <div
@@ -99,15 +110,20 @@ export default function Embed({ res, imgSize }) {
                 )}
                 onDoubleClick={toggleZoom}
             >
-                <div className={c_carousel.contents} ref={containerRef} onScroll={() => setModuleState(false)}>
+                <div className={c_carousel.contents} ref={containerRef} onScroll={handleContentScroll}>
                     {res.map((embed) => (
-                        <div key={embed.id || embed.image || embed.youtube || embed.name || embed.code || "embed"}>
+                        <div
+                            key={embed.id || embed.image || embed.youtube || embed.name || embed.code || "embed"}
+                            style={{
+                                "--slide-aspect": Number(embed.aspect || imgSize?.aspect || 1),
+                            } as any}
+                        >
                             {embed.image && (
                                 <Image
                                     src={embed.image}
                                     alt={embed.name || "作品画像"}
-                                    width={830}
-                                    height={Math.round(830 / imgSize.aspect)}
+                                    width={embed.width || 830}
+                                    height={embed.height || Math.round((embed.width || 830) / Number(embed.aspect || imgSize?.aspect || 1))}
                                     unoptimized
                                 />
                             )}

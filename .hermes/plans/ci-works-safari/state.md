@@ -5,7 +5,7 @@ updated: 2026-09-11T19:00:00+09:00
 `/works/ci-works`で、スマホのSafariでも画像・本文を表示し、リンクとPDFの公開状態を検証する。
 
 ## 現在の判定
-- **根本原因を特定し、画像・PDF・スマホ表示・依存・lint/test/build/React Doctorまで修正・検証し、`origin/main`とVercel liveへ反映済み。**
+- **根本原因を特定し、初回の画像・PDF・スマホ表示・依存・lint/test/build/React Doctor修正は`origin/main`とVercel liveへ反映済み。最新の混在画像除外・3枚PDF・可変frame修正はlocalで検証済みで、これからcommit/pushと公開readbackを行う。**
 - iOS Simulator Safariの修正前は、WorksのSSR HTML・DOM・画像・本文が存在するにもかかわらず、背景と固定navだけが表示されていた。
 - `html/body`の実rectが`402x61`で、`WorksOverlay`は`position:fixed`・rect`402x754`・`display:block`・`visibility:visible`・`opacity:1`だった。
 - `html/body/#__next`へ`height:100%; min-height:100%`をinline適用するA/Bで、ポスター・タイトル・本文が復帰した。
@@ -29,13 +29,16 @@ updated: 2026-09-11T19:00:00+09:00
 - 一時debug probe、paint probe、Error Boundary、z-index A/Bはすべて削除済み。
 
 ## 資産修正
-- Figma Desktop GUIから実ポスター8枚をPNG/JPEGとして取得し、`public/images/works/ci-works/`で管理した。
-- 実画像8枚から`public/works/ci-works.pdf`を生成した。確認値は8ページ、3,557,935 bytes。
+- 以前の8枚同期は、Figma Page 1の別作品（PhysicsClub／For the color.／HSSearch／YellowMug）を含んでいたため、最新revisionで無効化した。
+- WordPress正本のcover画像を`public/images/works/ci-works/ci-works-cover.jpg`へ取り込み、Figma Page 1から市ヶ谷の思いやりに属する`Frame 35`、`Frame 34 (a)`、`Frame 26`の3枚だけを残した。
+- 別作品5枚は`ci-works`の公開asset配下から削除し、manifestのselection testで再混入を防止した。
+- 3枚から`public/works/ci-works.pdf`を再生成した。確認値は3ページ、8,362,161 bytes。各ページ比率は元画像の1.95966475、2.13122687、2.08238173と一致する。
 - Figma一時URLを本番参照から除去し、管理下画像とPDFをWorks manifestから参照するようにした。
+- `assets:sync`に`ci-works`専用のframe selection gate、画像natural dimensions、既存cover保持を追加した。
 - Worksの`next/image`を`unoptimized`にしてVercel optimizer 402を回避した。
 
 ## 検証結果
-- local `bun run test`: 27 passed、0 failed。
+- local `bun run test`: 29 passed、0 failed。
 - `bun run lint`: exit 0、ESLint 0 warning / 0 error。
 - `tsc --noEmit`: exit 0。
 - `bun install --frozen-lockfile`: exit 0、Bun lockfile再現性確認済み。
@@ -65,7 +68,7 @@ updated: 2026-09-11T19:00:00+09:00
 
 ## 決定事項
 - Works detailの正本データは`getStaticProps`で確定した`selectedWork`とする。
-- 実画像8枚と同一素材から生成した8ページPDFを共通正本とする。
+- 実画像3枚と同一素材から生成した3ページPDFを共通正本とする。
 - 公開判定はHTTP 200やSSRだけでなく、iOS Simulator Safariの実画面で確認する。
 - WordPress、Figmaファイル、PR作成は行わない。
 - `public/sitemap-0.xml`のbuild生成差分は変更に含めない。
@@ -90,6 +93,11 @@ updated: 2026-09-11T19:00:00+09:00
 - `next.config.js`のSass prependを`@use`へ移行し、`styles/_prepend.scss`と`styles/variable.scss`のSass legacy APIを更新した。
 - 未使用と誤認して削除したSVG loaderは、`/contact/done`のReact #130で必要と判明したため復元した。`@svgr/webpack`は8.1系で保持し、build passを再確認した。
 
-## 次の一手
-- コード修正・依存整理・commit・push・Vercel公開・公開DOM/PDF/実画面readbackは完了。
-- iPhone実機またはSlack内蔵ブラウザで同じ症状が残る場合のみ、fresh cacheで追加確認する。
+## 最新の再開（2026-09-20）
+- WordPress正本coverと、Figma Page 1の候補8枚を内容照合した。`Frame 35`、`Frame 34 (a)`、`Frame 26`だけが「市ヶ谷の思いやり」に属し、`Frame 30`、`Frame 34 (b)`、`Frame 29`、`Frame 28`、`Frame 27`は別作品だった。
+- 最新manifestはcover 1枚とdetail embed 3枚を管理し、detail embedにはnatural width/height/aspectを保持する。
+- `Carousel`はactive slideの`--slide-aspect`を使い、画像ごとのframe比率を反映する。共通固定枠・55vh clampによる画像内余白を使わない。
+- local `next start`のSSR HTMLは3画像、cover、PDFリンク、本文を含み、別作品5画像は0件だった。local image/PDFはHTTP 200だった。
+- 3ページPDFのページ比率と元画像比率は全件一致した。
+- 最終local検証は29 tests、ESLint、TypeScript、clean build 571/571、React Doctor 100/100（0 issue）。
+- ここから今回分をcommit/pushし、Vercel live HTML・画像・PDF・公開DOMをreadbackする。

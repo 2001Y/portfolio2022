@@ -4,6 +4,9 @@ import { getStableWorkEmbeds } from "./worksEmbeds.mjs";
 type WorkAsset = {
   image: string;
   name?: string;
+  width?: number;
+  height?: number;
+  aspect?: number;
 };
 
 type WorkAssetEntry = {

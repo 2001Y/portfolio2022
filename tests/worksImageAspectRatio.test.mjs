@@ -10,4 +10,7 @@ const carouselStyles = await readFile(
 test("work carousel preserves each image's intrinsic aspect ratio", () => {
   assert.match(carouselStyles, /object-fit:\s*contain/);
   assert.match(carouselStyles, /object-position:\s*center/);
+  assert.match(carouselStyles, /aspect-ratio:\s*var\(--slide-aspect\)/);
+  assert.match(carouselStyles, /height:\s*auto/);
+  assert.match(carouselStyles, /max-height:\s*none/);
 });

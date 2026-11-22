@@ -2,6 +2,18 @@ import urlJoin from "url-join";
 
 const WORDPRESS_FETCH_ATTEMPTS = 3;
 
+// WordPress側のプラグイン（Code Snippets）が、_fieldsで絞った応答に対して
+// PHP Warning（HTML）をJSON本文の前に出力することがある。
+// 本文の先頭にあるJSON開始位置（[ または {）までを読み飛ばしてからparseする。
+async function parseWpJson(response) {
+	const text = await response.text();
+	const start = text.search(/[\[{]/);
+	if (start === -1) {
+		throw new SyntaxError("WordPress API response did not contain JSON");
+	}
+	return JSON.parse(start === 0 ? text : text.slice(start));
+}
+
 function isRetryableStatus(status) {
 	return status === 408 || status === 429 || (status >= 500 && status <= 599);
 }
@@ -78,7 +90,7 @@ export async function json(e) {
 		}
 
 		try {
-			return await response.json();
+			return await parseWpJson(response);
 		} catch (error) {
 			lastError = error;
 			if (attempt < WORDPRESS_FETCH_ATTEMPTS) {
@@ -113,7 +125,7 @@ export async function GETpostList(tags) {
 				throw error;
 			}
 			return {
-				postList: await response.json(),
+				postList: await parseWpJson(response),
 				totalpages: response.headers.get("x-wp-totalpages"),
 			};
 		} catch (error) {
